@@ -12,7 +12,7 @@ import {
 } from "@nextui-org/react";
 import Link from "next/link";
 import {usePathname} from "next/navigation";
-import Button, {MotionButton} from "@/app/(site)/components/Button";
+import Button from "@/app/(site)/components/Button";
 import clsx from "clsx";
 import CloudIcon from "@/app/(site)/components/icons/CloudIcon";
 
