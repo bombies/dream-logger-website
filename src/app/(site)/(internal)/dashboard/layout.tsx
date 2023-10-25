@@ -1,5 +1,11 @@
 import {FC, PropsWithChildren} from "react";
 import DashboardSidebar from "@/app/(site)/(internal)/dashboard/components/DashboardSidebar";
+import {Metadata} from "next";
+
+export const metadata: Metadata = {
+    title: 'Dream Logger - Dashboard',
+    description: 'Your Dream Logger dashboard'
+}
 
 const DashboardLayout: FC<PropsWithChildren> = ({children}) => {
     return (

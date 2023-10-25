@@ -3,16 +3,13 @@ import {Member} from "@prisma/client";
 import prisma from "@/libs/prisma";
 import bcrypt from 'bcrypt';
 import {NextResponse} from "next/server";
-import {buildResponse} from "@/app/api/utils/types";
+import {buildFailedValidationResponse, buildResponse} from "@/app/api/utils/types";
 
 class RegisterService {
     public async registerUser(dto: RegisterUserDto): Promise<NextResponse<Member | undefined>> {
         const dtoValidated = RegisterUserDtoSchema.safeParse(dto);
         if (!dtoValidated.success)
-            return buildResponse({
-                status: 400,
-                message: dtoValidated.error.message
-            })
+            return buildFailedValidationResponse(dtoValidated.error)
 
         const existingUser = await prisma.member.findFirst(({
             where: {

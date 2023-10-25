@@ -1,4 +1,5 @@
 import {NextResponse} from "next/server";
+import {ZodError} from "zod";
 
 export type RouteResponseType<T> = {
     status?: number,
@@ -21,6 +22,14 @@ class RouteResponse<T> {
 
 export const buildResponse = <T>(response: RouteResponseType<T>): NextResponse<T | undefined> => {
     return new RouteResponse(response).toNextResponse()
+}
+
+export const buildFailedValidationResponse = <T>(error: ZodError): NextResponse<T | undefined> => {
+    return new RouteResponse({
+        status: 400,
+        message: error.message,
+        data: undefined
+    }).toNextResponse()
 }
 
 export type NextRouteResponse<T extends RouteResponse<T>> = NextResponse<T>
