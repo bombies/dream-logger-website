@@ -27,7 +27,7 @@ const NavBar: FC = () => {
     return (
         <Navbar
             onMenuOpenChange={setMenuOpen}
-            className={clsx(pathName.includes("/dashboard") || pathName.includes("/signin") && "hidden")}
+            className={clsx((pathName.includes("/dashboard") || pathName.includes("/signin")) && "hidden")}
             classNames={{
                 base: 'bg-[#0C0015]'
             }}
@@ -54,33 +54,33 @@ const NavBar: FC = () => {
             <NavbarContent justify="end" className="laptop:hidden gap-4">
                 {
                     authStatus !== 'authenticated' &&
-                        (
-                            <Fragment>
-                                <NavbarItem>
-                                    <Button
-                                        color="secondary"
-                                        onPress={() => router.push("/signin")}
-                                    >
-                                        Log In
-                                    </Button>
-                                </NavbarItem>
-                                <NavbarItem>
-                                    <Button
-                                        color="cta"
-                                        variant="shadow"
-                                        onPress={() => router.push("/signin?tab=register")}
-                                    >
-                                        Sign Up
-                                    </Button>
-                                </NavbarItem>
-                            </Fragment>
-                        )
+                    (
+                        <Fragment>
+                            <NavbarItem>
+                                <Button
+                                    color="secondary"
+                                    onPress={() => router.push("/signin")}
+                                >
+                                    Log In
+                                </Button>
+                            </NavbarItem>
+                            <NavbarItem>
+                                <Button
+                                    color="cta"
+                                    variant="shadow"
+                                    onPress={() => router.push("/signin?tab=register")}
+                                >
+                                    Sign Up
+                                </Button>
+                            </NavbarItem>
+                        </Fragment>
+                    )
                 }
             </NavbarContent>
             {
                 authStatus === 'authenticated' && (
                     <NavbarContent justify='end'>
-                        <UserProfile />
+                        <UserProfile/>
                     </NavbarContent>
                 )
             }
