@@ -23,7 +23,7 @@ const Image: FC<Props> = ({fadeIn, imgWidth, imgHeight, className, width, height
                 height: width && `${height ?? width}rem`,
             }}
         >
-            <NextImage {...props} width={imgWidth} height={imgHeight}/>
+            <NextImage {...props} width={imgWidth} height={imgHeight} draggable={false}/>
         </motion.div>
     )
 }

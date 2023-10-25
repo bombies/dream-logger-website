@@ -1,23 +1,34 @@
 import {FC} from "react";
-import {Avatar, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger} from "@nextui-org/react";
-import {Divider} from "@nextui-org/divider";
-import {signOut} from "next-auth/react";
+import {Avatar, Dropdown, DropdownItem, DropdownMenu, DropdownSection, DropdownTrigger} from "@nextui-org/react";
+import {signOut, useSession} from "next-auth/react";
+import DashboardIcon from "@/app/(site)/components/icons/DashboardIcon";
+import SettingsIcon from "@/app/(site)/components/icons/SettingsIcon";
+import useMemberInfo from "@/app/(site)/hooks/useMemberInfo";
 
-type Props = {
-    user: any
-}
 
-const UserProfile: FC<Props> = ({user}) => {
-    console.log(user)
+
+const UserProfile: FC = () => {
+    const member = useMemberInfo()
 
     return (
-        <Dropdown placeholder="bottom-end">
+        <Dropdown
+            showArrow
+            placement="bottom"
+            offset={10}
+            classNames={{
+                base: "border font-semibold border-primary/30 px-4 py-6 bg-gradient-to-b from-[#8F00FF30] to-[#27007940] backdrop-blur-md"
+            }}
+        >
             <DropdownTrigger>
                 <Avatar
                     isBordered
                     as="button"
                     className="transition-transform"
-                    src={user?.image ?? undefined}
+                    src={member?.image ?? undefined}
+                    name={member?.firstName.toLowerCase()}
+                    classNames={{
+                        name: "capitalize font-semibold"
+                    }}
                 />
             </DropdownTrigger>
             <DropdownMenu
@@ -32,10 +43,26 @@ const UserProfile: FC<Props> = ({user}) => {
                     }
                 }}
             >
-                <DropdownItem key="profile" isReadOnly>
-                    <p>Hey <span className="capitalize">{user.firstName}</span></p>
-                    <Divider className="my-6" />
-                </DropdownItem>
+                <DropdownSection showDivider>
+                    <DropdownItem key="profile" isReadOnly>
+                        <p className="font-bold text-xl">Hey <span className="capitalize">{member?.firstName}</span></p>
+
+                    </DropdownItem>
+                </DropdownSection>
+                <DropdownSection showDivider>
+                    <DropdownItem
+                        key="dashboard"
+                        startContent={<DashboardIcon width={16}/>}
+                    >
+                        Dashboard
+                    </DropdownItem>
+                    <DropdownItem
+                        key="settings"
+                        startContent={<SettingsIcon width={16}/>}
+                    >
+                        Settings
+                    </DropdownItem>
+                </DropdownSection>
                 <DropdownItem color="danger" key="log_out">
                     Sign Out
                 </DropdownItem>

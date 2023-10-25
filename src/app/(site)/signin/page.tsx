@@ -1,8 +1,8 @@
 "use client"
 
-import {FC, useEffect} from "react";
+import {FC, useEffect, useState} from "react";
 import {useSession} from "next-auth/react";
-import {useRouter} from "next/navigation";
+import {useRouter, useSearchParams} from "next/navigation";
 import Card from "@/app/(site)/components/Card";
 import {CardBody} from "@nextui-org/card";
 import {Divider} from "@nextui-org/divider";
@@ -10,10 +10,14 @@ import {Tab, Tabs} from "@nextui-org/react";
 import GoogleAuthButton from "@/app/(site)/signin/components/GoogleAuthButton";
 import RegisterForm from "@/app/(site)/signin/components/RegisterForm";
 import LogInForm from "@/app/(site)/signin/components/LogInForm";
+import Image from "@/app/(site)/components/Image";
+import Link from "next/link";
 
 const SignInPage: FC = () => {
     const {data: sessionData, status: sessionStatus} = useSession()
     const router = useRouter()
+    const searchParams = useSearchParams()
+    const [selectedTab, setSelectedTab] = useState<string>(searchParams.get("tab")?.toLowerCase() === "register" ? "register" : "signin")
 
     useEffect(() => {
         console.log(sessionStatus, sessionData)
@@ -26,6 +30,13 @@ const SignInPage: FC = () => {
             {sessionStatus === "unauthenticated" &&
                 <Card className="w-1/2 tablet:w-3/4 phone:w-[90%]">
                     <CardBody>
+                        <Link className="mx-auto my-6" href="/">
+                            <Image
+                                src="/images/DreamLoggerFull.png"
+                                alt="Logo"
+                                imgWidth={250} imgHeight={100}
+                            />
+                        </Link>
                         <Tabs
                             size="lg"
                             aria-label="Sign In Options"
@@ -36,6 +47,8 @@ const SignInPage: FC = () => {
                                 tabList: "bg-secondary gap-8",
                                 tabContent: "text-[#EAE0FF]"
                             }}
+                            onSelectionChange={(key) => setSelectedTab(key as string)}
+                            selectedKey={selectedTab}
                         >
                             <Tab key="signin" title="Sign In" className="flex flex-col items-center">
                                 <div className="w-1/2 tablet:w-3/4 phone:w-[90%]">

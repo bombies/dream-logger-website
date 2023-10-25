@@ -11,22 +11,23 @@ import {
     NavbarMenuToggle
 } from "@nextui-org/react";
 import Link from "next/link";
-import {usePathname} from "next/navigation";
+import {usePathname, useRouter} from "next/navigation";
 import Button from "@/app/(site)/components/Button";
 import clsx from "clsx";
 import Image from "@/app/(site)/components/Image";
-import {signIn, useSession} from "next-auth/react";
+import {useSession} from "next-auth/react";
 import UserProfile from "@/app/(site)/components/UserProfile";
 
 const NavBar: FC = () => {
     const [isMenuOpen, setMenuOpen] = useState(false)
     const pathName = usePathname();
     const {data: session, status: authStatus} = useSession()
+    const router = useRouter()
 
     return (
         <Navbar
             onMenuOpenChange={setMenuOpen}
-            className={clsx(pathName.includes("/dashboard") && "hidden")}
+            className={clsx(pathName.includes("/dashboard") || pathName.includes("/signin") && "hidden")}
             classNames={{
                 base: 'bg-[#0C0015]'
             }}
@@ -52,13 +53,13 @@ const NavBar: FC = () => {
             </NavbarContent>
             <NavbarContent justify="end" className="laptop:hidden gap-4">
                 {
-                    authStatus !== 'authenticated' ?
+                    authStatus !== 'authenticated' &&
                         (
                             <Fragment>
                                 <NavbarItem>
                                     <Button
                                         color="secondary"
-                                        onPress={() => signIn()}
+                                        onPress={() => router.push("/signin")}
                                     >
                                         Log In
                                     </Button>
@@ -67,21 +68,22 @@ const NavBar: FC = () => {
                                     <Button
                                         color="cta"
                                         variant="shadow"
+                                        onPress={() => router.push("/signin?tab=register")}
                                     >
                                         Sign Up
                                     </Button>
                                 </NavbarItem>
                             </Fragment>
                         )
-                        :
-                        (
-                            <Fragment>
-                                <UserProfile user={session!!.user!!} />
-                            </Fragment>
-                        )
                 }
             </NavbarContent>
-
+            {
+                authStatus === 'authenticated' && (
+                    <NavbarContent justify='end'>
+                        <UserProfile />
+                    </NavbarContent>
+                )
+            }
             <NavbarMenu className="bg-[#0C0015]/95 backdrop-blur-md">
                 <NavbarMenuItem>
                     <Link className="w-full" href="#about">
@@ -96,7 +98,7 @@ const NavBar: FC = () => {
                                     <Button
                                         color="secondary"
                                         fullWidth
-                                        onPress={() => signIn()}
+                                        onPress={() => router.push("/signin")}
                                     >
                                         Log In
                                     </Button>
@@ -106,6 +108,7 @@ const NavBar: FC = () => {
                                         color="cta"
                                         variant="shadow"
                                         fullWidth
+                                        onPress={() => router.push("/signin?tab=register")}
                                     >
                                         Sign Up
                                     </Button>

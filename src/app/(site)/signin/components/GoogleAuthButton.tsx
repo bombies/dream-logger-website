@@ -5,7 +5,6 @@ import Button from "@/app/(site)/components/Button";
 import GoogleIcon from "@/app/(site)/components/icons/GoogleIcon";
 import {signIn} from "next-auth/react";
 import {useRouter} from "next/navigation";
-import toast from "react-hot-toast";
 
 type Props = {
     type: 'signin' | 'signup'
