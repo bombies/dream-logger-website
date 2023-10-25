@@ -19,9 +19,9 @@ import {useSession} from "next-auth/react";
 import UserProfile from "@/app/(site)/components/UserProfile";
 
 const NavBar: FC = () => {
-    const [isMenuOpen, setMenuOpen] = useState(false)
+    const [, setMenuOpen] = useState(false)
     const pathName = usePathname();
-    const {data: session, status: authStatus} = useSession()
+    const {status: authStatus} = useSession()
     const router = useRouter()
 
     return (

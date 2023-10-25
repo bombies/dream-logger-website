@@ -4,15 +4,21 @@ import {signOut, useSession} from "next-auth/react";
 import DashboardIcon from "@/app/(site)/components/icons/DashboardIcon";
 import SettingsIcon from "@/app/(site)/components/icons/SettingsIcon";
 import useMemberInfo from "@/app/(site)/hooks/useMemberInfo";
+import {OverlayPlacement} from "@nextui-org/aria-utils";
 import Link from "next/link";
 
-const UserProfile: FC = () => {
+type Props = {
+    placement?: OverlayPlacement
+}
+
+const UserProfile: FC<Props> = ({placement}) => {
     const member = useMemberInfo()
 
     return (
         <Dropdown
             showArrow
-            placement="bottom"
+            closeOnSelect
+            placement={placement ?? "bottom"}
             offset={10}
             classNames={{
                 base: "border font-semibold border-primary/30 px-4 py-6 bg-gradient-to-b from-[#8F00FF30] to-[#27007940] backdrop-blur-md"
@@ -50,22 +56,20 @@ const UserProfile: FC = () => {
                 </DropdownSection>
                 <DropdownSection showDivider>
                     <DropdownItem
+                        as={Link}
+                        href="/dashboard"
                         key="dashboard"
                         startContent={<DashboardIcon width={16}/>}
-                        isReadOnly
                     >
-                        <Link href="/dashboard">
-                            Dashboard
-                        </Link>
+                        Dashboard
                     </DropdownItem>
                     <DropdownItem
+                        as={Link}
+                        href="/settings"
                         key="settings"
                         startContent={<SettingsIcon width={16}/>}
-                        isReadOnly
                     >
-                        <Link href="/settings">
-                            Settings
-                        </Link>
+                        Settings
                     </DropdownItem>
                 </DropdownSection>
                 <DropdownItem color="danger" key="log_out">
