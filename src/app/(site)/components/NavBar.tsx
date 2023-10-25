@@ -1,6 +1,6 @@
 "use client";
 
-import {FC, Fragment, useState} from "react";
+import {FC, Fragment} from "react";
 import {
     Navbar,
     NavbarBrand,
@@ -19,14 +19,12 @@ import {useSession} from "next-auth/react";
 import UserProfile from "@/app/(site)/components/UserProfile";
 
 const NavBar: FC = () => {
-    const [, setMenuOpen] = useState(false)
     const pathName = usePathname();
     const {status: authStatus} = useSession()
     const router = useRouter()
 
     return (
         <Navbar
-            onMenuOpenChange={setMenuOpen}
             className={clsx((pathName.includes("/dashboard") || pathName.includes("/signin")) && "hidden")}
             classNames={{
                 base: 'bg-[#0C0015]'
@@ -88,6 +86,16 @@ const NavBar: FC = () => {
                 <NavbarMenuItem>
                     <Link className="w-full" href="#about">
                         ABOUT
+                    </Link>
+                </NavbarMenuItem>
+                <NavbarMenuItem>
+                    <Link className="w-full" href="/terms">
+                        TERMS OF SERVICE
+                    </Link>
+                </NavbarMenuItem>
+                <NavbarMenuItem>
+                    <Link className="w-full" href="/privacy">
+                        PRIVACY POLICY
                     </Link>
                 </NavbarMenuItem>
                 {
