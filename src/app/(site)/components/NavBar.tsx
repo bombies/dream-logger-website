@@ -16,11 +16,12 @@ import Button from "@/app/(site)/components/Button";
 import clsx from "clsx";
 import Image from "@/app/(site)/components/Image";
 import {signIn, useSession} from "next-auth/react";
+import UserProfile from "@/app/(site)/components/UserProfile";
 
 const NavBar: FC = () => {
     const [isMenuOpen, setMenuOpen] = useState(false)
     const pathName = usePathname();
-    const {status: authStatus} = useSession()
+    const {data: session, status: authStatus} = useSession()
 
     return (
         <Navbar
@@ -75,7 +76,7 @@ const NavBar: FC = () => {
                         :
                         (
                             <Fragment>
-                                {/*TODO: Set up user profile*/}
+                                <UserProfile user={session!!.user!!} />
                             </Fragment>
                         )
                 }

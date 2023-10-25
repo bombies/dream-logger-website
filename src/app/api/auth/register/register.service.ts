@@ -1,12 +1,12 @@
 import {RegisterUserDto, RegisterUserDtoSchema} from "@/app/api/auth/register/register.dto";
-import {User} from "@prisma/client";
+import {Member} from "@prisma/client";
 import prisma from "@/libs/prisma";
 import bcrypt from 'bcrypt';
 import {NextResponse} from "next/server";
 import {buildResponse} from "@/app/api/utils/types";
 
 class RegisterService {
-    public async registerUser(dto: RegisterUserDto): Promise<NextResponse<User | undefined>> {
+    public async registerUser(dto: RegisterUserDto): Promise<NextResponse<Member | undefined>> {
         const dtoValidated = RegisterUserDtoSchema.safeParse(dto);
         if (!dtoValidated.success)
             return buildResponse({
@@ -14,7 +14,7 @@ class RegisterService {
                 message: dtoValidated.error.message
             })
 
-        const existingUser = await prisma.user.findFirst(({
+        const existingUser = await prisma.member.findFirst(({
             where: {
                 OR: [
                     {username: dto.username.toLowerCase()},
@@ -31,7 +31,7 @@ class RegisterService {
 
         const salt = bcrypt.genSaltSync(12)
         const hashedPassword = await bcrypt.hash(dto.password, salt)
-        const createdUser = await prisma.user.create({
+        const createdUser = await prisma.member.create({
             data: {
                 firstName: dto.firstName.toLowerCase(),
                 lastName: dto.lastName.toLowerCase(),
