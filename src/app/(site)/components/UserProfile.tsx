@@ -4,8 +4,7 @@ import {signOut, useSession} from "next-auth/react";
 import DashboardIcon from "@/app/(site)/components/icons/DashboardIcon";
 import SettingsIcon from "@/app/(site)/components/icons/SettingsIcon";
 import useMemberInfo from "@/app/(site)/hooks/useMemberInfo";
-
-
+import Link from "next/link";
 
 const UserProfile: FC = () => {
     const member = useMemberInfo()
@@ -53,14 +52,20 @@ const UserProfile: FC = () => {
                     <DropdownItem
                         key="dashboard"
                         startContent={<DashboardIcon width={16}/>}
+                        isReadOnly
                     >
-                        Dashboard
+                        <Link href="/dashboard">
+                            Dashboard
+                        </Link>
                     </DropdownItem>
                     <DropdownItem
                         key="settings"
                         startContent={<SettingsIcon width={16}/>}
+                        isReadOnly
                     >
-                        Settings
+                        <Link href="/settings">
+                            Settings
+                        </Link>
                     </DropdownItem>
                 </DropdownSection>
                 <DropdownItem color="danger" key="log_out">
