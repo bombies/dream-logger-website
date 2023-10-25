@@ -21,47 +21,58 @@ export default function Home() {
         <main>
             <section aria-label="Hero"
                      className={`
-          bg-[#1F0032] p-20 phone:px-8 phone:pt-16 overflow-x-hidden`}
+           relative bg-[#1F0032] p-20 phone:px-8 phone:pt-16 overflow-hidden`}
             >
-                <div className="flex gap-64 laptop-big:gap-28 phone:gap-10 tablet:flex-col ">
-                    <div>
-                        <div className="flex tablet:justify-center">
-                            <Image
-                                src="/images/DreamLoggerFull.png"
-                                alt="Logo"
-                                imgWidth={1000} imgHeight={250}
-                                fadeIn
-                            />
+                <div className="relative z-10">
+                    <div className="flex gap-64 laptop-big:gap-28 phone:gap-10 tablet:flex-col ">
+                        <div>
+                            <div className="flex tablet:justify-center">
+                                <Image
+                                    src="/images/DreamLoggerFull.png"
+                                    alt="Logo"
+                                    imgWidth={1000} imgHeight={250}
+                                    fadeIn
+                                />
+                            </div>
+                            <motion.h3
+                                className={clsx(montserrat.className, "laptop-min:ml-6 tablet:text-center tablet:text-lg phone:text-sm font-light laptop-min:max-w-lg text-justify")}
+                                initial={{opacity: 0, y: 50}}
+                                whileInView={{opacity: 1, y: 0}}
+                                transition={{duration: 1}}
+                                viewport={{once: true}}
+                            >
+                                Transform every night&apos;s slumber into a captivating story. Unveil the hidden narratives
+                                of your dreams, track recurring characters, and explore the tapestry of your emotions. Start
+                                your journey into the subconscious, and let your dreams inspire your waking life.
+                            </motion.h3>
                         </div>
-                        <motion.h3
-                            className={clsx(montserrat.className, "laptop-min:ml-6 tablet:text-center tablet:text-lg phone:text-sm font-light laptop-min:max-w-lg text-justify")}
-                            initial={{opacity: 0, y: 50}}
-                            whileInView={{opacity: 1, y: 0}}
-                            transition={{duration: 1}}
-                            viewport={{once: true}}
+                        <div className="self-center">
+                            <StartDreamingButton/>
+                        </div>
+                    </div>
+                    <div className="flex justify-center mt-12">
+                        <Button
+                            isIconOnly
+                            className="animate-bounce rounded-full"
+                            color="default"
+                            variant="light"
+                            onPress={() => aboutRef.current?.scrollIntoView({
+                                behavior: "smooth"
+                            })}
                         >
-                            Transform every night&apos;s slumber into a captivating story. Unveil the hidden narratives
-                            of your dreams, track recurring characters, and explore the tapestry of your emotions. Start
-                            your journey into the subconscious, and let your dreams inspire your waking life.
-                        </motion.h3>
-                    </div>
-                    <div className="self-center">
-                        <StartDreamingButton/>
+                            <DownArrowIcon/>
+                        </Button>
                     </div>
                 </div>
-                <div className="flex justify-center mt-12">
-                    <Button
-                        isIconOnly
-                        className="animate-bounce rounded-full"
-                        color="default"
-                        variant="light"
-                        onPress={() => aboutRef.current?.scrollIntoView({
-                            behavior: "smooth"
-                        })}
-                    >
-                        <DownArrowIcon/>
-                    </Button>
-                </div>
+                <Image
+                    src="/images/hero-bg.jpg"
+                    alt=''
+                    className="!absolute w-full h-full top-0 left-0 opacity-10 z-[1] pointer-events-none"
+                    fill
+                    style={{
+                        objectFit: "cover"
+                    }}
+                />
             </section>
             <section ref={aboutRef} id="about" className="py-16 px-32 phone:px-8 flex flex-col gap-32 items-center">
                 <article className="flex gap-8 tablet:flex-col max-w-4xl w-full">
