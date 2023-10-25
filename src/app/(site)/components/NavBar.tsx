@@ -1,6 +1,6 @@
 "use client";
 
-import {FC, useState} from "react";
+import {FC, Fragment, useState} from "react";
 import {
     Navbar,
     NavbarBrand,
@@ -14,11 +14,13 @@ import Link from "next/link";
 import {usePathname} from "next/navigation";
 import Button from "@/app/(site)/components/Button";
 import clsx from "clsx";
-import CloudIcon from "@/app/(site)/components/icons/CloudIcon";
+import Image from "@/app/(site)/components/Image";
+import {signIn, useSession} from "next-auth/react";
 
 const NavBar: FC = () => {
     const [isMenuOpen, setMenuOpen] = useState(false)
     const pathName = usePathname();
+    const {status: authStatus} = useSession()
 
     return (
         <Navbar
@@ -29,36 +31,54 @@ const NavBar: FC = () => {
             }}
         >
             <NavbarContent>
-                <NavbarMenuToggle className="laptop-min:hidden" />
+                <NavbarMenuToggle className="laptop-min:hidden"/>
                 <NavbarBrand>
-                    <h1 className="font-bold text-xl relative">
-                        Dream<span className="text-primary">Logger</span>
-                        <CloudIcon svgClassName="absolute -bottom-[0.5px] -left-2" width={16} />
-                    </h1>
+                    <Link href="/">
+                        <Image
+                            src="/images/DreamLoggerFull.png"
+                            alt="Logo"
+                            imgWidth={150} imgHeight={75}
+                        />
+                    </Link>
                 </NavbarBrand>
             </NavbarContent>
             <NavbarContent className="laptop:hidden gap-4" justify="center">
                 <NavbarItem isActive={pathName.includes("#about")}>
-                    <Link href="#">
+                    <Link href="#about">
                         ABOUT
                     </Link>
                 </NavbarItem>
             </NavbarContent>
             <NavbarContent justify="end" className="laptop:hidden gap-4">
-                {/*TODO: Setup authentication*/}
-                <NavbarItem>
-                    <Button color="secondary">
-                        Log In
-                    </Button>
-                </NavbarItem>
-                <NavbarItem>
-                    <Button
-                        color="cta"
-                        variant="shadow"
-                    >
-                        Sign Up
-                    </Button>
-                </NavbarItem>
+                {
+                    authStatus !== 'authenticated' ?
+                        (
+                            <Fragment>
+                                <NavbarItem>
+                                    <Button
+                                        color="secondary"
+                                        onPress={() => signIn()}
+                                    >
+                                        Log In
+                                    </Button>
+                                </NavbarItem>
+                                <NavbarItem>
+                                    <Button
+                                        color="cta"
+                                        variant="shadow"
+                                    >
+                                        Sign Up
+                                    </Button>
+                                </NavbarItem>
+                            </Fragment>
+                        )
+                        :
+                        (
+                            <Fragment>
+                                {/*TODO: Set up user profile*/}
+                            </Fragment>
+                        )
+                }
             </NavbarContent>
 
             <NavbarMenu className="bg-[#0C0015]/95 backdrop-blur-md">
@@ -67,16 +87,36 @@ const NavBar: FC = () => {
                         ABOUT
                     </Link>
                 </NavbarMenuItem>
-                <NavbarMenuItem>
-                    <Button color="secondary">
-                        Log In
-                    </Button>
-                </NavbarMenuItem>
-                <NavbarMenuItem>
-                    <Button color="cta" variant="shadow">
-                        Sign Up
-                    </Button>
-                </NavbarMenuItem>
+                {
+                    authStatus !== 'authenticated' ?
+                        (
+                            <Fragment>
+                                <NavbarMenuItem>
+                                    <Button
+                                        color="secondary"
+                                        fullWidth
+                                        onPress={() => signIn()}
+                                    >
+                                        Log In
+                                    </Button>
+                                </NavbarMenuItem>
+                                <NavbarMenuItem>
+                                    <Button
+                                        color="cta"
+                                        variant="shadow"
+                                        fullWidth
+                                    >
+                                        Sign Up
+                                    </Button>
+                                </NavbarMenuItem>
+                            </Fragment>
+                        ) :
+                        (
+                            <Fragment>
+                                {/*TODO: Set up user profile*/}
+                            </Fragment>
+                        )
+                }
             </NavbarMenu>
         </Navbar>
     )

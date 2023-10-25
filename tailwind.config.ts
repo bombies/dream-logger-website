@@ -13,12 +13,12 @@ const primaryColorScale: ColorScale = {
   800: '#430077',
   900: '#300055',
   foreground: '#EAE0FF',
-  DEFAULT: '400'
+  DEFAULT: '#9E23FF'
 }
 
 const secondaryColorScale: ColorScale = {
   ...primaryColorScale,
-  DEFAULT: '700'
+  DEFAULT: '#560099'
 }
 
 const dangerColorScale: ColorScale = {
@@ -33,13 +33,13 @@ const dangerColorScale: ColorScale = {
   800: '#770C0C',
   900: '#550505',
   foreground: '#EAE0FF',
-  DEFAULT: '400'
+  DEFAULT: '#FF4A4A'
 }
 
 const backgroundColorScale: ColorScale = {
   ...primaryColorScale,
   900: '#0C0015',
-  DEFAULT: '900'
+  DEFAULT: '#0C0015'
 }
 
 const foregroundColorScale: ColorScale = {
@@ -54,7 +54,7 @@ const foregroundColorScale: ColorScale = {
   800: '#504960',
   900: '#3D364A',
   foreground: '#EAE0FF',
-  DEFAULT: '100'
+  DEFAULT: '#EAE0FF'
 }
 
 const config: Config = {
@@ -78,6 +78,7 @@ const config: Config = {
     extend: {
       colors: {
         primary: "#9E23FF",
+        subtext: "#828282",
         secondary: "#1A002F",
         danger: "#FF4A4A",
         "cta-start": "#8F00FF",

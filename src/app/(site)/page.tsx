@@ -1,12 +1,9 @@
 "use client";
 
 import Button from "@/app/(site)/components/Button";
-import {Spacer} from "@nextui-org/react";
 import {Montserrat} from "next/font/google";
 import clsx from "clsx";
 import DownArrowIcon from "@/app/(site)/components/icons/DownArrowIcon";
-import CloudIcon from "@/app/(site)/components/icons/CloudIcon";
-import {ScreenType, useScreenType} from "@/utils/screen-utils";
 import Image from "@/app/(site)/components/Image";
 import trackDreamImg from '@/../../public/images/trackDreamImg.svg';
 import categorizeDreamImg from '@/../../public/images/categorizeDreamImg.svg';
@@ -18,32 +15,35 @@ const montserrat = Montserrat({
 })
 
 export default function Home() {
-    const screenType = useScreenType()
     const aboutRef = useRef<HTMLDivElement>(null)
 
     return (
         <main>
             <section aria-label="Hero"
                      className={`
-          bg-[#1F0032] p-16 phone:px-8 phone:pt-16 overflow-x-hidden`}
+          bg-[#1F0032] p-20 phone:px-8 phone:pt-16 overflow-x-hidden`}
             >
                 <div className="flex gap-64 laptop-big:gap-28 phone:gap-10 tablet:flex-col ">
                     <div>
                         <div className="flex tablet:justify-center">
-                            <h1 className="font-bold text-8xl phone:text-4xl relative">
-                                Dream<span className="text-primary">Logger</span>
-                                <CloudIcon svgClassName="absolute -bottom-[6px] -left-6 phone:bottom-0 phone:-left-1"
-                                           width={
-                                               screenType === ScreenType.PHONE ? 20 : 64
-                                           }/>
-                            </h1>
+                            <Image
+                                src="/images/DreamLoggerFull.png"
+                                alt="Logo"
+                                imgWidth={1000} imgHeight={250}
+                                fadeIn
+                            />
                         </div>
-                        <Spacer y={6}/>
-                        <h3 className={clsx(montserrat.className, "laptop-min:ml-6 tablet:text-center tablet:text-lg phone:text-sm font-light laptop-min:max-w-lg text-justify")}>
+                        <motion.h3
+                            className={clsx(montserrat.className, "laptop-min:ml-6 tablet:text-center tablet:text-lg phone:text-sm font-light laptop-min:max-w-lg text-justify")}
+                            initial={{opacity: 0, y: 50}}
+                            whileInView={{opacity: 1, y: 0}}
+                            transition={{duration: 1}}
+                            viewport={{once: true}}
+                        >
                             Transform every night&apos;s slumber into a captivating story. Unveil the hidden narratives
                             of your dreams, track recurring characters, and explore the tapestry of your emotions. Start
                             your journey into the subconscious, and let your dreams inspire your waking life.
-                        </h3>
+                        </motion.h3>
                     </div>
                     <div className="self-center">
                         <StartDreamingButton/>
@@ -73,7 +73,12 @@ export default function Home() {
                             Logger, you can ensure that none of them slip through the cracks, offering you a chance to
                             analyze, reflect, and draw inspiration from your nightly adventures.</p>
                     </div>
-                    <Image src={trackDreamImg} alt={"Track Dream Image"} className="tablet:w-full w-[32rem]"/>
+                    <Image
+                        src={trackDreamImg}
+                        alt={"Track Dream Image"}
+                        className="tablet:w-full w-[32rem]"
+                        fadeIn
+                    />
                 </article>
                 <article className="flex flex-row-reverse gap-8 tablet:flex-col max-w-4xl w-full">
                     <div>
@@ -84,7 +89,12 @@ export default function Home() {
                             are personally meaningful. Whether you want to group dreams by themes, recurring symbols, or
                             emotions, Dream Logger empowers you to organize and access your dreams with ease.</p>
                     </div>
-                    <Image src={categorizeDreamImg} alt={"Track Dream Image"} className="tablet:w-full w-[32rem]"/>
+                    <Image
+                        src={categorizeDreamImg}
+                        alt={"Categorize Dream Image"}
+                        className="tablet:w-full w-[32rem]"
+                        fadeIn
+                    />
                 </article>
             </section>
         </main>
@@ -100,9 +110,21 @@ const StartDreamingButton: FC = () => {
             ref={scope}
             onMouseEnter={() => {
                 const animation = animate([
-                    [scope.current, {scale: 1.2, rotate: 2.5, filter: "drop-shadow(0px 2px 10px rgba(82, 0, 255, 0.25))"}],
-                    [scope.current, {scale: 1.2, rotate: 2.5, filter: "drop-shadow(0px 2px 15px rgba(95, 0, 255, 0.25))"}],
-                    [scope.current, {scale: 1.2, rotate: 2.5, filter: "drop-shadow(0px 2px 15px rgba(150, 0, 255, 0.25))"}],
+                    [scope.current, {
+                        scale: 1.2,
+                        rotate: 2.5,
+                        filter: "drop-shadow(0px 2px 10px rgba(82, 0, 255, 0.25))"
+                    }],
+                    [scope.current, {
+                        scale: 1.2,
+                        rotate: 2.5,
+                        filter: "drop-shadow(0px 2px 15px rgba(95, 0, 255, 0.25))"
+                    }],
+                    [scope.current, {
+                        scale: 1.2,
+                        rotate: 2.5,
+                        filter: "drop-shadow(0px 2px 15px rgba(150, 0, 255, 0.25))"
+                    }],
                 ], {
                     duration: 1,
                 })
