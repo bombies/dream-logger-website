@@ -1,8 +1,10 @@
-import {FC, useMemo} from "react";
+import {FC, Fragment, useMemo} from "react";
 import {useDreamsData} from "@/app/(site)/(internal)/dashboard/components/dreams/DreamsProvider";
-import DreamCard from "@/app/(site)/(internal)/dashboard/components/dreams/DreamCard";
+import DreamCard from "@/app/(site)/(internal)/dashboard/components/dreams/card/DreamCard";
 import LogDreamCard from "@/app/(site)/(internal)/dashboard/components/dreams/LogDreamCard";
 import useTodayTimeRange from "@/app/(site)/hooks/useTodayTimeRange";
+import {Spinner} from "@nextui-org/react";
+import DreamCardSkeleton from "@/app/(site)/(internal)/dashboard/components/dreams/card/DreamCardSkeleton";
 
 const CurrentDreamsContainer: FC = () => {
     const [startOfToday, endOfToday] = useTodayTimeRange()
@@ -18,13 +20,21 @@ const CurrentDreamsContainer: FC = () => {
 
     return (
         <div className="flex flex-col">
-            <h2 className="text-4xl phone:text-2xl font-semibold mb-8 phone:mb-4 tablet:text-center">Today - {startOfToday.toLocaleDateString("en-US", {
-                dateStyle: "medium"
-            })}
+            <h2 className="text-4xl phone:text-2xl font-semibold mb-8 phone:mb-4 tablet:text-center">Today
+                - {startOfToday.toLocaleDateString("en-US", {
+                    dateStyle: "medium"
+                })}
             </h2>
-            <div className="bg-primary/20 rounded-3xl py-6 px-4 phone:p-3 w-[36rem] tablet:w-[24rem] phone:w-[20rem] tablet:self-center flex flex-col gap-y-6 phone:gap-y-3">
+            <div
+                className="bg-primary/20 rounded-3xl py-6 px-4 phone:p-3 w-[36rem] tablet:w-[24rem] phone:w-[20rem] tablet:self-center flex flex-col gap-y-6 phone:gap-y-3">
                 <LogDreamCard/>
-                {dreamCards}
+                {dreams.loading ? (
+                    <Fragment>
+                        <DreamCardSkeleton />
+                        <DreamCardSkeleton />
+                        <DreamCardSkeleton />
+                    </Fragment>
+                ) : dreamCards}
             </div>
         </div>
 

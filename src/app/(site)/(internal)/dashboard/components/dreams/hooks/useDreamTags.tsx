@@ -1,10 +1,10 @@
 import useSWR, {KeyedMutator} from "swr";
-import {fetcher} from "@/utils/client-utils";
+import {fetcher} from "@/utils/client/client-utils";
 import {DreamTag} from "@prisma/client";
 import {useCallback} from "react";
-import {DreamContextState} from "@/app/(site)/(internal)/dashboard/components/dreams/hooks/useDreams";
+import {DataContextState} from "@/utils/client/client-data-utils";
 
-export type DreamTagsState = DreamContextState<DreamTag[], DreamTag>
+export type DreamTagsState = DataContextState<DreamTag[], DreamTag>
 
 const useDreamTags = (): DreamTagsState => {
     const {data: tags, isLoading: tagsLoading, mutate: mutateTags} = useSWR('/api/me/dreams/tags', fetcher<DreamTag[]>)

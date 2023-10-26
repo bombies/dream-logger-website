@@ -1,4 +1,5 @@
 import {z} from "zod";
+import {Dream, DreamCharacter, DreamTag, Member} from "@prisma/client";
 
 export type PostDreamDto = {
     title: string,
@@ -56,3 +57,9 @@ export const PostDreamCharacterSchema = z.object({
         .min(DREAM_CHARACTER_MIN, `The name can't be less than ${DREAM_CHARACTER_MIN} character!`)
         .max(DREAM_CHARACTER_MAX, `The name can't be more than ${DREAM_CHARACTER_MAX} characters!`)
 }).strict()
+
+export type DreamWithRelations = Dream & {
+    tags?: DreamTag[]
+    characters?: DreamCharacter[]
+    user?: Member[]
+}

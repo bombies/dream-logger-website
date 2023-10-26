@@ -21,3 +21,15 @@ export function handleAxiosError(error: any): undefined {
     toast.error(error.response?.statusText ?? "Something went wrong!")
     return undefined
 }
+
+/**
+ * Calculated the estimated reading time for a string
+ * @param text The text to analyze
+ * @return number The number of estimated minutes it would take to read
+ * the text
+ */
+export function calcEstimatedReadingTime(text: string): number {
+    const WORDS_PER_MINUTE = 200 // Based on research of the average case
+    const numOfWords = text.split(" ").length
+    return Math.ceil(numOfWords / WORDS_PER_MINUTE)
+}

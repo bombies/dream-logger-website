@@ -4,6 +4,7 @@ import prisma from "@/libs/prisma";
 import {NextResponse} from "next/server";
 import {Session} from "next-auth";
 import {
+    DreamWithRelations,
     PostDreamCharacterDto,
     PostDreamCharacterSchema,
     PostDreamDto,
@@ -22,6 +23,33 @@ class DreamsService {
 
         return buildResponse({
             data: dreams
+        })
+    }
+
+    public async fetchDream(session: Session, dreamId: string, options?: {
+        withTags?: boolean,
+        withCharacters?: boolean
+    }): Promise<NextResponse<DreamWithRelations | null>> {
+        const member = session.user
+        const dream = await prisma.dream.findFirst({
+            where: {
+                id: dreamId,
+                userId: member.id
+            },
+            include: {
+                tags: options?.withTags,
+                characters: options?.withCharacters
+            }
+        })
+
+        if (!dream)
+            return buildResponse({
+                status: 404,
+                message: `Couldn't find a dream for you with ID: ${dreamId}`
+            })
+
+        return buildResponse({
+            data: dream
         })
     }
 

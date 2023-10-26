@@ -3,10 +3,11 @@ import {Modal as NextModal, ModalBody, ModalContent, ModalFooter, ModalHeader, M
 
 type Props = {
     subtitle?: string,
+    header?: ReactElement | ReactElement[]
     footer?: ReactElement | ReactElement[]
 } & ModalProps
 
-const Modal: FC<Props> = ({footer, title, subtitle, children, ...props}) => {
+const Modal: FC<Props> = ({header, footer, title, subtitle, children, ...props}) => {
     return (
         <NextModal
             backdrop="blur"
@@ -19,11 +20,12 @@ const Modal: FC<Props> = ({footer, title, subtitle, children, ...props}) => {
             {...props}
         >
             <ModalContent>
-                {(title || subtitle) && (
+                {(title || subtitle || header) && (
                     <ModalHeader>
                         <div>
                             {title && <h1 className="text-4xl">{title}</h1>}
                             {subtitle && <h3 className="text-sm text-subtext mt-3">{subtitle}</h3>}
+                            {header}
                         </div>
                     </ModalHeader>
                 )}

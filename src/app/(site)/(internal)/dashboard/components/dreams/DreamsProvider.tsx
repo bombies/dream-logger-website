@@ -1,19 +1,20 @@
 "use client"
 
-import {createContext, FC, PropsWithChildren, useContext} from "react";
+import {FC, PropsWithChildren} from "react";
 import useDreams, {DreamsState} from "@/app/(site)/(internal)/dashboard/components/dreams/hooks/useDreams";
 import useDreamCharacters, {
     DreamCharactersState
 } from "@/app/(site)/(internal)/dashboard/components/dreams/hooks/useDreamCharacters";
 import useDreamTags, {DreamTagsState} from "@/app/(site)/(internal)/dashboard/components/dreams/hooks/useDreamTags";
+import {createDataContext, DataContextProps} from "@/utils/client/client-data-utils";
 
-type DreamsContextProps = {
+interface DreamsContextProps extends DataContextProps {
     dreams: DreamsState,
     characters: DreamCharactersState,
     tags: DreamTagsState,
 }
 
-const DreamsContext = createContext<DreamsContextProps | undefined>(undefined)
+const [DreamsContext, useHook] = createDataContext<DreamsContextProps>("useDreamsData must be used in a DreamsProvider!")
 
 const DreamsProvider: FC<PropsWithChildren> = ({children}) => {
     const dreams = useDreams()
@@ -28,10 +29,4 @@ const DreamsProvider: FC<PropsWithChildren> = ({children}) => {
 }
 
 export default DreamsProvider
-
-export const useDreamsData = () => {
-    const dreams = useContext(DreamsContext)
-    if (!dreams)
-        throw new Error("useDreams can only be used in a DreamProvider!")
-    return dreams;
-}
+export const useDreamsData = useHook

@@ -1,19 +1,10 @@
 import useSWR, {KeyedMutator} from "swr";
-import {fetcher} from "@/utils/client-utils";
+import {fetcher} from "@/utils/client/client-utils";
 import {Dream} from "@prisma/client";
 import {useCallback} from "react";
+import {DataContextState} from "@/utils/client/client-data-utils";
 
-export type DreamsState = DreamContextState<Dream[], Dream>
-
-export type DreamContextState<T, O> = {
-    loading: boolean,
-    data: T,
-    mutateData?: KeyedMutator<T>,
-    optimisticData: {
-        addOptimisticData: (work: () => Promise<O | undefined | null>, optimisticData: O) => Promise<void>,
-        removeOptimisticData: (work: () => Promise<O | undefined | null>, removedData: O) => Promise<void>,
-    }
-}
+export type DreamsState = DataContextState<Dream[], Dream>
 
 const useDreams = (): DreamsState => {
     const {data: dreams, isLoading: dreamsLoading, mutate: mutateDreams} = useSWR('/api/me/dreams', fetcher<Dream[]>)

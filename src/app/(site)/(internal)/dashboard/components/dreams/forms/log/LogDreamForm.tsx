@@ -15,7 +15,7 @@ import CloseIcon from "@/app/(site)/components/icons/CloseIcon";
 import axios from "axios";
 import useSWRMutation from "swr/mutation";
 import {Dream} from "@prisma/client";
-import {handleAxiosError} from "@/utils/client-utils";
+import {handleAxiosError} from "@/utils/client/client-utils";
 import {useSession} from "next-auth/react";
 import toast from "react-hot-toast";
 import AddTagModal from "@/app/(site)/(internal)/dashboard/components/dreams/forms/tags/AddTagModal";

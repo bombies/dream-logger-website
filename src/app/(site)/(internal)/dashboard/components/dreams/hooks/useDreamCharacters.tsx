@@ -1,10 +1,10 @@
 import useSWR, {KeyedMutator} from "swr";
-import {fetcher} from "@/utils/client-utils";
+import {fetcher} from "@/utils/client/client-utils";
 import {DreamCharacter} from "@prisma/client";
 import {useCallback} from "react";
-import {DreamContextState} from "@/app/(site)/(internal)/dashboard/components/dreams/hooks/useDreams";
+import {DataContextState} from "@/utils/client/client-data-utils";
 
-export type DreamCharactersState = DreamContextState<DreamCharacter[], DreamCharacter>
+export type DreamCharactersState = DataContextState<DreamCharacter[], DreamCharacter>
 
 const useDreamCharacters = (): DreamCharactersState => {
     const {data: characters, isLoading: charactersLoading, mutate: mutateCharacters} = useSWR('/api/me/dreams/characters', fetcher<DreamCharacter[]>)

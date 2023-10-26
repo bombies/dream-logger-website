@@ -1,6 +1,6 @@
 import {useSession} from "next-auth/react";
 import useSWR from "swr";
-import {fetcher} from "@/utils/client-utils";
+import {fetcher} from "@/utils/client/client-utils";
 import {Member} from "@prisma/client";
 
 

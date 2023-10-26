@@ -7,7 +7,7 @@ import axios from "axios";
 import useSWRMutation from "swr/mutation";
 import {useDreamsData} from "@/app/(site)/(internal)/dashboard/components/dreams/DreamsProvider";
 import {DreamTag} from "@prisma/client";
-import {handleAxiosError} from "@/utils/client-utils";
+import {handleAxiosError} from "@/utils/client/client-utils";
 import {useSession} from "next-auth/react";
 import toast from "react-hot-toast";
 import Input from "@/app/(site)/components/Input";
