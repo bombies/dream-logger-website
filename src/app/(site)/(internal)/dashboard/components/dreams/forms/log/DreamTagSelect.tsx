@@ -8,6 +8,7 @@ import {SelectItem} from "@nextui-org/react";
 import {UseFormRegister} from "react-hook-form";
 import {DreamTagsState} from "@/app/(site)/(internal)/dashboard/components/dreams/hooks/useDreamTags";
 import AddTagModal from "@/app/(site)/(internal)/dashboard/components/dreams/forms/tags/AddTagModal";
+import PlusIcon from "@/app/(site)/components/icons/PlusIcon";
 
 type Props = {
     register?: UseFormRegister<any>,
@@ -29,6 +30,7 @@ const DreamTagSelect: FC<Props> = ({tags, register}) => {
                     color="cta"
                     size="sm"
                     onPress={() => setModalOpen(true)}
+                    startContent={<PlusIcon width={20} />}
                 >
                     Add New Tag
                 </Button>

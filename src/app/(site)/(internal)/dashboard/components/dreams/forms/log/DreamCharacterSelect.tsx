@@ -8,6 +8,7 @@ import {SelectItem} from "@nextui-org/react";
 import {DreamCharactersState} from "@/app/(site)/(internal)/dashboard/components/dreams/hooks/useDreamCharacters";
 import {UseFormRegister} from "react-hook-form";
 import AddCharacterModal from "@/app/(site)/(internal)/dashboard/components/dreams/forms/characters/AddCharacterModal";
+import PlusIcon from "@/app/(site)/components/icons/PlusIcon";
 
 type Props = {
     register?: UseFormRegister<any>,
@@ -29,6 +30,7 @@ const DreamCharacterSelect: FC<Props> = ({characters, register}) => {
                     color="cta"
                     size="sm"
                     onPress={() => setModalOpen(true)}
+                    startContent={<PlusIcon width={20} />}
                 >
                     Add New Character
                 </Button>
