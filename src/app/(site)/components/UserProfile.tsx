@@ -6,6 +6,8 @@ import SettingsIcon from "@/app/(site)/components/icons/SettingsIcon";
 import useMemberInfo from "@/app/(site)/hooks/useMemberInfo";
 import {OverlayPlacement} from "@nextui-org/aria-utils";
 import Link from "next/link";
+import Image from "@/app/(site)/components/Image";
+import HomeIcon from "@/app/(site)/components/icons/HomeIcon";
 
 type Props = {
     placement?: OverlayPlacement
@@ -50,11 +52,25 @@ const UserProfile: FC<Props> = ({placement}) => {
             >
                 <DropdownSection showDivider>
                     <DropdownItem key="profile" isReadOnly>
+                        <Link href="/">
+                            <Image
+                                src="/images/DreamLoggerFull.png"
+                                alt="Logo"
+                                imgWidth={75} imgHeight={45}
+                            />
+                        </Link>
                         <p className="font-bold text-xl">Hey <span className="capitalize">{member?.firstName}</span></p>
-
                     </DropdownItem>
                 </DropdownSection>
                 <DropdownSection showDivider>
+                    <DropdownItem
+                        as={Link}
+                        href="/"
+                        key="home"
+                        startContent={<HomeIcon width={16}/>}
+                    >
+                        Home Page
+                    </DropdownItem>
                     <DropdownItem
                         as={Link}
                         href="/dashboard"

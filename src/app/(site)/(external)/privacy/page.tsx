@@ -7,7 +7,7 @@ const PrivacyPolicy: FC = () => {
         <main className="flex flex-col items-center py-32 phone:py-16">
             <h1 className="font-bold text-6xl phone:text-3xl mb-6">Privacy Policy</h1>
             <article className="w-1/2 tablet:w-2/3 phone:w-3/4 bg-secondary/40 rounded-xl p-12">
-                <h6 className="text-sm text-subtext mb-3">Last Updated: October 25, 2023</h6>
+                <h6 className="text-sm text-subtext mb-3">Last Updated: October 26, 2023</h6>
                 <p>
                     {
                         "DreamLogger (\"we\", \"our\", or \"us\") is committed to protecting the privacy of our users (\"you\" or \"your\"). This Privacy Policy outlines how we collect, use, disclose, and safeguard your information when you access or use our website or mobile application (the \"Service\"). By using the Service, you agree to the practices described in this Privacy Policy."
@@ -32,7 +32,7 @@ const PrivacyPolicy: FC = () => {
                         <h3 className="font-bold text-2xl">Data Storage and Security</h3>
                         <p>{"Secure Database: We use a secure PostgreSQL database to store user data."}</p>
                         <Spacer y={6}/>
-                        <p>{"Data Encryption: All data stored is encrypted to ensure its security and confidentiality."}</p>
+                        <p>{"Data Encryption: All sensitive data stored is encrypted to ensure its security and confidentiality."}</p>
                         <Spacer y={6}/>
                         <p>{"Cookies: Secure cookies are employed to keep track of user sessions, enhancing the user experience and ensuring the security of your interactions with the Service."}</p>
                     </div>
