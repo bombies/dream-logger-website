@@ -6,7 +6,7 @@ import {NextResponse} from "next/server";
 import {buildFailedValidationResponse, buildResponse} from "@/app/api/utils/types";
 
 class RegisterService {
-    public async registerUser(dto: RegisterUserDto): Promise<NextResponse<Member | undefined>> {
+    public async registerUser(dto: RegisterUserDto): Promise<NextResponse<Member | null>> {
         const dtoValidated = RegisterUserDtoSchema.safeParse(dto);
         if (!dtoValidated.success)
             return buildFailedValidationResponse(dtoValidated.error)

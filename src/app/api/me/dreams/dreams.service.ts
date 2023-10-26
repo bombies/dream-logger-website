@@ -7,12 +7,12 @@ import {
     PostDreamCharacterDto,
     PostDreamCharacterSchema,
     PostDreamDto,
-    PostDreamSchema, PostDreamTagDto
+    PostDreamSchema, PostDreamTagDto, PostDreamTagSchema
 } from "@/app/api/me/dreams/dreams.dto";
 
 class DreamsService {
 
-    public async fetchDreams(session: Session): Promise<NextResponse<Dream[] | undefined>> {
+    public async fetchDreams(session: Session): Promise<NextResponse<Dream[] | null>> {
         const member = session.user
         const dreams = await prisma.dream.findMany({
             where: {
@@ -25,7 +25,7 @@ class DreamsService {
         })
     }
 
-    public async createDream(session: Session, dto: PostDreamDto): Promise<NextResponse<Dream | undefined>> {
+    public async createDream(session: Session, dto: PostDreamDto): Promise<NextResponse<Dream | null>> {
         const dtoValidated = PostDreamSchema.safeParse(dto)
         if (!dtoValidated.success)
             return buildFailedValidationResponse(dtoValidated.error)
@@ -58,7 +58,7 @@ class DreamsService {
         })
     }
 
-    public async createCharacter(session: Session, dto: PostDreamCharacterDto): Promise<NextResponse<DreamCharacter | undefined>> {
+    public async createCharacter(session: Session, dto: PostDreamCharacterDto): Promise<NextResponse<DreamCharacter | null>> {
         const dtoValidated = PostDreamCharacterSchema.safeParse(dto)
         if (!dtoValidated.success)
             return buildFailedValidationResponse(dtoValidated.error)
@@ -87,8 +87,8 @@ class DreamsService {
         })
     }
 
-    public async createTag(session: Session, dto: PostDreamTagDto): Promise<NextResponse<DreamTag | undefined>> {
-        const dtoValidated = PostDreamCharacterSchema.safeParse(dto)
+    public async createTag(session: Session, dto: PostDreamTagDto): Promise<NextResponse<DreamTag | null>> {
+        const dtoValidated = PostDreamTagSchema.safeParse(dto)
         if (!dtoValidated.success)
             return buildFailedValidationResponse(dtoValidated.error)
 

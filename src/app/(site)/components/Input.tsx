@@ -22,7 +22,7 @@ type Props = {
     validate?: ValidationObject
 } & InputProps
 
-const Input: FC<Props> = ({id, register, errors, setValidationErrors, type, validate, ...props}) => {
+const Input: FC<Props> = ({classNames, id, register, errors, setValidationErrors, type, validate, ...props}) => {
     const [passwordVisible, setPasswordVisible] = useState(false)
     const [value, setValue] = useState(props.value ?? "");
     const [errMsg, setErrMsg] = useState<string>()
@@ -61,6 +61,8 @@ const Input: FC<Props> = ({id, register, errors, setValidationErrors, type, vali
         classNames: {
             inputWrapper: "h-fit py-6 bg-[#9E23FF1A]/10 border-1 border-[#3E0070] hover:!bg-[#9E23FF1A]/20 focus-within:!bg-[#9E23FF1A]/20",
             input: "text-[#EAE0FF]",
+            label: "text-lg phone:text-medium text-[#EAE0FF]",
+            ...classNames
         },
         isInvalid: errMsg != undefined,
         endContent: type === "password" &&
@@ -73,7 +75,7 @@ const Input: FC<Props> = ({id, register, errors, setValidationErrors, type, vali
         errorMessage: errMsg,
         value,
         onValueChange: props.onValueChange ?? setValue
-    }), [errMsg, id, passwordVisible, props, type, value])
+    }), [classNames, errMsg, id, passwordVisible, props, type, value])
 
     return register && id ? (
         <NextInput

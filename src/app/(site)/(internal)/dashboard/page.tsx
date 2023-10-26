@@ -1,14 +1,14 @@
 "use client"
 
 import {FC, Fragment} from "react";
-import {Spacer} from "@nextui-org/react";
+import CurrentDreamsContainer from "@/app/(site)/(internal)/dashboard/components/dreams/CurrentDreamsContainer";
 
 const DashboardHomePage: FC = () => {
     return (
         <Fragment>
-            <h1 className="font-bold text-5xl phone:text-4xl">Your Dreams</h1>
-            <Spacer y={12} />
-            <div className="flex phone:flex-col phone:items-center justify-evenly">
+            <h1 className="font-bold text-7xl phone:text-5xl mb-24 phone:mb-10">Your Dreams</h1>
+            <div className="flex laptop:flex-col laptop:items-center gap-24 laptop-min:gap-12 w-full">
+                <CurrentDreamsContainer />
             </div>
         </Fragment>
     )
