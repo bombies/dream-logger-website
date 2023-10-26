@@ -17,7 +17,7 @@ const Footer: FC = () => {
                     alt="Logo"
                     imgWidth={250} imgHeight={100}
                 />
-                <p className="text-subtext text-sm phone:text-center">&copy; DreamLogger 2023 - All rights reserved.</p>
+                <p className="text-subtext text-sm phone:text-center">&copy; 2023 Ajani Green - All rights reserved.</p>
             </div>
             <div className="phone:mt-12">
                 <div className='phone:text-center'>
