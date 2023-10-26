@@ -24,7 +24,8 @@ const DreamCard: FC<Props> = ({dream}) => {
                 isPressable
                 onPress={() => setModalOpen(true)}
                 classNames={{
-                    header: "bg-[#0C0015] pt-6 px-8 pb-0",
+                    base: "hover:scale-105",
+                    header: "bg-[#0C0015] pt-6 px-8 pb-0 z-1",
                     body: "bg-[#0C0015] px-8 pt-4",
                     footer: "bg-[#0C0015] px-8",
                 }}>

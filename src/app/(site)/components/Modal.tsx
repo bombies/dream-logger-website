@@ -14,7 +14,7 @@ const Modal: FC<Props> = ({header, footer, title, subtitle, children, ...props})
             placement="center"
             scrollBehavior="outside"
             classNames={{
-                base: "py-6 px-3 bg-secondary",
+                base: "py-6 px-3 phone:px-0 bg-secondary",
                 closeButton: "hover:bg-primary/20"
             }}
             {...props}

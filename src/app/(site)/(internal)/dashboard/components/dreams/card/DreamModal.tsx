@@ -22,7 +22,7 @@ const DreamModal: FC<Props> = ({dream, isOpen, onClose}) => {
     const {data: fullDream, error: fullDreamError} = FetchFullDream(dream, isOpen ?? false)
 
     const tagChips = useMemo(() => fullDream?.tags?.map(tag => (
-        <Chip key={tag.id} color="primary" variant="flat">
+        <Chip key={tag.id} color="primary" variant="flat" size="sm">
             {tag.tag}
         </Chip>
     )), [fullDream?.tags])
@@ -40,13 +40,13 @@ const DreamModal: FC<Props> = ({dream, isOpen, onClose}) => {
                     {(tagChips || fullDreamError) && (
                         <div className="flex flex-wrap gap-2 mb-3">
                             {tagChips ?? (fullDreamError &&
-                                <Chip color="danger" variant="flat">
+                                <Chip color="danger" variant="flat" size="sm">
                                     Error Loading Tags
                                 </Chip>
                             )}
                         </div>
                     )}
-                    <h1 className="text-4xl">{dream.title}</h1>
+                    <h1 className="text-4xl phone:text-2xl">{dream.title}</h1>
                     <h3 className="text-subtext text-sm font-semibold italic">{dream.comments}</h3>
                     <h3 className="text-subtext text-xs italic">~{calcEstimatedReadingTime(dream.description)} min. read</h3>
                 </Fragment>
@@ -55,7 +55,7 @@ const DreamModal: FC<Props> = ({dream, isOpen, onClose}) => {
             onClose={onClose}
         >
             <article
-                className="text-[#EAE0FF] whitespace-pre-wrap rounded-3xl border border-primary/40 bg-[#0C0015]/50 p-6">{dream.description}</article>
+                className="text-[#EAE0FF] phone:text-sm whitespace-pre-wrap rounded-3xl border border-primary/40 bg-[#0C0015]/50 p-6">{dream.description}</article>
         </Modal>
     )
 }

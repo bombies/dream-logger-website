@@ -19,6 +19,7 @@ const LogDreamCard: FC = () => {
                 onPress={() => setModalOpen(true)}
                 isPressable
                 classNames={{
+                    base: "hover:scale-105",
                     body: "bg-primary py-8"
                 }}
             >

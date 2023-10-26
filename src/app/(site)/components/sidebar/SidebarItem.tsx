@@ -20,12 +20,14 @@ const SidebarItem: FC<SidebarItemProps> = ({title, startContent, href, onClick})
         <motion.div
             initial={{
                 backgroundColor: "#9E23FF00",
-                color: "#EAE0FF"
+                color: "#EAE0FF",
+                transform: "scale(1)"
             }}
             whileHover={{
                 backgroundColor: "#9E23FF10",
                 color: "#c77dff",
-                filter: "drop-shadow(0px 2px 10px rgba(82, 0, 255, 0.65))"
+                filter: "drop-shadow(0px 2px 10px rgba(82, 0, 255, 0.65))",
+                transform: "scale(1.15)"
             }}
             className="flex gap-4 cursor-pointer rounded-lg font-semibold p-3"
             onClick={onClick}

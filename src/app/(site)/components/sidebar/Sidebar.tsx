@@ -24,8 +24,8 @@ const Sidebar: FC<Props> = ({children}) => {
     return (
         <motion.aside
             className={clsx(
-                "bg-secondary min-h-screen data-[isopen=true]:w-64 w-24 pt-12 px-2",
-                "tablet:z-[10] tablet:!bg-opacity-0 tablet:data-[isopen=true]:!bg-opacity-90 tablet:data-[isopen=true]:backdrop-blur-md tablet:w-16 data-[isopen=true]:tablet:w-72 tablet:absolute",
+                "bg-secondary min-h-screen data-[isopen=true]:w-96 w-24 pt-12 px-2",
+                "z-[10] tablet:!bg-opacity-0 tablet:data-[isopen=true]:!bg-opacity-90 tablet:data-[isopen=true]:backdrop-blur-md tablet:w-16 data-[isopen=true]:tablet:w-72 tablet:fixed",
                 "phone:w-12 data-[isopen=true]:phone:w-64",
                 "data-[isopen=true]:p-6 flex flex-col data-[isopen=false]:items-center"
             )}
