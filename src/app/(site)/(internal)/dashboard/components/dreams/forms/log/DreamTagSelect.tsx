@@ -7,35 +7,32 @@ import {Chip} from "@nextui-org/chip";
 import {SelectItem} from "@nextui-org/react";
 import {UseFormRegister} from "react-hook-form";
 import {DreamTagsState} from "@/app/(site)/(internal)/dashboard/components/dreams/hooks/useDreamTags";
-import AddTagModal from "@/app/(site)/(internal)/dashboard/components/dreams/forms/tags/AddTagModal";
 import PlusIcon from "@/app/(site)/components/icons/PlusIcon";
 
 type Props = {
     register?: UseFormRegister<any>,
-    tags: DreamTagsState
+    tags: DreamTagsState,
+    isDisabled?: boolean,
+    onModalOpen?: () => void
 }
 
-const DreamTagSelect: FC<Props> = ({tags, register}) => {
-    const [modalOpen, setModalOpen] = useState(false)
-
+const DreamTagSelect: FC<Props> = ({onModalOpen, isDisabled, tags, register}) => {
     return (
         <Fragment>
-            <AddTagModal
-                isOpen={modalOpen}
-                onClose={() => setModalOpen(false)}
-            />
             <div className="flex gap-4 mb-2">
                 <label className="text-lg phone:text-medium text-[#EAE0FF] self-center">Dream Tags</label>
                 <Button
                     color="cta"
                     size="sm"
-                    onPress={() => setModalOpen(true)}
+                    onPress={onModalOpen}
                     startContent={<PlusIcon width={20} />}
+                    isDisabled={isDisabled}
                 >
                     Add New Tag
                 </Button>
             </div>
             <Select
+                isDisabled={isDisabled}
                 aria-label="Dream Tags"
                 register={register}
                 id="tags"

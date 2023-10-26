@@ -69,7 +69,11 @@ const AddTagForm: FC<Props> = ({onSuccess}) => {
     }
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form
+            name="add_dream_tag_form"
+            id="add_dream_tag_form"
+            onSubmit={handleSubmit(onSubmit)}
+        >
             <div className="space-y-6">
                 <Input
                     isRequired
@@ -85,6 +89,7 @@ const AddTagForm: FC<Props> = ({onSuccess}) => {
                     isLoading={isCreating}
                     isDisabled={isCreating}
                     type="submit"
+                    form="add_dream_tag_form"
                     color="primary"
                     variant="shadow"
                 >Create Tag</Button>

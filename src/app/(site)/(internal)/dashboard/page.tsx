@@ -7,7 +7,7 @@ const DashboardHomePage: FC = () => {
     return (
         <Fragment>
             <h1 className="font-bold text-7xl phone:text-5xl mb-24 phone:mb-10">Your Dreams</h1>
-            <div className="flex laptop:flex-col laptop:items-center gap-24 laptop-min:gap-12 w-full">
+            <div className="flex flex-wrap laptop:flex-col laptop:items-center gap-24 laptop-min:gap-12">
                 <CurrentDreamsContainer />
             </div>
         </Fragment>

@@ -69,7 +69,11 @@ const AddCharacterForm: FC<Props> = ({onSuccess}) => {
     }
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form
+            onSubmit={handleSubmit(onSubmit)}
+            name="add_dream_character_form"
+            id="add_dream_character_form"
+        >
             <div className="space-y-6">
                 <Input
                     isRequired
@@ -85,6 +89,7 @@ const AddCharacterForm: FC<Props> = ({onSuccess}) => {
                     isLoading={isCreating}
                     isDisabled={isCreating}
                     type="submit"
+                    form="add_dream_character_form"
                     color="primary"
                     variant="shadow"
                 >Create Character</Button>

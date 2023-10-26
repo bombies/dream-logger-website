@@ -10,9 +10,9 @@ export const metadata: Metadata = {
 
 const DashboardLayout: FC<PropsWithChildren> = ({children}) => {
     return (
-        <main className="relative flex w-full min-h-screen">
+        <main className="relative flex min-h-screen">
             <DashboardSidebar />
-            <div className="flex-grow pt-32 phone:pt-32 flex flex-col phone:items-center phone-min:ml-16 tablet-min:ml-32">
+            <div className="flex-grow py-32 w-screen overflow-hidden phone:pt-32 flex flex-col phone:items-center phone-min:ml-16 tablet-min:ml-32">
                 <DreamsProvider>
                     {children}
                 </DreamsProvider>

@@ -16,7 +16,10 @@ const LogDreamModal: FC<Props> = ({isOpen, onClose}) => {
             subtitle="Had a new dream huh?"
             size="3xl"
         >
-            <LogDreamForm onForget={onClose} />
+            <LogDreamForm
+                onForget={onClose}
+                onCreate={onClose}
+            />
         </Modal>
     )
 }
