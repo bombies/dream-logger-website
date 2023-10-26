@@ -17,7 +17,8 @@ const Providers: FC<Props> = ({children, session}) => {
     return (
         <SWRConfig value={{
             refreshInterval: 60 * 1000,
-            revalidateOnFocus: false
+            revalidateOnFocus: false,
+            provider: () => new Map()
         }}>
             <NextUIProvider>
                 <ThemeProvider attribute="class" defaultTheme="dark">
@@ -25,7 +26,7 @@ const Providers: FC<Props> = ({children, session}) => {
                         <AppProgressBar
                             height="4px"
                             color="#9E23FF"
-                            options={{ showSpinner: true }}
+                            options={{showSpinner: true}}
                             shallowRouting
                         />
                         <Toaster

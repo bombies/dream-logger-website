@@ -2,6 +2,17 @@
 import {KeyedMutator} from "swr";
 import {Context, createContext, useContext} from "react";
 
+/**
+ * `T - State Data Type`, `O - Optimistic Data Type`
+ * The reason it's setup this way is due to the state data type and the optimistic data
+ * type not being exactly the same.
+ * For example, the state may be `T` while optimistic data may be `T | undefined`.
+ *
+ * Example
+ * ```
+ * type MyContextState = DataContextState<MyState[], MyState>
+ * ```
+ */
 export type DataContextState<T, O> = {
     loading: boolean,
     data: T,
@@ -9,6 +20,7 @@ export type DataContextState<T, O> = {
     optimisticData: {
         addOptimisticData: OptimisticWorker<O>,
         removeOptimisticData: OptimisticWorker<O>,
+        editOptimisticData?: OptimisticWorker<O>
     }
 }
 
