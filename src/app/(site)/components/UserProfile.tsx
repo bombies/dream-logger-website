@@ -1,6 +1,6 @@
 import {FC} from "react";
 import {Avatar, Dropdown, DropdownItem, DropdownMenu, DropdownSection, DropdownTrigger} from "@nextui-org/react";
-import {signOut, useSession} from "next-auth/react";
+import {signOut} from "next-auth/react";
 import DashboardIcon from "@/app/(site)/components/icons/DashboardIcon";
 import SettingsIcon from "@/app/(site)/components/icons/SettingsIcon";
 import useMemberInfo from "@/app/(site)/hooks/useMemberInfo";

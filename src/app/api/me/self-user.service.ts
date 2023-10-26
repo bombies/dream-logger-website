@@ -6,7 +6,7 @@ import prisma from "@/libs/prisma";
 
 class SelfUserService {
 
-    public async getInfo(session: Session): Promise<NextResponse<Member | undefined>> {
+    public async getInfo(session: Session): Promise<NextResponse<Member | null>> {
         if (!session.user)
             return buildResponse({
                 status: 403,

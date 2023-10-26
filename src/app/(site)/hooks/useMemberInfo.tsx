@@ -6,7 +6,7 @@ import {Member} from "@prisma/client";
 
 const useMemberInfo = () => {
     const {status: sessionStatus} = useSession()
-    const {data} = useSWR(sessionStatus === 'authenticated' && '/api/me', fetcher<Member>)
+    const {data} = useSWR(sessionStatus === 'authenticated' && '/api/me', fetcher<Member | null>)
     return data
 }
 
