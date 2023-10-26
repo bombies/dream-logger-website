@@ -32,7 +32,6 @@ const UserProfile: FC<Props> = ({placement}) => {
                     as="button"
                     className="transition-transform"
                     src={member?.image ?? undefined}
-                    name={member?.firstName.toLowerCase()}
                     classNames={{
                         name: "capitalize font-semibold"
                     }}
