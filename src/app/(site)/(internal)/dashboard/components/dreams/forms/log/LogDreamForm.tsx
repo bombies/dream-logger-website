@@ -10,6 +10,8 @@ import {useDreamsData} from "@/app/(site)/(internal)/dashboard/components/dreams
 import DreamCharacterSelect from "@/app/(site)/(internal)/dashboard/components/dreams/forms/log/DreamCharacterSelect";
 import DreamTagSelect from "@/app/(site)/(internal)/dashboard/components/dreams/forms/log/DreamTagSelect";
 import {Divider} from "@nextui-org/divider";
+import PencilIcon from "@/app/(site)/components/icons/PencilIcon";
+import CloseIcon from "@/app/(site)/components/icons/CloseIcon";
 
 type FormProps = Omit<PostDreamDto, 'tags' | 'characters'> & {
     tags?: string[] | string
@@ -75,10 +77,12 @@ const LogDreamForm: FC<Props> = ({onForget}) => {
                     <Button
                         type="submit"
                         color="cta"
+                        startContent={<PencilIcon width={20} />}
                     >Log Dream</Button>
                     <Button
                         variant="bordered"
                         color="danger"
+                        startContent={<CloseIcon width={20} />}
                         onPress={() => {
                             if (onForget)
                                 onForget()
