@@ -1,17 +1,33 @@
 "use client"
 
-import {FC, Fragment, useState} from "react";
+import {FC, Fragment, useCallback, useState} from "react";
 import {Dream} from "@prisma/client";
 import {CardBody, CardHeader} from "@nextui-org/card";
 import Card from "@/app/(site)/components/Card";
 import DreamModal from "@/app/(site)/(internal)/dashboard/components/dreams/card/DreamModal";
+import {OptimisticWorker} from "@/utils/client/client-data-utils";
+import toast from "react-hot-toast";
+import useSWRMutation from "swr/mutation";
+import {deleteMutator, handleAxiosError} from "@/utils/client/client-utils";
 
 type Props = {
-    dream: Dream
+    dream: Dream,
+    optimisticRemove?: OptimisticWorker<Dream>,
 }
 
-const DreamCard: FC<Props> = ({dream}) => {
+const DeleteDream = (dreamId: string) => {
+    return useSWRMutation(`/api/me/dreams/${dreamId}`, deleteMutator<Dream>())
+}
+
+const DreamCard: FC<Props> = ({dream, optimisticRemove}) => {
     const [modalOpen, setModalOpen] = useState(false)
+    const {trigger: deleteDream} = DeleteDream(dream.id)
+
+    const doDelete = useCallback(() => (
+        deleteDream()
+            .then(res => res.data)
+            .catch(handleAxiosError)
+    ), [deleteDream])
 
     return (
         <Fragment>
@@ -19,6 +35,17 @@ const DreamCard: FC<Props> = ({dream}) => {
                 dream={dream}
                 isOpen={modalOpen}
                 onClose={() => setModalOpen(false)}
+                onDelete={() => {
+                    if (optimisticRemove)
+                        optimisticRemove(
+                            doDelete, // TODO: Replace with API call
+                            dream
+                        )
+                            .then(() => {
+                                toast.success("Successfully removed that dream!")
+                            })
+                    setModalOpen(false)
+                }}
             />
             <Card
                 isPressable

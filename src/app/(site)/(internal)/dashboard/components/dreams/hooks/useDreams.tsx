@@ -2,14 +2,14 @@ import useSWR, {KeyedMutator} from "swr";
 import {fetcher} from "@/utils/client/client-utils";
 import {Dream} from "@prisma/client";
 import {useCallback} from "react";
-import {DataContextState} from "@/utils/client/client-data-utils";
+import {DataContextState, OptimisticWorker} from "@/utils/client/client-data-utils";
 
 export type DreamsState = DataContextState<Dream[], Dream>
 
 const useDreams = (): DreamsState => {
     const {data: dreams, isLoading: dreamsLoading, mutate: mutateDreams} = useSWR('/api/me/dreams', fetcher<Dream[]>)
 
-    const addOptimisticDream = useCallback(async (work: () => Promise<Dream | undefined | null>, optimisticDream: Dream) => {
+    const addOptimisticDream = useCallback<OptimisticWorker<Dream>>(async (work, optimisticDream) => {
         if (!dreams)
             return
         const mutate = mutateDreams as KeyedMutator<Dream[]>
@@ -21,11 +21,12 @@ const useDreams = (): DreamsState => {
         }
 
         await mutate(doWork, {
-            optimisticData: [...dreams, optimisticDream]
+            optimisticData: [...dreams, optimisticDream],
+            rollbackOnError: true
         })
     }, [dreams, mutateDreams])
 
-    const removeOptimisticDream = useCallback(async (work: () => Promise<Dream | undefined | null>, removedOptimisticDream: Dream) => {
+    const removeOptimisticDream = useCallback<OptimisticWorker<Dream>>(async (work, removedOptimisticDream) => {
         if (!dreams)
             return
         const mutate = mutateDreams as KeyedMutator<Dream[]>
@@ -37,7 +38,8 @@ const useDreams = (): DreamsState => {
         }
 
         await mutate(doWork, {
-            optimisticData: dreams.filter(dream => dream.id !== removedOptimisticDream.id)
+            optimisticData: dreams.filter(dream => dream.id !== removedOptimisticDream.id),
+            rollbackOnError: true,
         })
     }, [dreams, mutateDreams])
 

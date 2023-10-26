@@ -99,35 +99,30 @@ const NavBar: FC = () => {
                     </Link>
                 </NavbarMenuItem>
                 {
-                    authStatus !== 'authenticated' ?
-                        (
-                            <Fragment>
-                                <NavbarMenuItem>
-                                    <Button
-                                        color="secondary"
-                                        fullWidth
-                                        onPress={() => router.push("/signin")}
-                                    >
-                                        Log In
-                                    </Button>
-                                </NavbarMenuItem>
-                                <NavbarMenuItem>
-                                    <Button
-                                        color="cta"
-                                        variant="shadow"
-                                        fullWidth
-                                        onPress={() => router.push("/signin?tab=register")}
-                                    >
-                                        Sign Up
-                                    </Button>
-                                </NavbarMenuItem>
-                            </Fragment>
-                        ) :
-                        (
-                            <Fragment>
-                                {/*TODO: Set up user profile*/}
-                            </Fragment>
-                        )
+                    authStatus !== 'authenticated' &&
+                    (
+                        <Fragment>
+                            <NavbarMenuItem>
+                                <Button
+                                    color="secondary"
+                                    fullWidth
+                                    onPress={() => router.push("/signin")}
+                                >
+                                    Log In
+                                </Button>
+                            </NavbarMenuItem>
+                            <NavbarMenuItem>
+                                <Button
+                                    color="cta"
+                                    variant="shadow"
+                                    fullWidth
+                                    onPress={() => router.push("/signin?tab=register")}
+                                >
+                                    Sign Up
+                                </Button>
+                            </NavbarMenuItem>
+                        </Fragment>
+                    )
                 }
             </NavbarMenu>
         </Navbar>

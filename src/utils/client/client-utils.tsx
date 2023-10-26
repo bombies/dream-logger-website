@@ -11,6 +11,18 @@ export async function fetcher<T>(url: string): Promise<T | undefined> {
     }
 }
 
+
+export type MutatorArgs<T> = {
+    arg: {
+        body: T
+    }
+}
+
+export const postMutator = <B, R>() => (url: string, {arg}: MutatorArgs<B>) => axios.post<R>(url, arg.body)
+
+export const deleteMutator = <B,>() => (url: string) => axios.delete<B>(url)
+
+
 export function handleAxiosError(error: any): undefined {
     if (!(error instanceof AxiosError)) {
         console.error(error)

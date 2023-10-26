@@ -4,11 +4,14 @@ import prisma from "@/libs/prisma";
 import {NextResponse} from "next/server";
 import {Session} from "next-auth";
 import {
-    DreamWithRelations,
+    DreamWithRelations, PatchDreamCharacterDto, PatchDreamCharacterSchema,
+    PatchDreamDto, PatchDreamSchema, PatchDreamTagDto, PatchDreamTagSchema,
     PostDreamCharacterDto,
     PostDreamCharacterSchema,
     PostDreamDto,
-    PostDreamSchema, PostDreamTagDto, PostDreamTagSchema
+    PostDreamSchema,
+    PostDreamTagDto,
+    PostDreamTagSchema
 } from "@/app/api/me/dreams/dreams.dto";
 
 class DreamsService {
@@ -30,18 +33,7 @@ class DreamsService {
         withTags?: boolean,
         withCharacters?: boolean
     }): Promise<NextResponse<DreamWithRelations | null>> {
-        const member = session.user
-        const dream = await prisma.dream.findFirst({
-            where: {
-                id: dreamId,
-                userId: member.id
-            },
-            include: {
-                tags: options?.withTags,
-                characters: options?.withCharacters
-            }
-        })
-
+        const dream = await this.fetchDreamRaw(session, dreamId, options)
         if (!dream)
             return buildResponse({
                 status: 404,
@@ -51,6 +43,23 @@ class DreamsService {
         return buildResponse({
             data: dream
         })
+    }
+
+    private async fetchDreamRaw(session: Session, dreamId: string, options?: {
+        withTags?: boolean,
+        withCharacters?: boolean
+    }): Promise<Dream | null> {
+        const member = session.user
+        return prisma.dream.findFirst({
+            where: {
+                id: dreamId,
+                userId: member.id
+            },
+            include: {
+                tags: options?.withTags,
+                characters: options?.withCharacters
+            }
+        });
     }
 
     public async createDream(session: Session, dto: PostDreamDto): Promise<NextResponse<Dream | null>> {
@@ -67,6 +76,67 @@ class DreamsService {
                 tags: {connect: dto.tags?.map(id => ({id})) ?? []},
                 characters: {connect: dto.characters?.map(id => ({id})) ?? []}
             }
+        })
+
+        return buildResponse({
+            data: dream
+        })
+    }
+
+    public async editDream(session: Session, dreamId: string, dto: PatchDreamDto): Promise<NextResponse<Dream | null>> {
+        const dtoValidated = PatchDreamSchema.safeParse(dto)
+        if (!dtoValidated.success)
+            return buildFailedValidationResponse(dtoValidated.error)
+
+        const {tags, characters, newTags, newCharacters, ...restDto} = dto
+
+        const genConnections = (newArr?: string[], originalArr?: string[]) => {
+            const toConnect = newArr ? newArr
+                    .filter(newStr => !originalArr?.some(oldStr => oldStr === newStr))
+                    .map(id => ({id}))
+                : []
+
+            const toDisconnect = originalArr ? originalArr
+                    .filter(originalStr => !newArr?.some(newStr => newStr === originalStr))
+                    .map(id => ({id}))
+                : []
+
+            return [toConnect, toDisconnect]
+        }
+
+        const [tagsToConnect, tagsToDisconnect] = genConnections(newTags, tags)
+        const [charactersToConnect, charactersToDisconnect] = genConnections(newCharacters, characters)
+
+        const updatedDream = await prisma.dream.update({
+            where: {
+                userId: session.user.id,
+                id: dreamId
+            },
+            data: {
+                ...restDto,
+                tags: {
+                    connect: tagsToConnect,
+                    disconnect: tagsToDisconnect
+                },
+                characters: {
+                    connect: charactersToConnect,
+                    disconnect: charactersToDisconnect,
+                }
+            }
+        })
+
+        return buildResponse({
+            data: updatedDream
+        })
+    }
+
+    public async deleteDream(session: Session, dreamId: string): Promise<NextResponse<Dream | null>> {
+        const member = session.user
+        const dream = await prisma.dream.delete({
+            where: {
+                id: dreamId,
+                userId: member.id
+            },
         })
 
         return buildResponse({
@@ -103,6 +173,37 @@ class DreamsService {
         })
     }
 
+    public async editCharacter(session: Session, characterId: string, dto: PatchDreamCharacterDto): Promise<NextResponse<DreamCharacter | null>> {
+        const dtoValidated = PatchDreamCharacterSchema.safeParse(dto)
+        if (!dtoValidated.success)
+            return buildFailedValidationResponse(dtoValidated.error)
+
+        const updatedCharacter = await prisma.dreamCharacter.update({
+            where: {
+                id: characterId,
+                userId: session.user.id
+            },
+            data: dto
+        })
+
+        return buildResponse({
+            data: updatedCharacter
+        })
+    }
+
+    public async deleteCharacter(session: Session, characterId: string): Promise<NextResponse<DreamCharacter | null>> {
+        const deletedCharacter = await prisma.dreamCharacter.delete({
+            where: {
+                userId: session.user.id,
+                id: characterId
+            }
+        })
+
+        return buildResponse({
+            data: deletedCharacter
+        })
+    }
+
     public async fetchTags(session: Session) {
         const tags = await prisma.dreamTag.findMany({
             where: {
@@ -129,6 +230,37 @@ class DreamsService {
 
         return buildResponse({
             data: tag
+        })
+    }
+
+    public async editTag(session: Session, tagId: string, dto: PatchDreamTagDto): Promise<NextResponse<DreamTag | null>> {
+        const dtoValidated = PatchDreamTagSchema.safeParse(dto)
+        if (!dtoValidated.success)
+            return buildFailedValidationResponse(dtoValidated.error)
+
+        const updatedCharacter = await prisma.dreamTag.update({
+            where: {
+                id: tagId,
+                userId: session.user.id
+            },
+            data: dto
+        })
+
+        return buildResponse({
+            data: updatedCharacter
+        })
+    }
+
+    public async deleteTag(session: Session, tagId: string): Promise<NextResponse<DreamTag | null>> {
+        const deletedTag = await prisma.dreamTag.delete({
+            where: {
+                userId: session.user.id,
+                id: tagId
+            }
+        })
+
+        return buildResponse({
+            data: deletedTag
         })
     }
 }

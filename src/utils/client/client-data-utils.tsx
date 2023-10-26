@@ -7,10 +7,12 @@ export type DataContextState<T, O> = {
     data: T,
     mutateData?: KeyedMutator<T>,
     optimisticData: {
-        addOptimisticData: (work: () => Promise<O | undefined | null>, optimisticData: O) => Promise<void>,
-        removeOptimisticData: (work: () => Promise<O | undefined | null>, removedData: O) => Promise<void>,
+        addOptimisticData: OptimisticWorker<O>,
+        removeOptimisticData: OptimisticWorker<O>,
     }
 }
+
+export type OptimisticWorker<T> = (work: () => Promise<T | undefined | null>, data: T) => Promise<void>
 
 export interface DataContextProps {
     [K: string]: DataContextState<any, any>

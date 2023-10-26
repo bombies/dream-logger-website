@@ -9,6 +9,11 @@ export type PostDreamDto = {
     characters?: string[]
 }
 
+export type PatchDreamDto = Partial<PostDreamDto> & {
+    newTags?: string[],
+    newCharacters?: string[]
+}
+
 export const DREAM_TITLE_MIN = 1
 export const DREAM_TITLE_MAX = 500
 export const DREAM_DESC_MIN = 1
@@ -29,12 +34,18 @@ export const PostDreamSchema = z.object({
         .optional(),
 
     tags: z.array(z.string()).optional(),
-    characters: z.array(z.string()).optional()
+    characters: z.array(z.string()).optional(),
+    newTags: z.array(z.string()).optional(),
+    newCharacters: z.array(z.string()).optional(),
 }).strict()
+
+export const PatchDreamSchema = PostDreamSchema.optional()
 
 export type PostDreamTagDto = {
     tag: string,
 }
+
+export type PatchDreamTagDto = Partial<PostDreamTagDto>
 
 export const DREAM_TAG_MIN = 1
 export const DREAM_TAG_MAX = 64
@@ -45,9 +56,13 @@ export const PostDreamTagSchema = z.object({
         .max(DREAM_TAG_MAX, `The tag can't be more than ${DREAM_TAG_MAX} characters!`)
 }).strict()
 
+export const PatchDreamTagSchema = PostDreamTagSchema.optional()
+
 export type PostDreamCharacterDto = {
     name: string,
 }
+
+export type PatchDreamCharacterDto = Partial<PostDreamCharacterDto>
 
 export const DREAM_CHARACTER_MIN = 1
 export const DREAM_CHARACTER_MAX = 256
@@ -57,6 +72,8 @@ export const PostDreamCharacterSchema = z.object({
         .min(DREAM_CHARACTER_MIN, `The name can't be less than ${DREAM_CHARACTER_MIN} character!`)
         .max(DREAM_CHARACTER_MAX, `The name can't be more than ${DREAM_CHARACTER_MAX} characters!`)
 }).strict()
+
+export const PatchDreamCharacterSchema = PostDreamCharacterSchema.partial()
 
 export type DreamWithRelations = Dream & {
     tags?: DreamTag[]

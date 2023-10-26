@@ -16,8 +16,12 @@ const CurrentDreamsContainer: FC = () => {
         })
         .sort((a, b) => new Date(b.createdAt.toString()).getTime() - new Date(a.createdAt.toString()).getTime())
         .map(dream => (
-            <DreamCard key={dream.id} dream={dream}/>
-        )), [dreams.data, endOfToday, startOfToday])
+            <DreamCard 
+                key={dream.id} 
+                dream={dream}
+                optimisticRemove={dreams.optimisticData.removeOptimisticData}
+            />
+        )), [dreams.data, dreams.optimisticData.removeOptimisticData, endOfToday, startOfToday])
 
     return (
         <div className="flex flex-col">

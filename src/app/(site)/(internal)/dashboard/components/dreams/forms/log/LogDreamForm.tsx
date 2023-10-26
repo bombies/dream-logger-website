@@ -15,7 +15,7 @@ import CloseIcon from "@/app/(site)/components/icons/CloseIcon";
 import axios from "axios";
 import useSWRMutation from "swr/mutation";
 import {Dream} from "@prisma/client";
-import {handleAxiosError} from "@/utils/client/client-utils";
+import {handleAxiosError, MutatorArgs, postMutator} from "@/utils/client/client-utils";
 import {useSession} from "next-auth/react";
 import toast from "react-hot-toast";
 import AddTagModal from "@/app/(site)/(internal)/dashboard/components/dreams/forms/tags/AddTagModal";
@@ -31,15 +31,8 @@ type Props = {
     onCreate?: (dream: Dream) => void;
 }
 
-type CreateDreamArgs = {
-    arg: {
-        dto: PostDreamDto
-    }
-}
-
 const CreateDream = () => {
-    const mutator = (url: string, {arg}: CreateDreamArgs) => axios.post<Dream | null>(url, arg.dto)
-    return useSWRMutation('/api/me/dreams', mutator)
+    return useSWRMutation('/api/me/dreams', postMutator<PostDreamDto, Dream | null>())
 }
 
 const LogDreamForm: FC<Props> = ({onCreate, onForget}) => {
@@ -51,7 +44,7 @@ const LogDreamForm: FC<Props> = ({onCreate, onForget}) => {
     const {trigger: createDream, isMutating: dreamIsCreating} = CreateDream()
 
     const handleDreamCreation = useCallback(async (dto: PostDreamDto) => (
-        createDream({dto})
+        createDream({body: dto})
             .then(res => {
                 const dream = res.data!!
                 if (onCreate)
