@@ -14,6 +14,7 @@ const CurrentDreamsContainer: FC = () => {
             const creationDate = new Date(dream.createdAt.toString());
             return creationDate.getTime() >= startOfToday.getTime() && creationDate.getTime() <= endOfToday.getTime()
         })
+        .sort((a, b) => new Date(b.createdAt.toString()).getTime() - new Date(a.createdAt.toString()).getTime())
         .map(dream => (
             <DreamCard key={dream.id} dream={dream}/>
         )), [dreams.data, endOfToday, startOfToday])
@@ -30,9 +31,9 @@ const CurrentDreamsContainer: FC = () => {
                 <LogDreamCard/>
                 {dreams.loading ? (
                     <Fragment>
-                        <DreamCardSkeleton />
-                        <DreamCardSkeleton />
-                        <DreamCardSkeleton />
+                        <DreamCardSkeleton/>
+                        <DreamCardSkeleton/>
+                        <DreamCardSkeleton/>
                     </Fragment>
                 ) : dreamCards}
             </div>

@@ -3,18 +3,22 @@
 import {useMemo} from "react";
 
 const useTodayTimeRange = () => {
-    const startOfToday = useMemo(() => {
-        const today = new Date()
+    return useTimeRange(new Date())
+}
+
+export const useTimeRange = (date: Date): [Date, Date] => {
+    const startOfDay = useMemo(() => {
+        const today = new Date(date)
         today.setHours(0, 0, 0, 0)
         return today;
-    }, [])
-    const endOfToday = useMemo(() => {
-        const today = new Date()
+    }, [date])
+    const endOfDay = useMemo(() => {
+        const today = new Date(date)
         today.setHours(23, 59, 59, 999)
         return today;
-    }, [])
+    }, [date])
 
-    return [startOfToday, endOfToday]
+    return [startOfDay, endOfDay]
 }
 
 export default useTodayTimeRange
