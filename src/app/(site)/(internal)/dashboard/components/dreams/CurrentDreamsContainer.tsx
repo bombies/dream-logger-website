@@ -39,7 +39,7 @@ const CurrentDreamsContainer: FC = () => {
                         <DreamCardSkeleton/>
                         <DreamCardSkeleton/>
                     </Fragment>
-                ) : dreamCards}
+                ) : dreamCards.length ? dreamCards : <h3 className="text-center font-light text-3xl tablet:text-xl text-subtext/30 py-6">You have no dreams today...</h3>}
             </div>
         </div>
 
