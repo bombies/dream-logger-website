@@ -9,6 +9,7 @@ import trackDreamImg from '@/../../public/images/trackDreamImg.svg';
 import categorizeDreamImg from '@/../../public/images/categorizeDreamImg.svg';
 import {FC, useRef, useState} from "react";
 import {AnimationPlaybackControls, motion, useAnimate} from "framer-motion";
+import Link from "next/link";
 
 const montserrat = Montserrat({
     subsets: ["latin"]
@@ -117,44 +118,46 @@ const StartDreamingButton: FC = () => {
     const [currentAnimation, setCurrentAnimation] = useState<AnimationPlaybackControls>()
 
     return (
-        <button
-            ref={scope}
-            onMouseEnter={() => {
-                const animation = animate([
-                    [scope.current, {
-                        scale: 1.2,
-                        rotate: 2.5,
-                        filter: "drop-shadow(0px 2px 10px rgba(82, 0, 255, 0.25))"
-                    }],
-                    [scope.current, {
-                        scale: 1.2,
-                        rotate: 2.5,
-                        filter: "drop-shadow(0px 2px 15px rgba(95, 0, 255, 0.25))"
-                    }],
-                    [scope.current, {
-                        scale: 1.2,
-                        rotate: 2.5,
-                        filter: "drop-shadow(0px 2px 15px rgba(150, 0, 255, 0.25))"
-                    }],
-                ], {
-                    duration: 1,
-                })
+        <Link href="/dashboard">
+            <button
+                ref={scope}
+                onMouseEnter={() => {
+                    const animation = animate([
+                        [scope.current, {
+                            scale: 1.2,
+                            rotate: 2.5,
+                            filter: "drop-shadow(0px 2px 10px rgba(82, 0, 255, 0.25))"
+                        }],
+                        [scope.current, {
+                            scale: 1.2,
+                            rotate: 2.5,
+                            filter: "drop-shadow(0px 2px 15px rgba(95, 0, 255, 0.25))"
+                        }],
+                        [scope.current, {
+                            scale: 1.2,
+                            rotate: 2.5,
+                            filter: "drop-shadow(0px 2px 15px rgba(150, 0, 255, 0.25))"
+                        }],
+                    ], {
+                        duration: 1,
+                    })
 
-                setCurrentAnimation(animation)
-            }}
-            onMouseLeave={() => {
-                const animation = animate([
-                    [scope.current, {scale: 1, rotate: 0, filter: "drop-shadow(0px 2px 15px rgba(82, 0, 255, 0))"}],
-                ])
+                    setCurrentAnimation(animation)
+                }}
+                onMouseLeave={() => {
+                    const animation = animate([
+                        [scope.current, {scale: 1, rotate: 0, filter: "drop-shadow(0px 2px 15px rgba(82, 0, 255, 0))"}],
+                    ])
 
-                setCurrentAnimation(animation)
-            }}
-            className='bg-gradient-to-r from-[#8F00FF] to-[#270079] font-semibold px-16 py-6 rounded-xl'
-            style={{
-                filter: "drop-shadow(0px 2px 10px rgba(82, 0, 255, 0))"
-            }}
-        >
-            Start Dreaming
-        </button>
+                    setCurrentAnimation(animation)
+                }}
+                className='bg-gradient-to-r from-[#8F00FF] to-[#270079] font-semibold px-16 py-6 rounded-xl'
+                style={{
+                    filter: "drop-shadow(0px 2px 10px rgba(82, 0, 255, 0))"
+                }}
+            >
+                Start Dreaming
+            </button>
+        </Link>
     )
 }
