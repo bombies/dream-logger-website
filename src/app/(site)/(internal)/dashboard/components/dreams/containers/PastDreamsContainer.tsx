@@ -44,7 +44,7 @@ const PastDreamsContainer: FC = () => {
 
         const groupedDreams = dayTimes.reduce<GroupedDreams>((previousValue, currentValue, i, arr) => {
             const endDate = new Date(arr[i])
-            endDate.setHours(11, 59, 59, 999)
+            endDate.setHours(23, 59, 59, 999)
 
             const dreams = filteredDreams.filter(dream => {
                 const dreamDate = new Date(dream.createdAt)
