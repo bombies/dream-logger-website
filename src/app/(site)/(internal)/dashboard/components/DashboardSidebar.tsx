@@ -12,7 +12,7 @@ import StatisticsIcon from "@/app/(site)/components/icons/StatisticsIcon";
 const DashboardSidebar: FC = () => {
     return (
         <SidebarProvider>
-            <Sidebar>
+            <Sidebar headerText="Your Dashboard">
                 <SidebarItem
                     startContent={<CloudIcon />}
                     title="Your Dreams"

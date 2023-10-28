@@ -12,7 +12,7 @@ const useDreams = (): DreamsState => {
     const addOptimisticDream = useCallback<OptimisticWorker<Dream>>(async (work, optimisticDream) => {
         if (!dreams)
             return
-        const mutate = mutateDreams as KeyedMutator<Dream[]>
+        const mutate = mutateDreams
         const doWork = async (): Promise<Dream[]> => {
             const dream = await work()
             if (!dream)
@@ -29,7 +29,7 @@ const useDreams = (): DreamsState => {
     const removeOptimisticDream = useCallback<OptimisticWorker<Dream>>(async (work, removedOptimisticDream) => {
         if (!dreams)
             return
-        const mutate = mutateDreams as KeyedMutator<Dream[]>
+        const mutate = mutateDreams
         const doWork = async (): Promise<Dream[]> => {
             const removedDream = await work()
             if (!removedDream)
@@ -47,7 +47,7 @@ const useDreams = (): DreamsState => {
         if (!dreams)
             return
 
-        const mutate = mutateDreams as KeyedMutator<Dream[]>
+        const mutate = mutateDreams
 
         const doUpdate = (editedDream: Dream): Dream[] => {
             const newArr = dreams.filter(dream => dream.id !== editedDream.id)

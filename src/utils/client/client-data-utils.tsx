@@ -18,8 +18,8 @@ export type DataContextState<T, O> = {
     data: T,
     mutateData?: KeyedMutator<T>,
     optimisticData: {
-        addOptimisticData: OptimisticWorker<O>,
-        removeOptimisticData: OptimisticWorker<O>,
+        addOptimisticData?: OptimisticWorker<O>,
+        removeOptimisticData?: OptimisticWorker<O>,
         editOptimisticData?: OptimisticWorker<O>
     }
 }

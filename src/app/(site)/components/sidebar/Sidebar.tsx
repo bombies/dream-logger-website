@@ -14,10 +14,11 @@ import {useSidebar} from "@/app/(site)/components/sidebar/SidebarProvider";
 import {SidebarItemProps} from "@/app/(site)/components/sidebar/SidebarItem";
 
 type Props = {
-    children?: ReactElement<SidebarItemProps> | ReactElement<SidebarItemProps>[]
+    children?: ReactElement<SidebarItemProps> | ReactElement<SidebarItemProps>[],
+    headerText?: string
 }
 
-const Sidebar: FC<Props> = ({children}) => {
+const Sidebar: FC<Props> = ({children, headerText}) => {
     const sidebarState = useSidebar()
     const [isOpen, setOpen] = sidebarState.openState
 
@@ -59,7 +60,7 @@ const Sidebar: FC<Props> = ({children}) => {
                                 imgWidth={100} imgHeight={50}
                             />
                         </Link>
-                        <h3 className="font-semibold text-lg">Your Dashboard</h3>
+                        <h3 className="font-semibold text-lg">{headerText}</h3>
                     </div>
                 </div>
                 <Divider className={clsx(!isOpen && "hidden", "my-6")}/>

@@ -21,6 +21,7 @@ const SidebarItem: FC<SidebarItemProps> = ({title, startContent, href, onClick})
             initial={{
                 backgroundColor: "#9E23FF00",
                 color: "#EAE0FF",
+                filter: "none",
                 transform: "scale(1)"
             }}
             whileHover={{

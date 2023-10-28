@@ -1,7 +1,7 @@
 "use client"
 
 import {Dispatch, FC, SetStateAction, useEffect, useMemo, useState} from "react";
-import {Input as NextInput, InputProps} from "@nextui-org/react";
+import {Input as NextInput, InputProps as NextInputProps} from "@nextui-org/react";
 import {FieldErrors, UseFormRegister} from "react-hook-form";
 import EyeCrossedIcon from "@/app/(site)/components/icons/EyeCrossedIcon";
 import EyeIcon from "@/app/(site)/components/icons/EyeIcon";
@@ -16,14 +16,14 @@ export type ValidationErrors = {
     [T: string]: string | undefined
 }
 
-type Props = {
+export type InputProps = {
     register?: UseFormRegister<any>,
     errors?: FieldErrors,
     setValidationErrors?: Dispatch<SetStateAction<ValidationErrors>>
     validate?: ValidationObject
-} & InputProps
+} & NextInputProps
 
-const Input: FC<Props> = ({classNames, id, register, errors, setValidationErrors, type, validate, ...props}) => {
+const Input: FC<InputProps> = ({classNames, id, register, errors, setValidationErrors, type, validate, ...props}) => {
     const [passwordVisible, setPasswordVisible] = useState(false)
     const [value, setValue] = useState(props.value ?? "");
     const [errMsg, setErrMsg] = useState<string>()

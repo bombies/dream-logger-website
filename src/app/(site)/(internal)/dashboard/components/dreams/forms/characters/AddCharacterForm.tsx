@@ -51,21 +51,21 @@ const AddCharacterForm: FC<Props> = ({onSuccess}) => {
         if (!session?.user)
             return;
 
-        await toast.promise(characters.optimisticData
-                .addOptimisticData(() => handleCreation(data), {
-                    id: '',
-                    ...data,
-                    createdAt: new Date(),
-                    updatedAt: new Date(),
-                    userId: session.user.id
-                }),
-            {
-                loading: "Adding new character...",
-                success: "Successfully added that character!",
-                error: "Could not add that character!"
-            }
-        )
-
+        if (characters.optimisticData.addOptimisticData)
+            await toast.promise(characters.optimisticData
+                    .addOptimisticData(() => handleCreation(data), {
+                        id: '',
+                        ...data,
+                        createdAt: new Date(),
+                        updatedAt: new Date(),
+                        userId: session.user.id
+                    }),
+                {
+                    loading: "Adding new character...",
+                    success: "Successfully added that character!",
+                    error: "Could not add that character!"
+                }
+            )
     }
 
     return (

@@ -1,15 +1,15 @@
 import {FC} from "react";
 import {Card as NextCard, CardBody, CardProps} from "@nextui-org/card";
+import clsx from "clsx";
 
 const Card: FC<CardProps> = ({classNames, ...props}) => {
     return (
         <NextCard
             classNames={{
-                base: "rounded-3xl",
-                header: "bg-secondary",
-                body: "bg-secondary",
-                footer: "bg-secondary",
-                ...classNames,
+                base: clsx("rounded-3xl", classNames?.base),
+                header: clsx("bg-secondary", classNames?.header),
+                body: clsx("bg-secondary", classNames?.body),
+                footer: clsx("bg-secondary", classNames?.footer),
             }}
             {...props}
         >

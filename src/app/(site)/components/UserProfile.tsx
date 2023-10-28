@@ -3,19 +3,19 @@ import {Avatar, DropdownItem, DropdownMenu, DropdownSection, DropdownTrigger} fr
 import {signOut} from "next-auth/react";
 import DashboardIcon from "@/app/(site)/components/icons/DashboardIcon";
 import SettingsIcon from "@/app/(site)/components/icons/SettingsIcon";
-import useMemberInfo from "@/app/(site)/hooks/useMemberInfo";
 import {OverlayPlacement} from "@nextui-org/aria-utils";
 import Link from "next/link";
 import Image from "@/app/(site)/components/Image";
 import HomeIcon from "@/app/(site)/components/icons/HomeIcon";
 import Dropdown from "@/app/(site)/components/Dropdown";
+import {useMemberData} from "@/app/(site)/components/providers/user-data/UserProvider";
 
 type Props = {
     placement?: OverlayPlacement
 }
 
 const UserProfile: FC<Props> = ({placement}) => {
-    const member = useMemberInfo()
+    const {memberData: {data: member}} = useMemberData()
 
     return (
         <Dropdown
@@ -79,7 +79,7 @@ const UserProfile: FC<Props> = ({placement}) => {
                     </DropdownItem>
                     <DropdownItem
                         as={Link}
-                        href="/settings"
+                        href="/settings/account"
                         key="settings"
                         startContent={<SettingsIcon width={16}/>}
                     >

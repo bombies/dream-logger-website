@@ -1,9 +1,8 @@
 "use client"
 
 import {FC, PropsWithChildren, useCallback, useEffect, useState} from "react";
-import {InputProps} from "@nextui-org/react";
 import {AnimatePresence, motion} from "framer-motion";
-import Input from "@/app/(site)/components/inputs/Input";
+import Input, {InputProps} from "@/app/(site)/components/inputs/Input";
 import {Button} from "@nextui-org/button";
 import {SubmitHandler, useForm} from "react-hook-form";
 import CheckIcon from "@/app/(site)/components/icons/CheckIcon";
@@ -17,7 +16,7 @@ type Props = {
     isEditable?: boolean,
     value?: string,
     onEdit?: (value?: string) => void,
-} & Pick<InputProps, "classNames" | "placeholder" | "label" | "size" | "isRequired"> & PropsWithChildren
+} & Pick<InputProps, "classNames" | "placeholder" | "label" | "size" | "isRequired" | "maxLength" | "minLength" | "validate"> & PropsWithChildren
 
 const EditableInput: FC<Props> = ({isEditable, value, children, onEdit, ...inputProps}) => {
     const {register, handleSubmit} = useForm<FormProps>()

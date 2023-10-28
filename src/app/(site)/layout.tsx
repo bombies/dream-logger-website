@@ -1,7 +1,7 @@
 import type {Metadata} from 'next'
 import {Inter} from 'next/font/google'
 import '../globals.scss'
-import Providers from "@/app/(site)/components/Providers";
+import Providers from "@/app/(site)/components/providers/Providers";
 import NavBar from "@/app/(site)/components/NavBar";
 import Footer from "@/app/(site)/components/Footer";
 import {getServerSession} from "next-auth";
