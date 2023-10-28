@@ -44,9 +44,6 @@ const DreamModal: FC<Props> = ({dream, allTags, allCharacters, isOpen, onClose, 
                     allCharacters={allCharacters}
                     allTags={allTags}
                     fetchDream={isOpen}
-                    onEdit={(dto) => {
-                        console.log(dto)
-                    }}
                 />
                 <Divider className="my-6"/>
                 <div className="flex justify-end">

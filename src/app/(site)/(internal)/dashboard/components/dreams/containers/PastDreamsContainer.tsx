@@ -113,8 +113,7 @@ const PastDreamsContainer: FC = () => {
                     </Card>
                 </Fragment>
                 :
-                <h3 className="text-center font-light text-3xl tablet:text-xl text-subtext/30 py-6">You have no
-                    dreams today...</h3>)
+                <h3 className="text-center font-light text-3xl tablet:text-xl text-subtext/30 py-6">You have no previous dreams for the past week...</h3>)
             }
         </DreamContainer>
     )
