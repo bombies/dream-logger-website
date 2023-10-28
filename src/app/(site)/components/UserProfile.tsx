@@ -1,5 +1,5 @@
 import {FC} from "react";
-import {Avatar, Dropdown, DropdownItem, DropdownMenu, DropdownSection, DropdownTrigger} from "@nextui-org/react";
+import {Avatar, DropdownItem, DropdownMenu, DropdownSection, DropdownTrigger} from "@nextui-org/react";
 import {signOut} from "next-auth/react";
 import DashboardIcon from "@/app/(site)/components/icons/DashboardIcon";
 import SettingsIcon from "@/app/(site)/components/icons/SettingsIcon";
@@ -8,6 +8,7 @@ import {OverlayPlacement} from "@nextui-org/aria-utils";
 import Link from "next/link";
 import Image from "@/app/(site)/components/Image";
 import HomeIcon from "@/app/(site)/components/icons/HomeIcon";
+import Dropdown from "@/app/(site)/components/Dropdown";
 
 type Props = {
     placement?: OverlayPlacement
@@ -19,12 +20,10 @@ const UserProfile: FC<Props> = ({placement}) => {
     return (
         <Dropdown
             showArrow
+            color="gradient"
             closeOnSelect
             placement={placement ?? "bottom"}
             offset={10}
-            classNames={{
-                base: "border font-semibold border-primary/30 px-4 py-6 bg-gradient-to-b from-[#8F00FF30] to-[#27007940] backdrop-blur-md"
-            }}
         >
             <DropdownTrigger>
                 <Avatar

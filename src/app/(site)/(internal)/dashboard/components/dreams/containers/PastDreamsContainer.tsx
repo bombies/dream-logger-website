@@ -9,10 +9,8 @@ import PastDreamItem from "@/app/(site)/(internal)/dashboard/components/dreams/c
 import DreamCardSkeleton from "@/app/(site)/(internal)/dashboard/components/dreams/card/DreamCardSkeleton";
 import {Divider} from "@nextui-org/divider";
 import Card from "@/app/(site)/components/Card";
-import Link from "next/link";
 import {CardBody} from "@nextui-org/card";
 import {useRouter} from "next/navigation";
-import PillowIcon from "@/app/(site)/components/icons/PillowIcon";
 import CloudIcon from "@/app/(site)/components/icons/CloudIcon";
 
 type GroupedDreams = {
@@ -28,7 +26,7 @@ const NUMBER_OF_DAYS = 7
 
 const PastDreamsContainer: FC = () => {
     const router = useRouter()
-    const {dreams} = useDreamsData()
+    const {dreams, tags, characters} = useDreamsData()
     const earliestDate = useStartOfDay({
         dayOffset: -NUMBER_OF_DAYS, // A week ago @ 12:00 AM
     })
@@ -76,8 +74,10 @@ const PastDreamsContainer: FC = () => {
         <PastDreamItem
             key={dream.timestamp}
             dream={dream}
+            allTags={tags.data}
+            allCharacters={characters.data}
         />
-    )), [pastDreams])
+    )), [characters.data, pastDreams, tags.data])
 
 
     return (

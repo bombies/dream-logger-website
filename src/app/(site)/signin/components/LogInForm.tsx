@@ -2,7 +2,7 @@
 
 import {FC, useCallback, useState} from "react";
 import {SubmitHandler, useForm} from "react-hook-form";
-import Input from "@/app/(site)/components/Input";
+import Input from "@/app/(site)/components/inputs/Input";
 import {Button} from "@nextui-org/button";
 import {signIn} from "next-auth/react";
 import toast from "react-hot-toast";

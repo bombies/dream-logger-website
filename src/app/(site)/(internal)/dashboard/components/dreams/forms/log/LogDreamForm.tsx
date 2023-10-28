@@ -3,8 +3,8 @@
 import {FC, Fragment, useCallback, useState} from "react";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {PostDreamDto} from "@/app/api/me/dreams/dreams.dto";
-import Input from "@/app/(site)/components/Input";
-import TextArea from "@/app/(site)/components/TextArea";
+import Input from "@/app/(site)/components/inputs/Input";
+import TextArea from "@/app/(site)/components/inputs/TextArea";
 import Button from "@/app/(site)/components/Button";
 import {useDreamsData} from "@/app/(site)/(internal)/dashboard/components/dreams/DreamsProvider";
 import DreamCharacterSelect from "@/app/(site)/(internal)/dashboard/components/dreams/forms/log/DreamCharacterSelect";

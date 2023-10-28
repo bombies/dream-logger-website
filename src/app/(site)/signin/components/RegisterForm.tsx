@@ -1,7 +1,7 @@
 "use client"
 
 import {FC, useCallback, useState} from "react";
-import Input, {ValidationErrors} from "@/app/(site)/components/Input";
+import Input, {ValidationErrors} from "@/app/(site)/components/inputs/Input";
 import {Button} from "@nextui-org/button";
 import {PASSWORD_REGEX, RegisterUserDto, USERNAME_REGEX} from "@/app/api/auth/register/register.dto";
 import {SubmitHandler, useForm} from "react-hook-form";

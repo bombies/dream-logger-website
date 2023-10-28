@@ -7,7 +7,7 @@ type Props = {
     footer?: ReactElement | ReactElement[]
 } & ModalProps
 
-const Modal: FC<Props> = ({header, footer, title, subtitle, children, ...props}) => {
+const Modal: FC<Props> = ({classNames, header, footer, title, subtitle, children, ...props}) => {
     return (
         <NextModal
             backdrop="blur"
@@ -15,7 +15,8 @@ const Modal: FC<Props> = ({header, footer, title, subtitle, children, ...props})
             scrollBehavior="outside"
             classNames={{
                 base: "py-6 px-3 phone:px-0 bg-secondary",
-                closeButton: "hover:bg-primary/20"
+                closeButton: "hover:bg-primary/20",
+                ...classNames
             }}
             {...props}
         >

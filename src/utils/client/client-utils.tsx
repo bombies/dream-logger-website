@@ -19,6 +19,7 @@ export type MutatorArgs<T> = {
 }
 
 export const postMutator = <B, R>() => (url: string, {arg}: MutatorArgs<B>) => axios.post<R>(url, arg.body)
+export const patchMutator = <B, R>() => (url: string, {arg}: MutatorArgs<B>) => axios.patch<R>(url, arg.body)
 
 export const deleteMutator = <B,>() => (url: string) => axios.delete<B>(url)
 

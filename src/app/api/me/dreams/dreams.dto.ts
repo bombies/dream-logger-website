@@ -4,7 +4,7 @@ import {Dream, DreamCharacter, DreamTag, Member} from "@prisma/client";
 export type PostDreamDto = {
     title: string,
     description: string,
-    comments?: string,
+    comments?: string | null,
     tags?: string[]
     characters?: string[]
 }
@@ -39,7 +39,7 @@ export const PostDreamSchema = z.object({
     newCharacters: z.array(z.string()).optional(),
 }).strict()
 
-export const PatchDreamSchema = PostDreamSchema.optional()
+export const PatchDreamSchema = PostDreamSchema.partial()
 
 export type PostDreamTagDto = {
     tag: string,
@@ -56,7 +56,7 @@ export const PostDreamTagSchema = z.object({
         .max(DREAM_TAG_MAX, `The tag can't be more than ${DREAM_TAG_MAX} characters!`)
 }).strict()
 
-export const PatchDreamTagSchema = PostDreamTagSchema.optional()
+export const PatchDreamTagSchema = PostDreamTagSchema.partial()
 
 export type PostDreamCharacterDto = {
     name: string,

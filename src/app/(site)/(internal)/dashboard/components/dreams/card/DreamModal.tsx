@@ -1,20 +1,18 @@
 "use client"
 
-import {FC, Fragment, useEffect, useMemo, useState} from "react";
+import {FC, Fragment, useState} from "react";
 import Modal from "@/app/(site)/components/Modal";
-import {Dream} from "@prisma/client";
-import useSWR from "swr";
-import {calcEstimatedReadingTime, fetcher} from "@/utils/client/client-utils";
-import {DreamWithRelations} from "@/app/api/me/dreams/dreams.dto";
-import {Chip} from "@nextui-org/chip";
+import {Dream, DreamCharacter, DreamTag} from "@prisma/client";
 import {Divider} from "@nextui-org/divider";
 import {Button} from "@nextui-org/react";
 import ConfirmationModal from "@/app/(site)/components/ConfirmationModal";
 import TrashIcon from "@/app/(site)/components/icons/TrashIcon";
-import DreamView from "@/app/(site)/(internal)/dashboard/components/dreams/card/DreamView";
+import DreamView from "@/app/(site)/(internal)/dashboard/components/dreams/card/view/DreamView";
 
 type Props = {
     dream: Dream,
+    allCharacters: DreamCharacter[],
+    allTags: DreamTag[],
     isOpen?: boolean,
     onClose?: () => void,
     onDelete?: () => void,
@@ -22,7 +20,7 @@ type Props = {
 
 
 
-const DreamModal: FC<Props> = ({dream, isOpen, onClose, onDelete}) => {
+const DreamModal: FC<Props> = ({dream, allTags, allCharacters, isOpen, onClose, onDelete}) => {
     const [deleteModalOpen, setDeleteModalOpen] = useState(false)
 
     return (
@@ -43,7 +41,12 @@ const DreamModal: FC<Props> = ({dream, isOpen, onClose, onDelete}) => {
             >
                 <DreamView
                     dream={dream}
+                    allCharacters={allCharacters}
+                    allTags={allTags}
                     fetchDream={isOpen}
+                    onEdit={(dto) => {
+                        console.log(dto)
+                    }}
                 />
                 <Divider className="my-6"/>
                 <div className="flex justify-end">

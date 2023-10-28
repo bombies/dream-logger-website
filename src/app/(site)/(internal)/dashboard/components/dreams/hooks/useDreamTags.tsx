@@ -3,11 +3,26 @@ import {fetcher} from "@/utils/client/client-utils";
 import {DreamTag} from "@prisma/client";
 import {useCallback} from "react";
 import {DataContextState} from "@/utils/client/client-data-utils";
+import useSWRMutation from "swr/mutation";
 
 export type DreamTagsState = DataContextState<DreamTag[], DreamTag>
 
-const useDreamTags = (): DreamTagsState => {
-    const {data: tags, isLoading: tagsLoading, mutate: mutateTags} = useSWR('/api/me/dreams/tags', fetcher<DreamTag[]>)
+type Args = {
+    load?: boolean
+}
+
+const API_ROUTE = '/api/me/dreams/tags'
+
+export const FetchDreamTags = () => {
+    return useSWRMutation(API_ROUTE, fetcher<DreamTag[]>)
+}
+
+const useDreamTags = (args?: Args): DreamTagsState => {
+    const {
+        data: tags,
+        isLoading: tagsLoading,
+        mutate: mutateTags
+    } = useSWR(args?.load !== false && API_ROUTE, fetcher<DreamTag[]>)
 
     const addOptimisticCharacter = useCallback(async (work: () => Promise<DreamTag | undefined | null>, optimisticCharacter: DreamTag) => {
         if (!tags)

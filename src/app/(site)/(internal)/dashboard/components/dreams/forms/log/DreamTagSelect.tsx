@@ -2,7 +2,7 @@
 
 import {FC, Fragment, useState} from "react";
 import Button from "@/app/(site)/components/Button";
-import Select from "@/app/(site)/components/Select";
+import Select from "@/app/(site)/components/inputs/Select";
 import {Chip} from "@nextui-org/chip";
 import {SelectItem} from "@nextui-org/react";
 import {UseFormRegister} from "react-hook-form";

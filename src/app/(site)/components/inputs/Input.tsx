@@ -5,6 +5,7 @@ import {Input as NextInput, InputProps} from "@nextui-org/react";
 import {FieldErrors, UseFormRegister} from "react-hook-form";
 import EyeCrossedIcon from "@/app/(site)/components/icons/EyeCrossedIcon";
 import EyeIcon from "@/app/(site)/components/icons/EyeIcon";
+import clsx from "clsx";
 
 type ValidationObject = {
     predicate: (value: string) => boolean,
@@ -59,9 +60,16 @@ const Input: FC<Props> = ({classNames, id, register, errors, setValidationErrors
         color: "primary",
         size: "lg",
         classNames: {
-            inputWrapper: "h-fit py-6 bg-[#9E23FF1A]/10 border-1 border-[#3E0070] hover:!bg-[#9E23FF1A]/20 focus-within:!bg-[#9E23FF1A]/20",
+            inputWrapper: clsx(
+                "rounded-3xl h-fit bg-[#9E23FF1A]/10 border-1 border-[#3E0070] hover:!bg-[#9E23FF1A]/20 focus-within:!bg-[#9E23FF1A]/20",
+                props.size === "sm" ? "py-3" : (props.size === "md" ? "py-6" : "p-8")
+            ),
             input: "text-[#EAE0FF]",
-            label: "text-lg phone:text-medium text-[#EAE0FF]",
+            label: clsx(
+                "phone:text-medium text-[#EAE0FF]",
+                props.size === "sm" ? "text-sm" : (props.size === "md" ? "text-lg" : "text-xl")
+
+            ) ,
             ...classNames
         },
         isInvalid: errMsg != undefined,

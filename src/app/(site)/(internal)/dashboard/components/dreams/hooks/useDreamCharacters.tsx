@@ -1,13 +1,28 @@
 import useSWR, {KeyedMutator} from "swr";
 import {fetcher} from "@/utils/client/client-utils";
-import {DreamCharacter} from "@prisma/client";
+import {DreamCharacter, DreamTag} from "@prisma/client";
 import {useCallback} from "react";
 import {DataContextState} from "@/utils/client/client-data-utils";
+import useSWRMutation from "swr/mutation";
 
 export type DreamCharactersState = DataContextState<DreamCharacter[], DreamCharacter>
 
-const useDreamCharacters = (): DreamCharactersState => {
-    const {data: characters, isLoading: charactersLoading, mutate: mutateCharacters} = useSWR('/api/me/dreams/characters', fetcher<DreamCharacter[]>)
+const API_ROUTE = '/api/me/dreams/characters'
+
+export const FetchDreamCharacters = () => {
+    return useSWRMutation(API_ROUTE, fetcher<DreamCharacter[]>)
+}
+
+type Args = {
+    load?: boolean
+}
+
+const useDreamCharacters = (args?: Args): DreamCharactersState => {
+    const {
+        data: characters,
+        isLoading: charactersLoading,
+        mutate: mutateCharacters
+    } = useSWR(args?.load !== false && API_ROUTE, fetcher<DreamCharacter[]>)
 
     const addOptimisticCharacter = useCallback(async (work: () => Promise<DreamCharacter | undefined | null>, optimisticCharacter: DreamCharacter) => {
         if (!characters)

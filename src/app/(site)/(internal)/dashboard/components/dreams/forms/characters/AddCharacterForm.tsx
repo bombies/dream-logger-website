@@ -10,7 +10,7 @@ import {DreamCharacter} from "@prisma/client";
 import {handleAxiosError} from "@/utils/client/client-utils";
 import {useSession} from "next-auth/react";
 import toast from "react-hot-toast";
-import Input from "@/app/(site)/components/Input";
+import Input from "@/app/(site)/components/inputs/Input";
 import {Button} from "@nextui-org/button";
 
 type FormProps = PostDreamCharacterDto

@@ -8,7 +8,7 @@ import DreamContainer from "@/app/(site)/(internal)/dashboard/components/dreams/
 
 const CurrentDreamsContainer: FC = () => {
     const [startOfToday, endOfToday] = useTodayTimeRange()
-    const {dreams} = useDreamsData()
+    const {dreams, tags, characters} = useDreamsData()
     const dreamCards = useMemo(() => dreams.data
         .filter(dream => {
             const creationDate = new Date(dream.createdAt.toString());
@@ -19,9 +19,11 @@ const CurrentDreamsContainer: FC = () => {
             <DreamCard
                 key={dream.id}
                 dream={dream}
+                allTags={tags.data}
+                allCharacters={characters.data}
                 optimisticRemove={dreams.optimisticData.removeOptimisticData}
             />
-        )), [dreams.data, dreams.optimisticData.removeOptimisticData, endOfToday, startOfToday])
+        )), [characters.data, dreams.data, dreams.optimisticData.removeOptimisticData, endOfToday, startOfToday, tags.data])
 
     return (
         <DreamContainer title={`Today
