@@ -26,7 +26,6 @@ const LogInForm: FC = () => {
             redirect: false
         })
             .then((cb) => {
-                console.log(cb)
                 if (cb?.error)
                     toast.error("Invalid credentials! Please check your details and try again.")
                 else if (cb?.ok) {

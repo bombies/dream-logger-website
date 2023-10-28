@@ -20,7 +20,6 @@ const SignInPage: FC = () => {
     const [selectedTab, setSelectedTab] = useState<string>(searchParams.get("tab")?.toLowerCase() === "register" ? "register" : "signin")
 
     useEffect(() => {
-        console.log(sessionStatus, sessionData)
         if (sessionStatus !== 'loading' && sessionData !== null)
             router.push("/dashboard")
     }, [router, sessionData, sessionStatus])

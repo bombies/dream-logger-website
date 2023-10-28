@@ -38,7 +38,7 @@ const DreamCard: FC<Props> = ({dream, optimisticRemove}) => {
                 onDelete={() => {
                     if (optimisticRemove)
                         optimisticRemove(
-                            doDelete, // TODO: Replace with API call
+                            doDelete,
                             dream
                         )
                             .then(() => {
@@ -57,7 +57,7 @@ const DreamCard: FC<Props> = ({dream, optimisticRemove}) => {
                     footer: "bg-[#0C0015] px-8",
                 }}>
                 <CardHeader className="flex justify-between">
-                    <h2 className="text-3xl tablet:text-xl font-semibold whitespace-nowrap overflow-hidden overflow-ellipsis max-w-[80%] phone:max-w-[50%]">{dream.title}</h2>
+                    <h2 className="text-3xl tablet:text-xl font-semibold whitespace-nowrap overflow-hidden overflow-ellipsis max-w-[80%] tablet:max-w-[70%] phone:max-w-[50%]">{dream.title}</h2>
                     <p className="text-subtext text-lg self-end">
                         {new Date(dream.createdAt.toString()).toLocaleTimeString("en-US", {
                             timeStyle: 'short'
