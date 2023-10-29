@@ -12,10 +12,9 @@ import DreamTagSelect from "@/app/(site)/(internal)/dashboard/components/dreams/
 import {Divider} from "@nextui-org/divider";
 import PencilIcon from "@/app/(site)/components/icons/PencilIcon";
 import CloseIcon from "@/app/(site)/components/icons/CloseIcon";
-import axios from "axios";
 import useSWRMutation from "swr/mutation";
 import {Dream} from "@prisma/client";
-import {handleAxiosError, MutatorArgs, postMutator} from "@/utils/client/client-utils";
+import {handleAxiosError, postMutator} from "@/utils/client/client-utils";
 import {useSession} from "next-auth/react";
 import toast from "react-hot-toast";
 import AddTagModal from "@/app/(site)/(internal)/dashboard/components/dreams/forms/tags/AddTagModal";
@@ -73,23 +72,24 @@ const LogDreamForm: FC<Props> = ({onCreate, onForget}) => {
         // const tagObjects = tagIds && tags.data.filter(tag => tagIds.some(id => id === tag.id))
         // const characterObjects = characterIds && characters.data.filter(character => characterIds.some(id => id === character.id))
 
-        await toast.promise(dreams.optimisticData
-                .addOptimisticData(
-                    () => handleDreamCreation(mutableData),
-                    {
-                        id: '',
-                        userId: session.user.id,
-                        ...dreamData,
-                        comments: comments ?? null,
-                        createdAt: new Date(),
-                        updatedAt: new Date()
-                    }
-                ), {
-                loading: "Creating new dream log...",
-                success: "Successfully logged your dream!",
-                error: "Could not log your dream!"
-            }
-        )
+        if (dreams.optimisticData.addOptimisticData)
+            await toast.promise(dreams.optimisticData
+                    .addOptimisticData(
+                        () => handleDreamCreation(mutableData),
+                        {
+                            id: '',
+                            userId: session.user.id,
+                            ...dreamData,
+                            comments: comments ?? null,
+                            createdAt: new Date(),
+                            updatedAt: new Date()
+                        }
+                    ), {
+                    loading: "Creating new dream log...",
+                    success: "Successfully logged your dream!",
+                    error: "Could not log your dream!"
+                }
+            )
     }, [dreams.optimisticData, handleDreamCreation, session?.user])
 
     return (
