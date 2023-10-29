@@ -50,21 +50,21 @@ const AddTagForm: FC<Props> = ({onSuccess}) => {
     const onSubmit: SubmitHandler<FormProps> = async (data) => {
         if (!session?.user)
             return;
-
-        await toast.promise(tags.optimisticData
-                .addOptimisticData(() => handleCreation(data), {
-                    id: '',
-                    ...data,
-                    createdAt: new Date(),
-                    updatedAt: new Date(),
-                    userId: session.user.id
-                }),
-            {
-                loading: "Adding new tag...",
-                success: "Successfully added that tag!",
-                error: "Could not add that tag!"
-            }
-        )
+        if (tags.optimisticData.addOptimisticData)
+            await toast.promise(tags.optimisticData
+                    .addOptimisticData(() => handleCreation(data), {
+                        id: '',
+                        ...data,
+                        createdAt: new Date(),
+                        updatedAt: new Date(),
+                        userId: session.user.id
+                    }),
+                {
+                    loading: "Adding new tag...",
+                    success: "Successfully added that tag!",
+                    error: "Could not add that tag!"
+                }
+            )
 
     }
 
