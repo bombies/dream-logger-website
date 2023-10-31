@@ -1,7 +1,7 @@
 import {NextResponse} from "next/server";
 import {getServerSession, Session} from "next-auth";
 import authOptions from "@/app/api/auth/[...nextauth]/utils";
-import {buildResponse, RouteResponseType} from "@/app/api/utils/types";
+import {buildResponse} from "@/app/api/utils/types";
 import {Member, Prisma} from "@prisma/client";
 import prisma from "@/libs/prisma";
 import PrismaClientKnownRequestError = Prisma.PrismaClientKnownRequestError;
@@ -10,10 +10,11 @@ export type RouteContext<T extends { [K: string]: string }> = {
     params: T
 }
 
-export type IdObject = {id: string}
+export type IdObject = { id: string }
 
 type PrismaErrorOptions = {
-    recordNotFoundMessage?: string
+    recordNotFoundMessage?: string,
+    uniqueConstraintFailed?: string | ((target: string) => string),
 
 }
 
@@ -43,9 +44,11 @@ export const authenticated = async (logic: (session: Session, member?: Member) =
                     status: 404,
                     message: "Couldn't find information for your user!"
                 })
+
+            return await logic(session, member)
         }
 
-        return logic(session)
+        return await logic(session)
     } catch (e) {
         const prismaError = prismaErrorHandler(e, options?.prismaErrors)
         if (prismaError)
@@ -61,11 +64,24 @@ export const authenticated = async (logic: (session: Session, member?: Member) =
 
 const prismaErrorHandler = (e: any, options?: PrismaErrorOptions): NextResponse<null> | undefined => {
     if (e instanceof PrismaClientKnownRequestError) {
-        if (e.code === "P2001")
-            return buildResponse({
-                status: 404,
-                message: options?.recordNotFoundMessage ?? `Couldn't find any records to complete execution!`
-            })
+        switch (e.code) {
+            case "P2001": {
+                return buildResponse({
+                    status: 404,
+                    message: options?.recordNotFoundMessage ?? `Couldn't find any records to complete execution!`
+                })
+            }
+            case "P2002": {
+                return buildResponse({
+                    status: 400,
+                    message: options?.uniqueConstraintFailed ?
+                        (options.uniqueConstraintFailed instanceof Function
+                            ? options.uniqueConstraintFailed((e.meta!.target as string[])[0])
+                            : options.uniqueConstraintFailed as string)
+                        : `There is already a record with the value of that unique constraint!`
+                })
+            }
+        }
     }
     return undefined
 }

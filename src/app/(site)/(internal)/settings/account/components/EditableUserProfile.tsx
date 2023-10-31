@@ -13,25 +13,28 @@ import toast from "react-hot-toast";
 import UpdateSelfMember from "@/app/(site)/hooks/user/UpdateSelfMember";
 import {PatchSelfDto} from "@/app/api/me/self-user.dto";
 import {handleAxiosError} from "@/utils/client/client-utils";
+import {Member} from "@prisma/client";
+import {AxiosError} from "axios";
 
 const EditableUserProfile: FC = () => {
-    const {trigger: update, isMutating: isUpdating} = UpdateSelfMember()
+    const {trigger: update} = UpdateSelfMember()
     const [optimisticAvatarSrc, setOptimisticAvatarSrc] = useState<string>()
     const {
         memberData: {
             data: member,
             loading: memberDataLoading,
+            mutateData: mutateMemberData,
             optimisticData: {
                 editOptimisticData: editMemberData
             }
         }
     } = useMemberData()
 
-    const doUpdate = useCallback(async (dto: PatchSelfDto) => (
-        update({body: dto})
+    const doUpdate = useCallback(async (dto: PatchSelfDto, handleError?: boolean): Promise<Member | null | undefined> => {
+        const work = update({body: dto})
             .then(res => res.data)
-            .catch(handleAxiosError)
-    ), [update])
+        return handleError ? work.catch(handleAxiosError) : work
+    }, [update])
 
     return (
         <Card
@@ -66,7 +69,7 @@ const EditableUserProfile: FC = () => {
                                         onUploadSuccess={async (key) => {
                                             if (editMemberData)
                                                 await editMemberData(
-                                                    () => doUpdate({image: key}),
+                                                    () => doUpdate({image: key}, true),
                                                     {
                                                         ...member!,
                                                         image: key
@@ -105,8 +108,27 @@ const EditableUserProfile: FC = () => {
                                                     },
                                                     errorMsg: "Invalid username!"
                                                 }}
-                                                onEdit={(newValue) => {
+                                                onEdit={async (newValue) => {
+                                                    if (!newValue)
+                                                        return
 
+                                                    const newUsername = newValue.toLowerCase()
+                                                    if (newUsername === member!.username)
+                                                        return;
+
+                                                    await toast.promise(doUpdate({username: newUsername})
+                                                        .then(async (res) => {
+                                                            if (!res || !mutateMemberData)
+                                                                return
+                                                            await mutateMemberData(res)
+                                                        })
+                                                        .catch((err: AxiosError) => Promise.reject(err.response?.statusText ?? "Something went wrong!")), {
+                                                        loading: "Updating username...",
+                                                        success: "Successfully updated your username!",
+                                                        error(err: string) {
+                                                            return err
+                                                        }
+                                                    })
                                                 }}
                                             >
                                                 <p className="flex gap-2">{member?.username} <EditIcon
@@ -123,8 +145,18 @@ const EditableUserProfile: FC = () => {
                                                     minLength={1}
                                                     maxLength={60}
                                                     size="sm"
-                                                    onEdit={(newValue) => {
+                                                    onEdit={async (newValue) => {
+                                                        if (!newValue)
+                                                            return
 
+                                                        if (editMemberData)
+                                                            await editMemberData(
+                                                                () => doUpdate({firstName: newValue}, true),
+                                                                {
+                                                                    ...member!,
+                                                                    firstName: newValue
+                                                                }
+                                                            )
                                                     }}
                                                 >
                                                     <p className="capitalize flex gap-2">{member?.firstName} <EditIcon
@@ -140,8 +172,18 @@ const EditableUserProfile: FC = () => {
                                                     minLength={1}
                                                     maxLength={60}
                                                     size="sm"
-                                                    onEdit={(newValue) => {
+                                                    onEdit={async (newValue) => {
+                                                        if (!newValue)
+                                                            return
 
+                                                        if (editMemberData)
+                                                            await editMemberData(
+                                                                () => doUpdate({lastName: newValue}, true),
+                                                                {
+                                                                    ...member!,
+                                                                    lastName: newValue
+                                                                }
+                                                            )
                                                     }}
                                                 >
                                                     <p className="capitalize flex gap-2">{member?.lastName} <EditIcon

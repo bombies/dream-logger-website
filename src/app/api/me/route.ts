@@ -11,7 +11,10 @@ export const PATCH = async (req: Request) => {
     return authenticated(async (session) =>
             selfUserService.update(session, await req.json()), {
             prismaErrors: {
-                recordNotFoundMessage: "Couldn't find your information!"
+                recordNotFoundMessage: "Couldn't find your information!",
+                uniqueConstraintFailed(target) {
+                    return `There is already a user with that ${target}!`
+                }
             }
         }
     )

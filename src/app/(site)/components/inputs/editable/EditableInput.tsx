@@ -29,7 +29,10 @@ const EditableInput: FC<Props> = ({isEditable, value, children, onEdit, ...input
         else setEditToggled(false)
     }, [isEditable, value])
 
-    const onSubmit: SubmitHandler<FormProps> = useCallback((data) => {
+    const onSubmit: SubmitHandler<FormProps> = useCallback((data, e) => {
+        if (inputProps.validate && !inputProps.validate.predicate(data.value))
+            return;
+
         if (data.value === value)
             return setEditToggled(false)
 
@@ -37,7 +40,7 @@ const EditableInput: FC<Props> = ({isEditable, value, children, onEdit, ...input
             onEdit(data.value.length === 0 ? undefined : data.value)
         setEditToggled(false)
         setCurrentValue(value ?? "")
-    }, [onEdit, value])
+    }, [inputProps.validate, onEdit, value])
 
     return (
         <AnimatePresence>

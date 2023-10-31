@@ -1,3 +1,5 @@
+"use client"
+
 import {fetcher} from "@/utils/client/client-utils";
 import useSWR from "swr";
 

@@ -1,3 +1,5 @@
+"use client"
+
 import {FC} from "react";
 import FileUpload, {FileUploadProps} from "@/app/(site)/components/FileUpload";
 import MediaType from "@/app/api/utils/MediaType";
