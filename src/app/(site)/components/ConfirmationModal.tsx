@@ -10,10 +10,23 @@ type Props = {
     size?: "lg" | "xl" | "2xl"
     onAccept?: () => void,
     onReject?: () => void,
+    rejectContent?: ReactElement | ReactElement[] | string
+    acceptContent?: ReactElement | ReactElement[] | string
+    controlsDisabled?: boolean,
     isOpen?: boolean,
 } & PropsWithChildren
 
-const ConfirmationModal: FC<Props> = ({title, children, size, isOpen, onAccept, onReject}) => {
+const ConfirmationModal: FC<Props> = ({
+                                          title,
+                                          children,
+                                          size,
+                                          isOpen,
+                                          onAccept,
+                                          onReject,
+                                          rejectContent,
+                                          acceptContent,
+                                          controlsDisabled
+                                      }) => {
     return (
         <Modal
             placement="center"
@@ -24,23 +37,25 @@ const ConfirmationModal: FC<Props> = ({title, children, size, isOpen, onAccept, 
             isDismissable={false}
         >
             {children}
-            <Divider className="my-6" />
+            <Divider className="my-6"/>
             <div className="flex justify-end gap-4">
                 <Button
+                    isDisabled={controlsDisabled}
                     color="primary"
                     variant="flat"
                     onPress={onAccept}
-                    startContent={<CheckIcon />}
+                    startContent={<CheckIcon/>}
                 >
-                    I&apos;m sure
+                    {acceptContent ?? "I'm sure"}
                 </Button>
                 <Button
+                    isDisabled={controlsDisabled}
                     color="danger"
                     variant="shadow"
                     onPress={onReject}
-                    startContent={<CloseIcon />}
+                    startContent={<CloseIcon/>}
                 >
-                    Nevermind
+                    {rejectContent ?? "Nevermind"}
                 </Button>
             </div>
         </Modal>

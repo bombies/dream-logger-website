@@ -21,7 +21,7 @@ export type MutatorArgs<T> = {
 export const postMutator = <B, R>() => (url: string, {arg}: MutatorArgs<B>) => axios.post<R>(url, arg.body)
 export const patchMutator = <B, R>() => (url: string, {arg}: MutatorArgs<B>) => axios.patch<R>(url, arg.body)
 
-export const deleteMutator = <B,>() => (url: string) => axios.delete<B>(url)
+export const deleteMutator = <B extends Record<string, string>, R>() => (url: string, args?: MutatorArgs<B>) => axios.delete<R>(`${url}${args ? "?" + new URLSearchParams(args.arg.body).toString() : ""}`)
 
 
 export function handleAxiosError(error: any): undefined {

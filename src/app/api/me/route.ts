@@ -19,3 +19,9 @@ export const PATCH = async (req: Request) => {
         }
     )
 }
+
+export const DELETE = async (req: Request) => (
+    authenticated(async (session) => (
+        selfUserService.delete(session, new URL(req.url).searchParams)
+    ))
+)
