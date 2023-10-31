@@ -80,12 +80,10 @@ model Member {
   updatedAt DateTime @updatedAt
 }
 
-model VerificationToken {
-  identifier String
-  token      String   @unique
-  expires    DateTime
-
-  @@unique([identifier, token])
+model MemberPasswordReset {
+  id        String   @id
+  email     String   @unique
+  expiresAt DateTime
 }
 
 model FriendRequest {

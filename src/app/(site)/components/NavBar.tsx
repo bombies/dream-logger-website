@@ -25,7 +25,7 @@ const NavBar: FC = () => {
 
     return (
         <Navbar
-            className={clsx((["/dashboard", "/signin", "/settings"].some(name => pathName.includes(name))) && "hidden")}
+            className={clsx((["/dashboard", "/signin", "/settings", "/resetpassword"].some(name => pathName.includes(name))) && "hidden")}
             classNames={{
                 base: 'bg-[#0C0015]'
             }}

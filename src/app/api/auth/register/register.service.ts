@@ -26,8 +26,7 @@ class RegisterService {
                 message: "There is already a user with that username/email!"
             })
 
-        const salt = bcrypt.genSaltSync(12)
-        const hashedPassword = await bcrypt.hash(dto.password, salt)
+        const hashedPassword = await this.hashPassword(dto.password)
         const createdUser = await prisma.member.create({
             data: {
                 firstName: dto.firstName.toLowerCase(),
@@ -41,6 +40,11 @@ class RegisterService {
         return buildResponse({
             data: createdUser
         })
+    }
+
+    public async hashPassword(password: string): Promise<string> {
+        const salt = bcrypt.genSaltSync(12)
+        return bcrypt.hash(password, salt)
     }
 }
 

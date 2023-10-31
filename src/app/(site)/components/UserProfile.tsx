@@ -17,7 +17,10 @@ type Props = {
 
 const UserProfile: FC<Props> = ({placement}) => {
     const {memberData: {data: member}} = useMemberData()
-    const {data: memberImage, isLoading: memberImageLoading} = useCloudFrontUrl(member && `avatars/${member?.image}`)
+    const {
+        data: memberImage,
+        isLoading: memberImageLoading
+    } = useCloudFrontUrl(member?.image && `avatars/${member?.image}`)
 
     return (
         <Dropdown

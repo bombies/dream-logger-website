@@ -104,8 +104,8 @@ const authOptions: AuthOptions = {
                 }
             }))!!
 
-            const {firstName, lastName, email, username, id, createdAt} = member
-            session.user = {firstName, lastName, email, id, createdAt}
+            const {firstName, lastName, email, username, id, createdAt, accountProvider} = member
+            session.user = {firstName, lastName, email, id, createdAt, accountProvider}
             return session
         }
     },
