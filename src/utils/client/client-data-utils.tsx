@@ -21,7 +21,8 @@ export type DataContextState<T, O> = {
         addOptimisticData?: OptimisticWorker<O>,
         removeOptimisticData?: OptimisticWorker<O>,
         editOptimisticData?: OptimisticWorker<O>
-    }
+    },
+    [T: string]: any
 }
 
 export type OptimisticWorker<T> = (work: () => Promise<T | undefined | null>, data: T) => Promise<void>

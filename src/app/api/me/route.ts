@@ -6,3 +6,13 @@ export const GET = async () => {
         selfUserService.getInfo(session)
     )
 }
+
+export const PATCH = async (req: Request) => {
+    return authenticated(async (session) =>
+            selfUserService.update(session, await req.json()), {
+            prismaErrors: {
+                recordNotFoundMessage: "Couldn't find your information!"
+            }
+        }
+    )
+}

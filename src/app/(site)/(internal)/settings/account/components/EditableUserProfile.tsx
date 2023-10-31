@@ -1,15 +1,22 @@
 "use client"
 
-import {FC, Fragment} from "react";
+import {FC, Fragment, useCallback, useState} from "react";
 import {useMemberData} from "@/app/(site)/components/providers/user-data/UserProvider";
-import {Avatar, Spacer, Spinner} from "@nextui-org/react";
+import {Spacer, Spinner} from "@nextui-org/react";
 import Card from "@/app/(site)/components/Card";
 import {CardBody} from "@nextui-org/card";
 import EditableInput from "@/app/(site)/components/inputs/editable/EditableInput";
 import {USERNAME_REGEX} from "@/app/api/auth/register/register.dto";
 import {EditIcon} from "@nextui-org/shared-icons";
+import EditableMemberAvatar from "@/app/(site)/components/inputs/editable/EditableAvatar";
+import toast from "react-hot-toast";
+import UpdateSelfMember from "@/app/(site)/hooks/user/UpdateSelfMember";
+import {PatchSelfDto} from "@/app/api/me/self-user.dto";
+import {handleAxiosError} from "@/utils/client/client-utils";
 
 const EditableUserProfile: FC = () => {
+    const {trigger: update, isMutating: isUpdating} = UpdateSelfMember()
+    const [optimisticAvatarSrc, setOptimisticAvatarSrc] = useState<string>()
     const {
         memberData: {
             data: member,
@@ -19,6 +26,12 @@ const EditableUserProfile: FC = () => {
             }
         }
     } = useMemberData()
+
+    const doUpdate = useCallback(async (dto: PatchSelfDto) => (
+        update({body: dto})
+            .then(res => res.data)
+            .catch(handleAxiosError)
+    ), [update])
 
     return (
         <Card
@@ -35,10 +48,35 @@ const EditableUserProfile: FC = () => {
                         (
                             <Fragment>
                                 <div className="flex gap-8">
-                                    <Avatar
-                                        src={member?.image ?? undefined}
-                                        isBordered
+                                    <EditableMemberAvatar
+                                        srcOverride={optimisticAvatarSrc}
+                                        editEnabled={member !== undefined}
+                                        member={member}
                                         className="w-24 h-24"
+                                        isBordered
+
+                                        onUploadStart={async (file) => {
+                                            const fileBlob = new Blob([Buffer.from(await file.arrayBuffer())])
+                                            const fileSrc = URL.createObjectURL(fileBlob)
+                                            setOptimisticAvatarSrc(fileSrc)
+
+                                            toast.success("Updated your avatar!")
+                                        }}
+
+                                        onUploadSuccess={async (key) => {
+                                            if (editMemberData)
+                                                await editMemberData(
+                                                    () => doUpdate({image: key}),
+                                                    {
+                                                        ...member!,
+                                                        image: key
+                                                    }
+                                                )
+                                        }}
+
+                                        onUploadError={(error) => {
+                                            toast.error(error)
+                                        }}
                                     />
                                     <div className="flex flex-col justify-center">
                                         <h3 className="capitalize font-semibold text-2xl">{member?.firstName} {member?.lastName}</h3>
@@ -71,7 +109,8 @@ const EditableUserProfile: FC = () => {
 
                                                 }}
                                             >
-                                                <p className="flex gap-2">{member?.username} <EditIcon className="self-center" /></p>
+                                                <p className="flex gap-2">{member?.username} <EditIcon
+                                                    className="self-center"/></p>
                                             </EditableInput>
                                         </div>
                                         <div className="flex phone:flex-col gap-24 phone:gap-4">
@@ -88,7 +127,8 @@ const EditableUserProfile: FC = () => {
 
                                                     }}
                                                 >
-                                                    <p className="capitalize flex gap-2">{member?.firstName} <EditIcon className="self-center" /></p>
+                                                    <p className="capitalize flex gap-2">{member?.firstName} <EditIcon
+                                                        className="self-center"/></p>
                                                 </EditableInput>
                                             </div>
                                             <div>
@@ -104,7 +144,8 @@ const EditableUserProfile: FC = () => {
 
                                                     }}
                                                 >
-                                                    <p className="capitalize flex gap-2">{member?.lastName} <EditIcon className="self-center" /></p>
+                                                    <p className="capitalize flex gap-2">{member?.lastName} <EditIcon
+                                                        className="self-center"/></p>
                                                 </EditableInput>
                                             </div>
                                         </div>

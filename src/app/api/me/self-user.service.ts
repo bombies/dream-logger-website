@@ -1,8 +1,9 @@
 import {NextResponse} from "next/server";
 import {Member} from "@prisma/client";
 import {Session} from "next-auth";
-import {buildResponse} from "@/app/api/utils/types";
+import {buildFailedValidationResponse, buildResponse} from "@/app/api/utils/types";
 import prisma from "@/libs/prisma";
+import {PatchSelfDto, PatchSelfDtoSchema} from "@/app/api/me/self-user.dto";
 
 class SelfUserService {
 
@@ -28,6 +29,29 @@ class SelfUserService {
 
         return buildResponse({
             data: member
+        })
+    }
+
+    public async update(session: Session, dto: PatchSelfDto): Promise<NextResponse<Member | null>> {
+        if (!session.user)
+            return buildResponse({
+                status: 403,
+                message: "Unauthenticated!"
+            })
+
+        const dtoValidated = PatchSelfDtoSchema.safeParse(dto)
+        if (!dtoValidated.success)
+            return buildFailedValidationResponse(dtoValidated.error)
+
+        const updatedUser = await prisma.member.update({
+            where: {
+                email: session.user.email
+            },
+            data: dto
+        })
+
+        return buildResponse({
+            data: updatedUser
         })
     }
 }
