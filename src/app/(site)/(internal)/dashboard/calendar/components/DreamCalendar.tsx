@@ -132,7 +132,6 @@ const DreamCalendar: FC = () => {
                     >
                         {day}
                     </p>
-
                 ))}
             </div>
             <div id="days_of_week"
