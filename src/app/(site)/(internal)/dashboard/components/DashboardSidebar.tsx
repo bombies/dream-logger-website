@@ -21,7 +21,7 @@ const DashboardSidebar: FC = () => {
                 <SidebarItem
                     startContent={<CalendarIcon />}
                     title="Dream Calendar"
-                    href="/dashboard"
+                    href="/dashboard/calendar"
                 />
                 <SidebarItem
                     startContent={<SearchFilledIcon />}

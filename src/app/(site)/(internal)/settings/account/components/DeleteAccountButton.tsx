@@ -6,7 +6,7 @@ import ConfirmationModal from "@/app/(site)/components/ConfirmationModal";
 import {AnimatePresence, motion} from "framer-motion";
 import Input from "@/app/(site)/components/inputs/Input";
 import {signOut, useSession} from "next-auth/react";
-import {deleteMutator} from "@/utils/client/client-utils";
+import {deleteMutatorWithArgs} from "@/utils/client/client-utils";
 import {DeleteSelfDto} from "@/app/api/me/self-user.dto";
 import useSWRMutation from "swr/mutation";
 import {Member} from "@prisma/client";
@@ -14,7 +14,7 @@ import toast from "react-hot-toast";
 import {AxiosError} from "axios";
 
 const DeleteAccount = () => (
-    useSWRMutation('/api/me', deleteMutator<DeleteSelfDto, Member>())
+    useSWRMutation('/api/me', deleteMutatorWithArgs<DeleteSelfDto, Member>())
 )
 
 const DeleteAccountButton: FC = () => {

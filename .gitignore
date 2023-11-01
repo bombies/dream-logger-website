@@ -37,6 +37,7 @@ yarn-error.log*
 next-env.d.ts
 
 .idea
+.turbo
 
 /private
 /.react-email
