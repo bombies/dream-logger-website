@@ -13,6 +13,8 @@ import DreamContainer
 import DreamCard from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/card/DreamCard";
 import {Dream, DreamCharacter, DreamTag} from "@prisma/client";
 import {OptimisticWorker} from "@/utils/client/client-data-utils";
+import LogDreamCard from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/LogDreamCard";
+import PlusIcon from "@/app/(site)/components/icons/PlusIcon";
 
 type Props = {
     dreams?: DayDreams
@@ -39,29 +41,32 @@ const DreamCalendarDay: FC<Props> = ({dreams, day, allTags, allCharacters, optim
                         dateStyle: "long"
                     })}`}
                 >
-                    {dreams?.dreams.map(dream => (
-                        <DreamCard
-                            key={dream.id}
-                            dream={dream}
-                            allCharacters={allCharacters}
-                            allTags={allTags}
-                            optimisticRemove={optimisticRemove}
-                        />
-                    ))}
+                    <Fragment>
+                        {isToday && <LogDreamCard />}
+                        {dreams?.dreams.map(dream => (
+                            <DreamCard
+                                key={dream.id}
+                                dream={dream}
+                                allCharacters={allCharacters}
+                                allTags={allTags}
+                                optimisticRemove={optimisticRemove}
+                            />
+                        ))}
+                    </Fragment>
                 </DreamContainer>
             </Modal>
             <div
                 className={clsx(
-                    "min-h-[8rem] tablet:h-20 bg-[#9E23FF1A] border-primary ease-in-out duration-300 tablet:border-0 tablet:border-b-1",
-                    dreams && "cursor-pointer hover:bg-primary/30"
+                    "min-h-[8rem] tablet:min-h-[5rem] bg-[#9E23FF1A] border-primary ease-in-out duration-300 tablet:border-0 tablet:border-b-1",
+                    (dreams || isToday) && "cursor-pointer hover:bg-primary/30"
                 )}
                 onClick={() => {
-                    if (dreams)
+                    if (dreams || isToday)
                         setModalOpen(true)
                 }}
             >
                 {day.isCurrentMonth && (
-                    <div className="h-full border-x border-b border-primary tablet:border-0">
+                    <div className="flex flex-col h-full border-x border-b border-primary tablet:border-0">
                         <div
                             className="bg-primary tablet:bg-primary/0 p-2 font-semibold text-xl phone:text-medium tablet:justify-center flex gap-2">
                             <p className={clsx(isToday && "tablet:text-primary")}>{day.dayOfMonth}</p>
@@ -79,7 +84,7 @@ const DreamCalendarDay: FC<Props> = ({dreams, day, allTags, allCharacters, optim
                             )}
                         </div>
                         {
-                            dreams && (
+                            dreams ? (
                                 <Fragment>
                                     <div className="px-2 py-6 space-y-2 tablet:hidden">
                                         {
@@ -87,9 +92,9 @@ const DreamCalendarDay: FC<Props> = ({dreams, day, allTags, allCharacters, optim
                                                 .map(dream => (
                                                     <div
                                                         key={dream.id}
-                                                        className="bg-primary/20 border border-primary/40 p-2 rounded-3xl whitespace-nowrap overflow-hidden overflow-ellipsis"
+                                                        className="bg-primary/10 border border-primary/60 py-2 px-4 rounded-3xl whitespace-nowrap overflow-hidden overflow-ellipsis"
                                                     >
-                                                        <p className="text-xs overflow-hidden overflow-ellipsis">
+                                                        <p className="text-xs font-semibold overflow-hidden overflow-ellipsis">
                                                             {dream.title}
                                                         </p>
                                                     </div>
@@ -102,6 +107,15 @@ const DreamCalendarDay: FC<Props> = ({dreams, day, allTags, allCharacters, optim
                                 </Fragment>
 
                             )
+                                :
+                                (isToday && (
+                                    <div className="flex-grow flex gap-2 flex-col justify-center items-center text-primary">
+                                        <div className="rounded-full bg-primary/30">
+                                            <PlusIcon />
+                                        </div>
+                                        <p className="text-xs font-semibold text-primary/60 tablet:hidden">Log Dream</p>
+                                    </div>
+                                ))
                         }
                     </div>
                 )}
