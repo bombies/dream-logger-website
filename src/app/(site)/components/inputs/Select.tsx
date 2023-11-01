@@ -41,7 +41,7 @@ export default function Select<T>({
             ...popoverProps,
             classNames: {
                 base: [
-                    "bg-[#9E23FF1A]/10 border-1 border-[#3E0070] backdrop-blur-md"
+                    "bg-secondary/90 border-1 border-[#3E0070] backdrop-blur-md"
                 ],
                 ...popoverProps?.classNames
             }
