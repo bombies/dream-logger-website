@@ -42,8 +42,10 @@ export default function Home() {
                                 transition={{duration: 1}}
                                 viewport={{once: true}}
                             >
-                                Transform every night&apos;s slumber into a captivating story. Unveil the hidden narratives
-                                of your dreams, track recurring characters, and explore the tapestry of your emotions. Start
+                                Transform every night&apos;s slumber into a captivating story. Unveil the hidden
+                                narratives
+                                of your dreams, track recurring characters, and explore the tapestry of your emotions.
+                                Start
                                 your journey into the subconscious, and let your dreams inspire your waking life.
                             </motion.h3>
                         </div>
@@ -105,6 +107,29 @@ export default function Home() {
                         src={categorizeDreamImg}
                         alt={"Categorize Dream Image"}
                         className="tablet:w-full w-[32rem]"
+                        fadeIn
+                    />
+                </article>
+                <article className="flex gap-8 tablet:flex-col max-w-4xl w-full">
+                    <div>
+                        <h3 className="text-3xl font-semibold mb-3">The Dream Calendar</h3>
+                        <p className="max-w-xl text-justify">The Dream Calendar feature is your personal time machine
+                            into the world of your subconscious. It offers a visual and organized journey through your
+                            past dreams, allowing you to revisit and reflect on the fascinating stories you&apos;ve
+                            experienced. With a quick glance, you can relive the adventures of your dreamland, spot
+                            patterns, and gain insights into your dream patterns and recurring themes. The Dream
+                            Calendar transforms the abstract realm of dreams into an accessible and insightful timeline,
+                            making it an essential tool for self-discovery and exploration.</p>
+                    </div>
+                    <Image
+                        width={24}
+                        src={"/images/dream-calendar-mobile.png"}
+                        alt={"Track Dream Image"}
+                        style={{
+                            objectFit: "contain"
+                        }}
+                        className="self-center"
+                        fill
                         fadeIn
                     />
                 </article>
