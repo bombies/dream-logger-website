@@ -16,9 +16,14 @@ export const daysOfWeek = [
     "Saturday"
 ];
 
-export function getYearDropdownOptions(currentYear: number): CalendarDropdownOptions[] {
-    let minYear = currentYear - 4;
-    let maxYear = currentYear + 5;
+export function getYearDropdownOptions(currentYear: number, opts?: {
+    maxOffset?: number,
+    minOffset?: number,
+    startingYear?: number,
+    endingYear?: number,
+}): CalendarDropdownOptions[] {
+    let minYear = opts?.startingYear ?? currentYear - Math.abs(opts?.minOffset ?? 0);
+    let maxYear = opts?.endingYear ?? currentYear + Math.abs(opts?.maxOffset ?? 0);
     return range(minYear, maxYear + 1).map((y) => ({label: `${y}`, value: y}));
 }
 

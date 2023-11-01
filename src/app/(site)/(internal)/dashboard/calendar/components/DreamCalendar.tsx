@@ -12,6 +12,9 @@ import {SelectItem} from "@nextui-org/react";
 import DreamCalendarDay from "@/app/(site)/(internal)/dashboard/calendar/components/DreamCalendarDay";
 import {useDreamsData} from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/DreamsProvider";
 import useDayDreams from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/hooks/useDayDreams";
+import {Button} from "@nextui-org/button";
+import DoubleBackIcon from "@/app/(site)/components/icons/DoubleBackIcon";
+import DoubleForwardIcon from "@/app/(site)/components/icons/DoubleForwardIcon";
 
 const DreamCalendar: FC = () => {
     const [[currentYear, currentMonth], setCurrentYearAndMonth] = useState<[number, number]>([new Date().getFullYear(), new Date().getMonth() + 1]);
@@ -29,16 +32,63 @@ const DreamCalendar: FC = () => {
         ...nextMonthDays
     ];
 
-    const selectMonths = useMemo(() => getMonthDropdownOptions(), [])
-    const selectYears = useMemo(() => getYearDropdownOptions(new Date().getUTCFullYear()), [])
 
     const {dreams, tags, characters} = useDreamsData()
     const dayDreams = useDayDreams({dreams: dreams.data})
+    const earliestYear = useMemo(() => dayDreams.length ? new Date(dayDreams[0].timestamp).getFullYear() : undefined, [dayDreams])
+
+    const selectMonths = useMemo(() => getMonthDropdownOptions(), [])
+    const selectYears = useMemo(() => getYearDropdownOptions(new Date().getUTCFullYear(), {
+        startingYear: earliestYear
+    }), [earliestYear])
+
+    const displayPreviousMonth = () => {
+        setCurrentYearAndMonth(([prevYear, prevMonth]) => {
+            let nextYear = prevYear
+            let nextMonth = prevMonth - 1
+
+            if (nextMonth === 0) {
+                nextMonth = 12
+                nextYear = prevYear - 1
+            }
+
+            if (earliestYear && nextYear < earliestYear)
+                return [prevYear, prevMonth]
+
+            return [nextYear, nextMonth]
+        })
+    }
+
+    const displayNextMonth = () => {
+        setCurrentYearAndMonth(([prevYear, prevMonth]) => {
+            let nextYear = prevYear
+            let nextMonth = prevMonth + 1
+
+            if (nextMonth === 13) {
+                nextMonth = 1
+                nextYear = prevYear + 1
+            }
+
+            if (nextYear > new Date().getFullYear())
+                return [prevYear, prevMonth]
+
+            return [nextYear, nextMonth]
+        })
+    }
 
     return (
-        <div id="calendar-root" className="flex flex-col justify-center w-3/4 laptop:w-5/6">
+        <div id="calendar-root" className="flex flex-col justify-center w-3/4 laptop:w-5/6 phone:w-[90%]">
             <div id="calendar-nav" className="flex justify-center mb-12 gap-4">
-                <div className="flex w-1/2 phone:w-full gap-2">
+                <div className="flex w-3/4 phone:w-full gap-2">
+                    <Button
+                        disableRipple
+                        isIconOnly
+                        color="default"
+                        variant="light"
+                        onPress={displayPreviousMonth}
+                    >
+                        <DoubleBackIcon width={16}/>
+                    </Button>
                     <Select
                         classNames={{
                             trigger: "py-0",
@@ -59,7 +109,7 @@ const DreamCalendar: FC = () => {
                                         key={item.key}
                                         color="primary"
                                         variant="flat"
-                                        className="max-w-[6rem]"
+                                        className="max-w-[10rem]"
                                         classNames={{
                                             content: "overflow-ellipsis whitespace-nowrap overflow-hidden font-semibold"
                                         }}
@@ -101,7 +151,7 @@ const DreamCalendar: FC = () => {
                                         key={item.key}
                                         color="primary"
                                         variant="flat"
-                                        className="max-w-[6rem]"
+                                        className="max-w-[10rem]"
                                         classNames={{
                                             content: "overflow-ellipsis whitespace-nowrap overflow-hidden font-semibold"
                                         }}
@@ -122,6 +172,15 @@ const DreamCalendar: FC = () => {
                             </SelectItem>
                         )}
                     </Select>
+                    <Button
+                        disableRipple
+                        isIconOnly
+                        color="default"
+                        variant="light"
+                        onPress={displayNextMonth}
+                    >
+                        <DoubleForwardIcon width={16}/>
+                    </Button>
                 </div>
             </div>
             <div id="days_of_week" className="grid grid-cols-7 mb-4 tablet:hidden">
