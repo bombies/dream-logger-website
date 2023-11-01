@@ -6,9 +6,9 @@ import {PostDreamDto} from "@/app/api/me/dreams/dreams.dto";
 import Input from "@/app/(site)/components/inputs/Input";
 import TextArea from "@/app/(site)/components/inputs/TextArea";
 import Button from "@/app/(site)/components/Button";
-import {useDreamsData} from "@/app/(site)/(internal)/dashboard/components/dreams/DreamsProvider";
-import DreamCharacterSelect from "@/app/(site)/(internal)/dashboard/components/dreams/forms/log/DreamCharacterSelect";
-import DreamTagSelect from "@/app/(site)/(internal)/dashboard/components/dreams/forms/log/DreamTagSelect";
+import {useDreamsData} from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/DreamsProvider";
+import DreamCharacterSelect from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/forms/log/DreamCharacterSelect";
+import DreamTagSelect from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/forms/log/DreamTagSelect";
 import {Divider} from "@nextui-org/divider";
 import PencilIcon from "@/app/(site)/components/icons/PencilIcon";
 import CloseIcon from "@/app/(site)/components/icons/CloseIcon";
@@ -17,8 +17,8 @@ import {Dream} from "@prisma/client";
 import {handleAxiosError, postMutator} from "@/utils/client/client-utils";
 import {useSession} from "next-auth/react";
 import toast from "react-hot-toast";
-import AddTagModal from "@/app/(site)/(internal)/dashboard/components/dreams/forms/tags/AddTagModal";
-import AddCharacterModal from "@/app/(site)/(internal)/dashboard/components/dreams/forms/characters/AddCharacterModal";
+import AddTagModal from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/forms/tags/AddTagModal";
+import AddCharacterModal from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/forms/characters/AddCharacterModal";
 
 type FormProps = Omit<PostDreamDto, 'tags' | 'characters'> & {
     tags?: string[] | string

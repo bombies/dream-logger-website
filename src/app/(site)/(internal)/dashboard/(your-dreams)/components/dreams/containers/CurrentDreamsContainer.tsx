@@ -1,10 +1,10 @@
 import {FC, Fragment, useMemo} from "react";
-import {useDreamsData} from "@/app/(site)/(internal)/dashboard/components/dreams/DreamsProvider";
-import DreamCard from "@/app/(site)/(internal)/dashboard/components/dreams/card/DreamCard";
-import LogDreamCard from "@/app/(site)/(internal)/dashboard/components/dreams/LogDreamCard";
+import {useDreamsData} from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/DreamsProvider";
+import DreamCard from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/card/DreamCard";
+import LogDreamCard from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/LogDreamCard";
 import useTodayTimeRange from "@/app/(site)/hooks/time-hooks";
-import DreamCardSkeleton from "@/app/(site)/(internal)/dashboard/components/dreams/card/DreamCardSkeleton";
-import DreamContainer from "@/app/(site)/(internal)/dashboard/components/dreams/containers/DreamContainer";
+import DreamCardSkeleton from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/card/DreamCardSkeleton";
+import DreamContainer from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/containers/DreamContainer";
 
 const CurrentDreamsContainer: FC = () => {
     const [startOfToday, endOfToday] = useTodayTimeRange()

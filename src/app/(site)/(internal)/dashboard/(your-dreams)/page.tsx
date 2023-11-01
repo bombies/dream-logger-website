@@ -1,8 +1,8 @@
 "use client"
 
 import {FC, Fragment} from "react";
-import CurrentDreamsContainer from "@/app/(site)/(internal)/dashboard/components/dreams/containers/CurrentDreamsContainer";
-import PastDreamsContainer from "@/app/(site)/(internal)/dashboard/components/dreams/containers/PastDreamsContainer";
+import CurrentDreamsContainer from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/containers/CurrentDreamsContainer";
+import PastDreamsContainer from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/containers/PastDreamsContainer";
 
 const DashboardHomePage: FC = () => {
     return (

@@ -10,12 +10,12 @@ import {Button} from "@nextui-org/button";
 import {EditIcon} from "@nextui-org/shared-icons";
 import toast from "react-hot-toast";
 import EditableTextArea from "@/app/(site)/components/inputs/editable/EditableTextArea";
-import DreamEditableChip from "@/app/(site)/(internal)/dashboard/components/dreams/card/view/DreamEditableChip";
+import DreamEditableChip from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/card/view/DreamEditableChip";
 import {DropdownItem, Spacer} from "@nextui-org/react";
 import DreamEditableAddButton
-    from "@/app/(site)/(internal)/dashboard/components/dreams/card/view/DreamEditableAddButton";
-import {useDreamsData} from "@/app/(site)/(internal)/dashboard/components/dreams/DreamsProvider";
-import {FetchFullDream, UpdateDream} from "../../hooks/dream-api-utils";
+    from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/card/view/DreamEditableAddButton";
+import {useDreamsData} from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/DreamsProvider";
+import {FetchFullDream, UpdateDream} from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/hooks/dream-api-utils";
 
 type Props = {
     dream: Dream,

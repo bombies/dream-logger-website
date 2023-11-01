@@ -4,7 +4,7 @@ import {FC, Fragment, useCallback, useState} from "react";
 import {Dream, DreamCharacter, DreamTag} from "@prisma/client";
 import {CardBody, CardHeader} from "@nextui-org/card";
 import Card from "@/app/(site)/components/Card";
-import DreamModal from "@/app/(site)/(internal)/dashboard/components/dreams/card/DreamModal";
+import DreamModal from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/card/DreamModal";
 import {OptimisticWorker} from "@/utils/client/client-data-utils";
 import toast from "react-hot-toast";
 import useSWRMutation from "swr/mutation";

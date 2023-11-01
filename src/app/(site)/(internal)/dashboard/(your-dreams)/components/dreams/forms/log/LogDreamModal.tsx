@@ -1,6 +1,6 @@
 import {FC} from "react";
 import Modal from "@/app/(site)/components/Modal";
-import LogDreamForm from "@/app/(site)/(internal)/dashboard/components/dreams/forms/log/LogDreamForm";
+import LogDreamForm from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/forms/log/LogDreamForm";
 
 type Props = {
     isOpen: boolean,

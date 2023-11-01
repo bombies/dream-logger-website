@@ -1,4 +1,4 @@
-import { range } from "ramda";
+import {range} from "ramda";
 import dayjs from "dayjs";
 import weekday from "dayjs/plugin/weekday";
 import weekOfYear from "dayjs/plugin/weekOfYear";
@@ -16,13 +16,18 @@ export const daysOfWeek = [
     "Saturday"
 ];
 
-export function getYearDropdownOptions(currentYear: number) {
+export function getYearDropdownOptions(currentYear: number): CalendarDropdownOptions[] {
     let minYear = currentYear - 4;
     let maxYear = currentYear + 5;
-    return range(minYear, maxYear + 1).map((y) => ({ label: `${y}`, value: y }));
+    return range(minYear, maxYear + 1).map((y) => ({label: `${y}`, value: y}));
 }
 
-export function getMonthDropdownOptions() {
+export type CalendarDropdownOptions = {
+    value: number,
+    label: string,
+}
+
+export function getMonthDropdownOptions(): CalendarDropdownOptions[] {
     return range(1, 13).map((m) => ({
         value: m,
         label: dayjs()
@@ -35,7 +40,13 @@ export function getNumberOfDaysInMonth(year: number, month: number) {
     return dayjs(`${year}-${month}-01`).daysInMonth();
 }
 
-export function createDaysForCurrentMonth(year: number, month: number) {
+export type CalendarMonthDay = {
+    dateString: string,
+    dayOfMonth: number,
+    isCurrentMonth: boolean,
+}
+
+export function createDaysForCurrentMonth(year: number, month: number): CalendarMonthDay[] {
     return [...Array(getNumberOfDaysInMonth(year, month))].map((_, index) => {
         return {
             dateString: dayjs(`${year}-${month}-${index + 1}`).format("YYYY-MM-DD"),
@@ -45,7 +56,7 @@ export function createDaysForCurrentMonth(year: number, month: number) {
     });
 }
 
-export function createDaysForPreviousMonth(year: number, month: number, currentMonthDays: any[]) {
+export function createDaysForPreviousMonth(year: number, month: number, currentMonthDays: CalendarMonthDay[]): CalendarMonthDay[] {
     const firstDayOfTheMonthWeekday = getWeekday(currentMonthDays[0].dateString);
     const previousMonth = dayjs(`${year}-${month}-01`).subtract(1, "month");
 
@@ -63,7 +74,7 @@ export function createDaysForPreviousMonth(year: number, month: number, currentM
                 `${previousMonth.year()}-${previousMonth.month() + 1}-${
                     previousMonthLastMondayDayOfMonth + index
                 }`
-            ).format("YYYY-MM-DD"),
+            ).format("YYYY-MM-D"),
             dayOfMonth: previousMonthLastMondayDayOfMonth + index,
             isCurrentMonth: false,
             isPreviousMonth: true
@@ -71,7 +82,7 @@ export function createDaysForPreviousMonth(year: number, month: number, currentM
     });
 }
 
-export function createDaysForNextMonth(year: number, month: number, currentMonthDays: any) {
+export function createDaysForNextMonth(year: number, month: number, currentMonthDays: CalendarMonthDay[]): CalendarMonthDay[] {
     const lastDayOfTheMonthWeekday = getWeekday(
         `${year}-${month}-${currentMonthDays.length}`
     );

@@ -4,7 +4,7 @@ import {FC, Fragment, useState} from "react";
 import {CardBody} from "@nextui-org/card";
 import CloudIcon from "@/app/(site)/components/icons/CloudIcon";
 import Card from "@/app/(site)/components/Card";
-import LogDreamModal from "@/app/(site)/(internal)/dashboard/components/dreams/forms/log/LogDreamModal";
+import LogDreamModal from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/forms/log/LogDreamModal";
 
 const LogDreamCard: FC = () => {
     const [modalOpen, setModalOpen] = useState(false)

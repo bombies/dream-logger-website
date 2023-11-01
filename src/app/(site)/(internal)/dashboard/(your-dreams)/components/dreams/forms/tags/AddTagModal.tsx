@@ -2,7 +2,7 @@
 
 import {FC} from "react";
 import Modal from "@/app/(site)/components/Modal";
-import AddTagForm from "@/app/(site)/(internal)/dashboard/components/dreams/forms/tags/AddTagForm";
+import AddTagForm from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/forms/tags/AddTagForm";
 
 type Props = {
     isOpen: boolean,

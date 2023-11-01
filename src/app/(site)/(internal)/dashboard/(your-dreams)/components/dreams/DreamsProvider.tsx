@@ -1,11 +1,11 @@
 "use client"
 
 import {FC, PropsWithChildren} from "react";
-import useDreams, {DreamsState} from "@/app/(site)/(internal)/dashboard/components/dreams/hooks/useDreams";
+import useDreams, {DreamsState} from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/hooks/useDreams";
 import useDreamCharacters, {
     DreamCharactersState
-} from "@/app/(site)/(internal)/dashboard/components/dreams/hooks/useDreamCharacters";
-import useDreamTags, {DreamTagsState} from "@/app/(site)/(internal)/dashboard/components/dreams/hooks/useDreamTags";
+} from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/hooks/useDreamCharacters";
+import useDreamTags, {DreamTagsState} from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/hooks/useDreamTags";
 import {createDataContext, DataContextProps} from "@/utils/client/client-data-utils";
 
 interface DreamsContextProps extends DataContextProps {

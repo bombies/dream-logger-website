@@ -7,7 +7,7 @@ import {Divider} from "@nextui-org/divider";
 import {Button} from "@nextui-org/react";
 import ConfirmationModal from "@/app/(site)/components/ConfirmationModal";
 import TrashIcon from "@/app/(site)/components/icons/TrashIcon";
-import DreamView from "@/app/(site)/(internal)/dashboard/components/dreams/card/view/DreamView";
+import DreamView from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/card/view/DreamView";
 
 type Props = {
     dream: Dream,

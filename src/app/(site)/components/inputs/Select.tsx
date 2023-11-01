@@ -2,22 +2,29 @@
 import {useMemo} from "react";
 import {SelectProps, Select as NextSelect} from "@nextui-org/react";
 import {UseFormRegister} from "react-hook-form";
+import clsx from "clsx";
 
 type Props<T> = {
     register?: UseFormRegister<any>,
 } & SelectProps<T>
 
-export default function Select<T>({classNames, listboxProps, popoverProps, children, id, register, ...props}: Props<T>) {
+export default function Select<T>({
+                                      classNames,
+                                      listboxProps,
+                                      popoverProps,
+                                      children,
+                                      id,
+                                      register,
+                                      ...props
+                                  }: Props<T>) {
     // @ts-ignore
     const defAttributes: SelectProps<T> = useMemo(() => ({
         id,
         color: "primary",
         size: "lg",
         classNames: {
-            trigger: "h-fit py-6 bg-[#9E23FF1A]/10 border-1 border-[#3E0070] hover:!bg-[#9E23FF1A]/20 focus-within:!bg-[#9E23FF1A]/20",
-            input: "text-[#EAE0FF]",
-            label: "text-lg text-[#EAE0FF]",
-            ...classNames
+            trigger: clsx("h-fit py-6 bg-[#9E23FF1A]/10 border-1 border-[#3E0070] hover:!bg-[#9E23FF1A]/20 focus-within:!bg-[#9E23FF1A]/20", classNames?.trigger),
+            label: clsx("text-lg text-[#EAE0FF]", classNames?.label),
         },
         listboxProps: {
             ...listboxProps,
@@ -41,7 +48,7 @@ export default function Select<T>({classNames, listboxProps, popoverProps, child
         },
         ...props
     }), [classNames, id, listboxProps, popoverProps, props])
-    
+
     return register && id ? (
         <NextSelect
             {...register(id, {required: props.required || props.isRequired})}

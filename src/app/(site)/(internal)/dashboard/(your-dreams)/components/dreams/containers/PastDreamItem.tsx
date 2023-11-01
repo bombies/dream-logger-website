@@ -1,12 +1,12 @@
 "use client"
 
 import {FC, Fragment, useMemo} from "react";
-import {PastDream} from "@/app/(site)/(internal)/dashboard/components/dreams/containers/PastDreamsContainer";
-import DreamCard from "@/app/(site)/(internal)/dashboard/components/dreams/card/DreamCard";
+import {DayDreams} from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/containers/PastDreamsContainer";
+import DreamCard from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/card/DreamCard";
 import {DreamCharacter, DreamTag} from "@prisma/client";
 
 type Props = {
-    dream: PastDream,
+    dream: DayDreams,
     allCharacters: DreamCharacter[],
     allTags: DreamTag[],
 }

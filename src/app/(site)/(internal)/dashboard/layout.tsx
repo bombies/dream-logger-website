@@ -1,7 +1,7 @@
 import {FC, PropsWithChildren} from "react";
-import DashboardSidebar from "@/app/(site)/(internal)/dashboard/components/DashboardSidebar";
+import DashboardSidebar from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/DashboardSidebar";
 import {Metadata} from "next";
-import DreamsProvider from "@/app/(site)/(internal)/dashboard/components/dreams/DreamsProvider";
+import DreamsProvider from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/DreamsProvider";
 
 export const metadata: Metadata = {
     title: 'Dream Logger - Dashboard',

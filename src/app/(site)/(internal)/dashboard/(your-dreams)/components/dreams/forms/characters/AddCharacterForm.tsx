@@ -2,47 +2,47 @@
 
 import {FC} from "react";
 import {SubmitHandler, useForm} from "react-hook-form";
-import {PostDreamTagDto} from "@/app/api/me/dreams/dreams.dto";
+import {PostDreamCharacterDto} from "@/app/api/me/dreams/dreams.dto";
 import axios from "axios";
 import useSWRMutation from "swr/mutation";
-import {useDreamsData} from "@/app/(site)/(internal)/dashboard/components/dreams/DreamsProvider";
-import {DreamTag} from "@prisma/client";
+import {useDreamsData} from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/DreamsProvider";
+import {DreamCharacter} from "@prisma/client";
 import {handleAxiosError} from "@/utils/client/client-utils";
 import {useSession} from "next-auth/react";
 import toast from "react-hot-toast";
 import Input from "@/app/(site)/components/inputs/Input";
 import {Button} from "@nextui-org/button";
 
-type FormProps = PostDreamTagDto
+type FormProps = PostDreamCharacterDto
 
 type CreateTagsArgs = {
     arg: {
-        dto: PostDreamTagDto
+        dto: PostDreamCharacterDto
     }
 }
 
-const CreateTag = () => {
-    const mutator = (url: string, {arg}: CreateTagsArgs) => axios.post<DreamTag | null>(url, arg.dto)
-    return useSWRMutation('/api/me/dreams/tags', mutator)
+const CreateCharacter = () => {
+    const mutator = (url: string, {arg}: CreateTagsArgs) => axios.post<DreamCharacter | null>(url, arg.dto)
+    return useSWRMutation('/api/me/dreams/characters', mutator)
 }
 
 type Props = {
-    onSuccess?: (tag: DreamTag) => void
+    onSuccess?: (tag: DreamCharacter) => void
 }
 
-const AddTagForm: FC<Props> = ({onSuccess}) => {
+const AddCharacterForm: FC<Props> = ({onSuccess}) => {
     const {data: session} = useSession()
     const {register, handleSubmit} = useForm<FormProps>()
-    const {trigger: createTag, isMutating: isCreating} = CreateTag()
-    const {tags} = useDreamsData()
+    const {trigger: createCharacter, isMutating: isCreating} = CreateCharacter()
+    const {characters} = useDreamsData()
 
-    const handleCreation = async (dto: PostDreamTagDto) => (
-        createTag({dto})
+    const handleCreation = async (dto: PostDreamCharacterDto) => (
+        createCharacter({dto})
             .then(res => {
-                const tag = res.data!!
+                const character = res.data!!
                 if (onSuccess)
-                    onSuccess(tag)
-                return tag
+                    onSuccess(character)
+                return character
             })
             .catch(handleAxiosError)
     )
@@ -50,8 +50,9 @@ const AddTagForm: FC<Props> = ({onSuccess}) => {
     const onSubmit: SubmitHandler<FormProps> = async (data) => {
         if (!session?.user)
             return;
-        if (tags.optimisticData.addOptimisticData)
-            await toast.promise(tags.optimisticData
+
+        if (characters.optimisticData.addOptimisticData)
+            await toast.promise(characters.optimisticData
                     .addOptimisticData(() => handleCreation(data), {
                         id: '',
                         ...data,
@@ -60,42 +61,41 @@ const AddTagForm: FC<Props> = ({onSuccess}) => {
                         userId: session.user.id
                     }),
                 {
-                    loading: "Adding new tag...",
-                    success: "Successfully added that tag!",
-                    error: "Could not add that tag!"
+                    loading: "Adding new character...",
+                    success: "Successfully added that character!",
+                    error: "Could not add that character!"
                 }
             )
-
     }
 
     return (
         <form
-            name="add_dream_tag_form"
-            id="add_dream_tag_form"
             onSubmit={handleSubmit(onSubmit)}
+            name="add_dream_character_form"
+            id="add_dream_character_form"
         >
             <div className="space-y-6">
                 <Input
                     isRequired
-                    id="tag"
-                    label="Tag Name"
+                    id="name"
+                    label="Character Name"
                     register={register}
                     labelPlacement="outside"
-                    placeholder="Enter a tag name..."
+                    placeholder="Enter the name of the character..."
                     isDisabled={isCreating}
-                    maxLength={64}
+                    maxLength={256}
                 />
                 <Button
                     isLoading={isCreating}
                     isDisabled={isCreating}
                     type="submit"
-                    form="add_dream_tag_form"
+                    form="add_dream_character_form"
                     color="primary"
                     variant="shadow"
-                >Create Tag</Button>
+                >Create Character</Button>
             </div>
         </form>
     )
 }
 
-export default AddTagForm
+export default AddCharacterForm
