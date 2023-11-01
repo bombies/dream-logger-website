@@ -42,7 +42,7 @@ const DreamCalendarDay: FC<Props> = ({dreams, day, allTags, allCharacters, optim
                     })}`}
                 >
                     <Fragment>
-                        {isToday && <LogDreamCard />}
+                        {isToday && <LogDreamCard/>}
                         {dreams?.dreams.map(dream => (
                             <DreamCard
                                 key={dream.id}
@@ -58,10 +58,10 @@ const DreamCalendarDay: FC<Props> = ({dreams, day, allTags, allCharacters, optim
             <div
                 className={clsx(
                     "min-h-[8rem] tablet:min-h-[5rem] bg-[#9E23FF1A] border-primary ease-in-out duration-300 tablet:border-0 tablet:border-b-1",
-                    (dreams || isToday) && "cursor-pointer hover:bg-primary/30"
+                    ((dreams || isToday) && day.isCurrentMonth) && "cursor-pointer hover:bg-primary/30"
                 )}
                 onClick={() => {
-                    if (dreams || isToday)
+                    if ((dreams || isToday) && day.isCurrentMonth)
                         setModalOpen(true)
                 }}
             >
@@ -85,33 +85,34 @@ const DreamCalendarDay: FC<Props> = ({dreams, day, allTags, allCharacters, optim
                         </div>
                         {
                             dreams ? (
-                                <Fragment>
-                                    <div className="px-2 py-6 space-y-2 tablet:hidden">
-                                        {
-                                            dreams.dreams.slice(0, Math.min(dreams.dreams.length, 2))
-                                                .map(dream => (
-                                                    <div
-                                                        key={dream.id}
-                                                        className="bg-primary/10 border border-primary/60 py-2 px-4 rounded-3xl whitespace-nowrap overflow-hidden overflow-ellipsis"
-                                                    >
-                                                        <p className="text-xs font-semibold overflow-hidden overflow-ellipsis">
-                                                            {dream.title}
-                                                        </p>
-                                                    </div>
-                                                ))
-                                        }
-                                    </div>
-                                    <div className="flex justify-center tablet-min:hidden">
-                                        <span className="w-3 h-3 bg-primary/30 rounded-full"></span>
-                                    </div>
-                                </Fragment>
+                                    <Fragment>
+                                        <div className="px-2 py-6 space-y-2 tablet:hidden">
+                                            {
+                                                dreams.dreams.slice(0, Math.min(dreams.dreams.length, 2))
+                                                    .map(dream => (
+                                                        <div
+                                                            key={dream.id}
+                                                            className="bg-primary/10 border border-primary/60 py-2 px-4 rounded-3xl whitespace-nowrap overflow-hidden overflow-ellipsis"
+                                                        >
+                                                            <p className="text-xs font-semibold overflow-hidden overflow-ellipsis">
+                                                                {dream.title}
+                                                            </p>
+                                                        </div>
+                                                    ))
+                                            }
+                                        </div>
+                                        <div className="flex justify-center tablet-min:hidden">
+                                            <span className="w-3 h-3 bg-primary/30 rounded-full"></span>
+                                        </div>
+                                    </Fragment>
 
-                            )
+                                )
                                 :
                                 (isToday && (
-                                    <div className="flex-grow flex gap-2 flex-col justify-center items-center text-primary">
+                                    <div
+                                        className="flex-grow flex gap-2 flex-col justify-center items-center text-primary">
                                         <div className="rounded-full bg-primary/30">
-                                            <PlusIcon />
+                                            <PlusIcon/>
                                         </div>
                                         <p className="text-xs font-semibold text-primary/60 tablet:hidden">Log Dream</p>
                                     </div>
