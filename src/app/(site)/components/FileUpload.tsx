@@ -5,9 +5,14 @@ import {Input} from "@nextui-org/input";
 import MediaType from "@/app/api/utils/MediaType";
 import toast from "react-hot-toast";
 import UploadS3File from "@/app/(site)/hooks/s3/UploadS3File";
+import {FileSize} from "@/utils/FileSize";
 
 export type FileUploadProps = {
     uploadKey?: string,
+    /**
+     * The maximum size of a file.
+     */
+    maxFileSize?: FileSize,
     /**
      * Used to update an image to prevent the cluttering
      * of the S3 bucket and CloudFront CDN.
@@ -21,6 +26,7 @@ export type FileUploadProps = {
     onUploadStart?: (file: File) => void,
     onUploadSuccess?: (key: string) => void,
     onUploadError?: (error: string) => void,
+    onFileSizeError?: (size: number) => void,
     onFileRemove?: () => void,
     disabled?: boolean,
     fileTypes: MediaType[]
@@ -34,6 +40,8 @@ export type FileUploadProps = {
 }
 
 export const FileUpload: FC<FileUploadProps> = ({
+                                                    maxFileSize,
+                                                    onFileSizeError,
                                                     uploadKey,
                                                     oldKey,
                                                     uploadPath,
@@ -69,7 +77,16 @@ export const FileUpload: FC<FileUploadProps> = ({
                                 onFileRemove();
                             return Promise.resolve();
                         }
+
                         const file = allFiles[0];
+                        if (maxFileSize && file.size > maxFileSize.toBytes()) {
+                            if (onFileSizeError)
+                                onFileSizeError(file.size)
+                            else
+                                toast.error("That file is too big!")
+                            return;
+                        }
+
                         if (onUploadStart)
                             onUploadStart(file);
 

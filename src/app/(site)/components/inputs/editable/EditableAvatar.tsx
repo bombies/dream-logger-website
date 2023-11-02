@@ -7,6 +7,8 @@ import {Member} from "@prisma/client";
 import useCDNUrl from "@/app/(site)/hooks/s3/useCDNUrl";
 import {Avatar, AvatarProps} from "@nextui-org/react";
 import clsx from "clsx";
+import {MegaBytes} from "@/utils/FileSize";
+import toast from "react-hot-toast";
 
 type Props = {
         editEnabled?: boolean,
@@ -34,6 +36,10 @@ const EditableMemberAvatar: FC<Props> = ({
     return (
         <FileUpload
             oldKey={member?.image ?? undefined}
+            maxFileSize={new MegaBytes(2)}
+            onFileSizeError={() => {
+                toast.error("Avatars cannot exceed 2 megabytes!")
+            }}
             isPublicObject
             uploadPath="avatars/"
             disabled={!editEnabled}
