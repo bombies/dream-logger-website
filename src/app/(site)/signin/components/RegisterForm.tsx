@@ -1,6 +1,6 @@
 "use client"
 
-import {FC, useCallback, useState} from "react";
+import {FC, Fragment, useCallback, useState} from "react";
 import Input, {ValidationErrors} from "@/app/(site)/components/inputs/Input";
 import {Button} from "@nextui-org/button";
 import {PASSWORD_REGEX, RegisterUserDto, USERNAME_REGEX} from "@/app/api/auth/register/register.dto";
@@ -9,6 +9,9 @@ import axios, {AxiosError} from "axios";
 import useSWRMutation from "swr/mutation";
 import {signIn} from "next-auth/react";
 import toast from "react-hot-toast";
+import {Checkbox, Link} from "@nextui-org/react";
+import {Divider} from "@nextui-org/divider";
+import GoogleAuthButton from "@/app/(site)/signin/components/GoogleAuthButton";
 
 type FormProps = RegisterUserDto & {
     confirmedPassword: string
@@ -31,6 +34,7 @@ const RegisterForm: FC = () => {
     const [confirmedPassword, setConfirmedPassword] = useState("")
     const [validationErrors, setValidationErrors] = useState<ValidationErrors>({})
     const {trigger: registerUser, isMutating: userIsRegistering} = RegisterUser()
+    const [termsAccepted, setTermsAccepted] = useState(false)
 
     const submitHandler: SubmitHandler<FormProps> = useCallback((data) => {
         if (Object.keys(validationErrors).length != 0)
@@ -59,123 +63,138 @@ const RegisterForm: FC = () => {
     }, [registerUser, validationErrors])
 
     return (
-        <form
-            onSubmit={handleSubmit(submitHandler)}
-            className="flex flex-col gap-y-6"
-        >
-            <div className="flex phone:flex-col gap-6">
+        <Fragment>
+            <form
+                onSubmit={handleSubmit(submitHandler)}
+                className="flex flex-col gap-y-6"
+            >
+                <div className="flex phone:flex-col gap-6">
+                    <Input
+                        id="firstName"
+                        register={register}
+                        errors={errors}
+                        labelPlacement="outside"
+                        isRequired
+                        label={"First Name"}
+                        placeholder="John"
+                        minLength={1}
+                        isDisabled={userIsRegistering}
+                        isClearable
+                        maxLength={60}
+                    />
+                    <Input
+                        id="lastName"
+                        register={register}
+                        errors={errors}
+                        labelPlacement="outside"
+                        isRequired
+                        label={"Last Name"}
+                        isDisabled={userIsRegistering}
+                        placeholder="Doe"
+                        minLength={1}
+                        isClearable
+                        maxLength={60}
+                    />
+                </div>
                 <Input
-                    id="firstName"
+                    id="username"
                     register={register}
                     errors={errors}
                     labelPlacement="outside"
                     isRequired
-                    label={"First Name"}
-                    placeholder="John"
-                    minLength={1}
+                    label={"Username"}
+                    placeholder="FriendlyDragon123"
+                    minLength={2}
+                    maxLength={32}
                     isDisabled={userIsRegistering}
                     isClearable
-                    maxLength={60}
+                    setValidationErrors={setValidationErrors}
+                    validate={{
+                        predicate(value) {
+                            if (!value)
+                                return true
+                            return USERNAME_REGEX.test(value)
+                        },
+                        errorMsg: "Invalid username!"
+                    }}
                 />
                 <Input
-                    id="lastName"
+                    id="email"
                     register={register}
                     errors={errors}
                     labelPlacement="outside"
                     isRequired
-                    label={"Last Name"}
-                    isDisabled={userIsRegistering}
-                    placeholder="Doe"
-                    minLength={1}
+                    label={"Email"}
+                    type="email"
                     isClearable
-                    maxLength={60}
+                    isDisabled={userIsRegistering}
+                    placeholder="johndoe@email.com"
                 />
-            </div>
-            <Input
-                id="username"
-                register={register}
-                errors={errors}
-                labelPlacement="outside"
-                isRequired
-                label={"Username"}
-                placeholder="FriendlyDragon123"
-                minLength={2}
-                maxLength={32}
-                isDisabled={userIsRegistering}
-                isClearable
-                setValidationErrors={setValidationErrors}
-                validate={{
-                    predicate(value) {
-                        if (!value)
-                            return true
-                        return USERNAME_REGEX.test(value)
-                    },
-                    errorMsg: "Invalid username!"
-                }}
+                <Input
+                    id="password"
+                    register={register}
+                    errors={errors}
+                    labelPlacement="outside"
+                    isRequired
+                    label={"Password"}
+                    placeholder="Enter your password"
+                    type="password"
+                    value={password}
+                    onValueChange={setPassword}
+                    isDisabled={userIsRegistering}
+                    setValidationErrors={setValidationErrors}
+                    validate={{
+                        predicate(value) {
+                            if (!value)
+                                return true
+                            return PASSWORD_REGEX.test(value)
+                        },
+                        errorMsg: "Password must have at least 8 characters with 1 uppercase character, 1 lowercase character and 1 number."
+                    }}
+                />
+                <Input
+                    id="confirmedPassword"
+                    register={register}
+                    errors={errors}
+                    labelPlacement="outside"
+                    isRequired
+                    label={"Confirm Password"}
+                    placeholder="Confirm your password"
+                    type="password"
+                    value={confirmedPassword}
+                    onValueChange={setConfirmedPassword}
+                    setValidationErrors={setValidationErrors}
+                    isDisabled={userIsRegistering}
+                    validate={{
+                        predicate(value) {
+                            if (!value)
+                                return true;
+                            return password === confirmedPassword
+                        },
+                        errorMsg: "Passwords must match."
+                    }}
+                />
+                <Checkbox
+                    isRequired
+                    isSelected={termsAccepted}
+                    onValueChange={setTermsAccepted}
+                    size="sm"
+                >
+                    You have read and agreed to the <Link className="text-sm " isExternal showAnchorIcon href="/terms">terms of service</Link>
+                </Checkbox>
+                <Button
+                    type="submit"
+                    variant="shadow"
+                    isDisabled={userIsRegistering || !termsAccepted}
+                    isLoading={userIsRegistering}
+                >Register</Button>
+            </form>
+            <Divider className="my-6"/>
+            <GoogleAuthButton
+                isDisabled={!termsAccepted}
+                type='signup'
             />
-            <Input
-                id="email"
-                register={register}
-                errors={errors}
-                labelPlacement="outside"
-                isRequired
-                label={"Email"}
-                type="email"
-                isClearable
-                isDisabled={userIsRegistering}
-                placeholder="johndoe@email.com"
-            />
-            <Input
-                id="password"
-                register={register}
-                errors={errors}
-                labelPlacement="outside"
-                isRequired
-                label={"Password"}
-                placeholder="Enter your password"
-                type="password"
-                value={password}
-                onValueChange={setPassword}
-                isDisabled={userIsRegistering}
-                setValidationErrors={setValidationErrors}
-                validate={{
-                    predicate(value) {
-                        if (!value)
-                            return true
-                        return PASSWORD_REGEX.test(value)
-                    },
-                    errorMsg: "Password must have at least 8 characters with 1 uppercase character, 1 lowercase character and 1 number."
-                }}
-            />
-            <Input
-                id="confirmedPassword"
-                register={register}
-                errors={errors}
-                labelPlacement="outside"
-                isRequired
-                label={"Confirm Password"}
-                placeholder="Confirm your password"
-                type="password"
-                value={confirmedPassword}
-                onValueChange={setConfirmedPassword}
-                setValidationErrors={setValidationErrors}
-                isDisabled={userIsRegistering}
-                validate={{
-                    predicate(value) {
-                        if (!value)
-                            return true;
-                        return password === confirmedPassword
-                    },
-                    errorMsg: "Passwords must match."
-                }}
-            />
-            <Button
-                type="submit"
-                variant="shadow"
-                isDisabled={userIsRegistering}
-                isLoading={userIsRegistering}
-            >Register</Button>
-        </form>
+        </Fragment>
     )
 }
 

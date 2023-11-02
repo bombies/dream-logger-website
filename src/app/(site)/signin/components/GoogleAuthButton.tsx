@@ -7,14 +7,16 @@ import {signIn} from "next-auth/react";
 import {useRouter} from "next/navigation";
 
 type Props = {
+    isDisabled?: boolean,
     type: 'signin' | 'signup'
 }
 
-const GoogleAuthButton: FC<Props> = ({type}) => {
+const GoogleAuthButton: FC<Props> = ({isDisabled, type}) => {
     const router = useRouter()
 
     return (
         <Button
+            isDisabled={isDisabled}
             fullWidth
             color="secondary"
             startContent={<GoogleIcon/>}

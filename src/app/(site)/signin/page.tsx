@@ -61,8 +61,6 @@ const SignInPage: FC = () => {
                                 <div className="w-1/2 tablet:w-3/4 phone:w-[90%]">
                                     <Divider className="mb-6"/>
                                     <RegisterForm/>
-                                    <Divider className="my-6"/>
-                                    <GoogleAuthButton type='signup'/>
                                 </div>
                             </Tab>
                         </Tabs>
