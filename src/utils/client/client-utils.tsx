@@ -2,6 +2,7 @@
 
 import axios, {AxiosError} from "axios";
 import toast from "react-hot-toast";
+import {Dispatch, RefObject, SetStateAction} from "react";
 
 export async function fetcher<T>(url: string): Promise<T | undefined> {
     try {
@@ -22,7 +23,7 @@ export const postMutator = <B, R>() => (url: string, {arg}: MutatorArgs<B>) => a
 export const patchMutator = <B, R>() => (url: string, {arg}: MutatorArgs<B>) => axios.patch<R>(url, arg.body)
 
 export const deleteMutatorWithArgs = <B extends Record<string, string> | undefined, R>() => (url: string, args?: MutatorArgs<B>) => axios.delete<R>(`${url}${args ? "?" + new URLSearchParams(args.arg.body).toString() : ""}`)
-export const deleteMutator = <R,>() => (url: string) => axios.delete<R>(url)
+export const deleteMutator = <R, >() => (url: string) => axios.delete<R>(url)
 
 
 export function handleAxiosError(error: any): undefined {
