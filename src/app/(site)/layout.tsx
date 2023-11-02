@@ -13,6 +13,9 @@ const inter = Inter({subsets: ['latin']})
 export const metadata: Metadata = {
     title: 'Dream Logger',
     description: 'Your Personal Dream Journal and Character Odyssey',
+    openGraph: {
+        images: '/opengraph-image.png'
+    }
 }
 
 export default async function RootLayout({
