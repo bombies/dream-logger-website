@@ -29,6 +29,7 @@
     "bcrypt": "^5.1.1",
     "dayjs": "^1.11.10",
     "framer-motion": "^10.16.4",
+    "intro.js-react": "^1.0.0",
     "jsonwebtoken": "^9.0.2",
     "next": "^14.0.1",
     "next-auth": "^4.24.4",

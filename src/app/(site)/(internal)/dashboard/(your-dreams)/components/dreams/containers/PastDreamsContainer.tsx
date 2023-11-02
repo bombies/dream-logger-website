@@ -15,6 +15,7 @@ import {CardBody} from "@nextui-org/card";
 import {useRouter} from "next/navigation";
 import CloudIcon from "@/app/(site)/components/icons/CloudIcon";
 import useDayDreams from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/hooks/useDayDreams";
+import {useTutorialsData} from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/TutorialsProvider";
 
 export type GroupedDreams = {
     [K: string]: Dream[]
@@ -28,6 +29,7 @@ export type DayDreams = {
 const NUMBER_OF_DAYS = 7
 
 const PastDreamsContainer: FC = () => {
+    const [tutorialsState] = useTutorialsData()
     const router = useRouter()
     const {dreams, tags, characters} = useDreamsData()
     const latestDate = useEndOfDay({
@@ -44,16 +46,18 @@ const PastDreamsContainer: FC = () => {
 
     const dreamItems = useMemo(() => pastDreams.map(dream => (
         <PastDreamItem
+            isDisabled={!tutorialsState?.yourDreams}
             key={dream.timestamp}
             dream={dream}
             allTags={tags.data}
             allCharacters={characters.data}
         />
-    )), [characters.data, pastDreams, tags.data])
+    )), [characters.data, pastDreams, tags.data, tutorialsState?.yourDreams])
 
 
     return (
         <DreamContainer
+            id="past_dreams"
             containerClassName="!py-12"
             title="Previous Dreams"
         >

@@ -20,6 +20,56 @@ body {
   color: $foreground-color !important;
 }
 
+.introjs-tooltip {
+  color: $foreground-color;
+  background-color: #1A002F90;
+  border-color: #9E23FF90;
+  border-width: 1px;
+  backdrop-filter: blur(12px);
+  border-radius: 1.5rem;
+}
+
+.introjs-skipbutton {
+  color: #9E23FF;
+}
+
+.customIntroJsTooltip .introjs-tooltip-header {
+
+}
+
+.introjs-donebutton, .introjs-nextbutton, .introjs-prevbutton {
+  border-radius: 1.5rem;
+  background-color: rgba(73, 0, 132, 0.38);
+  border-color: #9E23FF90;
+  color: #9E23FF;
+  font-weight: 500;
+  text-shadow: none;
+}
+
+.introjs-bullets ul li a.active {
+  background-color: #9E23FF;
+}
+
+.introjs-bullets ul li a {
+  //background-color: #9E23FF;
+  border-radius: 100% !important;
+  width: 8px !important;
+  height: 8px !important;
+}
+
+.introjs-tooltipbuttons {
+  border-color: #9E23FF90;
+}
+
+.introjs-helperLayer {
+  border-radius: 1.5rem;
+}
+
+.introjs-arrow {
+  display: none !important;
+}
+
+
 ::-webkit-scrollbar {
   width: 0.5rem;
 }

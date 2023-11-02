@@ -6,7 +6,11 @@ import CloudIcon from "@/app/(site)/components/icons/CloudIcon";
 import Card from "@/app/(site)/components/Card";
 import LogDreamModal from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/forms/log/LogDreamModal";
 
-const LogDreamCard: FC = () => {
+type Props = {
+    isDisabled?: boolean
+}
+
+const LogDreamCard: FC<Props> = ({isDisabled}) => {
     const [modalOpen, setModalOpen] = useState(false)
 
     return (
@@ -16,8 +20,11 @@ const LogDreamCard: FC = () => {
                 onClose={() => setModalOpen(false)}
             />
             <Card
-                onPress={() => setModalOpen(true)}
-                isPressable
+                onPress={() => {
+                    if (!isDisabled)
+                        setModalOpen(true)
+                }}
+                isPressable={!isDisabled}
                 classNames={{
                     base: "hover:scale-105",
                     body: "bg-primary py-8"

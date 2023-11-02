@@ -3,10 +3,14 @@ import {useDreamsData} from "@/app/(site)/(internal)/dashboard/(your-dreams)/com
 import DreamCard from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/card/DreamCard";
 import LogDreamCard from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/LogDreamCard";
 import useTodayTimeRange from "@/app/(site)/hooks/time-hooks";
-import DreamCardSkeleton from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/card/DreamCardSkeleton";
-import DreamContainer from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/containers/DreamContainer";
+import DreamCardSkeleton
+    from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/card/DreamCardSkeleton";
+import DreamContainer
+    from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/containers/DreamContainer";
+import {useTutorialsData} from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/TutorialsProvider";
 
 const CurrentDreamsContainer: FC = () => {
+    const [tutorialsState] = useTutorialsData()
     const [startOfToday, endOfToday] = useTodayTimeRange()
     const {dreams, tags, characters} = useDreamsData()
     const dreamCards = useMemo(() => dreams.data
@@ -17,22 +21,23 @@ const CurrentDreamsContainer: FC = () => {
         .sort((a, b) => new Date(b.createdAt.toString()).getTime() - new Date(a.createdAt.toString()).getTime())
         .map(dream => (
             <DreamCard
+                isDisabled={!tutorialsState?.yourDreams}
                 key={dream.id}
                 dream={dream}
                 allTags={tags.data}
                 allCharacters={characters.data}
                 optimisticRemove={dreams.optimisticData.removeOptimisticData}
             />
-        )), [characters.data, dreams.data, dreams.optimisticData.removeOptimisticData, endOfToday, startOfToday, tags.data])
+        )), [characters.data, dreams.data, dreams.optimisticData.removeOptimisticData, endOfToday, startOfToday, tags.data, tutorialsState?.yourDreams])
 
     return (
-        <DreamContainer title={`Today
+        <DreamContainer id="today_dreams" title={`Today
             - ${
             startOfToday.toLocaleDateString("en-US", {
                 dateStyle: "medium"
             })
         }`}>
-            <LogDreamCard/>
+            <LogDreamCard isDisabled={!tutorialsState?.yourDreams} />
             {dreams.loading ? (
                 <Fragment>
                     <DreamCardSkeleton/>

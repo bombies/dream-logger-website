@@ -5,11 +5,12 @@ type Props = {
     title: string,
     className?: string,
     containerClassName?: string,
+    id?: string,
 } & PropsWithChildren
 
-const DreamContainer: FC<Props> = ({title, children, className, containerClassName}) => {
+const DreamContainer: FC<Props> = ({id, title, children, className, containerClassName}) => {
     return (
-        <div className={clsx(className, "flex flex-col")}>
+        <div id={id} className={clsx(className, "flex flex-col")}>
             <h2 className="text-4xl phone:text-2xl font-semibold mb-8 phone:mb-4 tablet:text-center">{title}</h2>
             <div
                 className={clsx(

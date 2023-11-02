@@ -1,6 +1,6 @@
 "use client"
 import {KeyedMutator} from "swr";
-import {Context, createContext, useContext} from "react";
+import {Context, createContext, Dispatch, SetStateAction, useContext} from "react";
 
 /**
  * `T - State Data Type`, `O - Optimistic Data Type`
@@ -32,6 +32,10 @@ export interface DataContextProps {
 }
 
 export function createDataContext<T extends DataContextProps>(hookErr?: string): [Context<T | undefined>, () => T] {
+    return createGenericContext<T>(hookErr)
+}
+
+export function createGenericContext<T>(hookErr?: string): [Context<T | undefined>, () => T] {
     const context = createContext<T | undefined>(undefined)
     const useHook = () => useGenericContextHook(context, hookErr)
     return [context, useHook]
@@ -43,3 +47,5 @@ export function useGenericContextHook<T>(context: Context<T | undefined>, hookEr
         throw new Error(hookErr ?? "This hook cannot be used here!")
     return data
 }
+
+export type UseStateArray<T> = [T, Dispatch<SetStateAction<T>>]

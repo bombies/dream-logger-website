@@ -12,6 +12,7 @@ import {deleteMutator, handleAxiosError} from "@/utils/client/client-utils";
 
 type Props = {
     dream: Dream,
+    isDisabled?: boolean,
     allCharacters: DreamCharacter[],
     allTags: DreamTag[],
     optimisticRemove?: OptimisticWorker<Dream>,
@@ -21,7 +22,7 @@ const DeleteDream = (dreamId: string) => {
     return useSWRMutation(`/api/me/dreams/${dreamId}`, deleteMutator<Dream>())
 }
 
-const DreamCard: FC<Props> = ({dream, allTags, allCharacters, optimisticRemove}) => {
+const DreamCard: FC<Props> = ({isDisabled, dream, allTags, allCharacters, optimisticRemove}) => {
     const [modalOpen, setModalOpen] = useState(false)
     const {trigger: deleteDream} = DeleteDream(dream.id)
 
@@ -52,8 +53,11 @@ const DreamCard: FC<Props> = ({dream, allTags, allCharacters, optimisticRemove})
                 }}
             />
             <Card
-                isPressable
-                onPress={() => setModalOpen(true)}
+                isPressable={!isDisabled}
+                onPress={() => {
+                    if (!isDisabled)
+                        setModalOpen(true)
+                }}
                 classNames={{
                     base: "hover:scale-105",
                     header: "bg-[#0C0015] pt-6 px-8 pb-0 z-1",
