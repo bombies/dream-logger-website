@@ -14,7 +14,7 @@ const TextArea: FC<Props> = ({register, id, classNames, ...props}) => {
         color: "primary",
         size: "lg",
         classNames: {
-            inputWrapper: "h-fit py-2 bg-[#9E23FF1A]/10 border-1 border-[#3E0070] hover:!bg-[#9E23FF1A]/20 focus-within:!bg-[#9E23FF1A]/20",
+            inputWrapper: "h-fit py-2 bg-[#9E23FF1A]/10 border-1 border-[#3E0070] hover:!bg-[#9E23FF1A]/20 focus-within:!bg-[#9E23FF1A]/20 rounded-3xl",
             input: "text-[#EAE0FF]",
             label: "text-lg text-[#EAE0FF]",
             ...classNames
