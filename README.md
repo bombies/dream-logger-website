@@ -1,5 +1,6 @@
 <img src="https://i.imgur.com/BAdWxzw.png" alt="Logo" style="object-fit: contain" width="1000">
 
+
 # Dream Logger
 
 An innovative dream journaling app that empowers users to log, categorize, and share their dreams, providing a comprehensive tool for personal reflection and exploration of the subconscious world.
