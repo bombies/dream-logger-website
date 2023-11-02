@@ -215,9 +215,9 @@ const DreamCalendar: FC = () => {
 
                         const dayIsToday = () => {
                             const today = new Date()
-                            return date.getUTCFullYear() === today.getUTCFullYear() &&
-                                date.getUTCMonth() === today.getUTCMonth() &&
-                                date.getUTCDate() === today.getUTCDate()
+                            return date.getFullYear() === today.getFullYear() &&
+                                date.getMonth() === today.getMonth() &&
+                                date.getDate() === today.getDate()
                         }
 
                         const dreamsForDay = dayDreams.find(dayDream => {
