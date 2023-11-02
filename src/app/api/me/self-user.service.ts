@@ -8,7 +8,7 @@ import {compare} from "bcrypt";
 
 class SelfUserService {
 
-    public async getInfo(session: Session): Promise<NextResponse<Member | null>> {
+    public async getInfo(session: Session): Promise<NextResponse<Omit<Member, "password"> | null>> {
         if (!session.user)
             return buildResponse({
                 status: 403,
@@ -18,7 +18,7 @@ class SelfUserService {
         let member = await prisma.member.findUnique({
             where: {
                 email: session.user.email
-            }
+            },
         })
 
         if (!member)
@@ -27,9 +27,10 @@ class SelfUserService {
                 message: "Couldn't find your information!"
             })
 
+        const {password, ...memberDetails} = member
 
         return buildResponse({
-            data: member
+            data: memberDetails
         })
     }
 
