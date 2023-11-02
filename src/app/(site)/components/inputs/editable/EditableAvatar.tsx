@@ -5,9 +5,8 @@ import FileUpload, {FileUploadProps} from "@/app/(site)/components/FileUpload";
 import MediaType from "@/app/api/utils/MediaType";
 import {Member} from "@prisma/client";
 import useCDNUrl from "@/app/(site)/hooks/s3/useCDNUrl";
-import {Avatar, AvatarProps, Skeleton} from "@nextui-org/react";
+import {Avatar, AvatarProps} from "@nextui-org/react";
 import clsx from "clsx";
-import {AnimatePresence} from "framer-motion";
 
 type Props = {
         editEnabled?: boolean,
@@ -45,24 +44,14 @@ const EditableMemberAvatar: FC<Props> = ({
             onFileRemove={onFileRemove}
         >
             {(ref) => (
-                <AnimatePresence>
-                    {avatarIsLoading ? (
-                        <Skeleton
-                            isLoaded={!avatarIsLoading}
-                            className={clsx("rounded-full", avatarProps.className)}>
-                        </Skeleton>
-                    ) : (
-                        <Avatar
-                            src={srcOverride ?? (avatarUrl ?? fetchedAvatarUrl?.url)}
-                            onClick={() => ref.current?.click()}
-                            classNames={{
-                                base: clsx(editEnabled && "cursor-pointer"),
-                            }}
-                            {...avatarProps}
-                        />
-                    )}
-
-                </AnimatePresence>
+                <Avatar
+                    src={srcOverride ?? (avatarUrl ?? fetchedAvatarUrl)}
+                    onClick={() => ref.current?.click()}
+                    classNames={{
+                        base: clsx(editEnabled && "cursor-pointer"),
+                    }}
+                    {...avatarProps}
+                />
             )}
         </FileUpload>
     )
