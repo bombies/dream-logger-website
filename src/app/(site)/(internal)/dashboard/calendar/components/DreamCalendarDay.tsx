@@ -110,9 +110,9 @@ const DreamCalendarDay: FC<Props> = ({dreams, day, allTags, allCharacters, optim
                                 :
                                 (isToday && (
                                     <div
-                                        className="flex-grow flex gap-2 flex-col justify-center items-center text-primary">
+                                        className="flex-grow flex gap-2 flex-col justify-center tablet:justify-start items-center text-primary">
                                         <div className="rounded-full bg-primary/30">
-                                            <PlusIcon/>
+                                            <PlusIcon width={16}/>
                                         </div>
                                         <p className="text-xs font-semibold text-primary/60 tablet:hidden">Log Dream</p>
                                     </div>
