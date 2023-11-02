@@ -4,7 +4,7 @@ import {fetcher} from "@/utils/client/client-utils";
 import {Member} from "@prisma/client";
 import {DataContextState, OptimisticWorker} from "@/utils/client/client-data-utils";
 import {useCallback, useEffect} from "react";
-import useCloudFrontUrl from "@/app/(site)/hooks/s3/useCloudFrontUrl";
+import useCDNUrl from "@/app/(site)/hooks/s3/useCDNUrl";
 
 const useUserDataState = (): DataContextState<Member | undefined, Member> => {
     const {data: session} = useSession();
@@ -13,7 +13,7 @@ const useUserDataState = (): DataContextState<Member | undefined, Member> => {
         isLoading: userDataLoading,
         mutate: mutateUserData
     } = useSWR(session && "/api/me", fetcher<Member>)
-    const avatarUrl = useCloudFrontUrl(userData?.image && `avatars/${userData.image}`)
+    const avatarUrl = useCDNUrl(userData?.image && `avatars/${userData.image}`)
 
     const editOptimisticUser = useCallback<OptimisticWorker<Member>>(async (work, optimisticUser) => {
         if (!userData)

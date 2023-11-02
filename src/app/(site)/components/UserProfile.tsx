@@ -9,7 +9,7 @@ import Image from "@/app/(site)/components/Image";
 import HomeIcon from "@/app/(site)/components/icons/HomeIcon";
 import Dropdown from "@/app/(site)/components/Dropdown";
 import {useMemberData} from "@/app/(site)/components/providers/user-data/UserProvider";
-import useCloudFrontUrl from "@/app/(site)/hooks/s3/useCloudFrontUrl";
+import useCDNUrl from "@/app/(site)/hooks/s3/useCDNUrl";
 
 type Props = {
     placement?: OverlayPlacement
@@ -17,10 +17,7 @@ type Props = {
 
 const UserProfile: FC<Props> = ({placement}) => {
     const {memberData: {data: member}} = useMemberData()
-    const {
-        data: memberImage,
-        isLoading: memberImageLoading
-    } = useCloudFrontUrl(member?.image && `avatars/${member?.image}`)
+    const memberImage = useCDNUrl(member?.image && `avatars/${member?.image}`)
 
     return (
         <Dropdown
@@ -35,7 +32,7 @@ const UserProfile: FC<Props> = ({placement}) => {
                     isBordered
                     as="button"
                     className="transition-transform"
-                    src={memberImage?.url ?? undefined}
+                    src={memberImage}
                     classNames={{
                         name: "capitalize font-semibold"
                     }}

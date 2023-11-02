@@ -4,7 +4,7 @@ import {FC} from "react";
 import FileUpload, {FileUploadProps} from "@/app/(site)/components/FileUpload";
 import MediaType from "@/app/api/utils/MediaType";
 import {Member} from "@prisma/client";
-import useCloudFrontUrl from "@/app/(site)/hooks/s3/useCloudFrontUrl";
+import useCDNUrl from "@/app/(site)/hooks/s3/useCDNUrl";
 import {Avatar, AvatarProps, Skeleton} from "@nextui-org/react";
 import clsx from "clsx";
 import {AnimatePresence} from "framer-motion";
@@ -29,10 +29,7 @@ const EditableMemberAvatar: FC<Props> = ({
                                              srcOverride,
                                              ...avatarProps
                                          }) => {
-    const {
-        data: fetchedAvatarUrl,
-        isLoading: avatarIsLoading
-    } = useCloudFrontUrl(avatarUrl === undefined && member?.image ? `avatars/${member.image}` : null)
+    const fetchedAvatarUrl = useCDNUrl(avatarUrl === undefined && member?.image ? `avatars/${member.image}` : null)
 
 
     return (
