@@ -1,6 +1,6 @@
 "use client"
 
-import {FC, Fragment, useState} from "react";
+import {FC, Fragment} from "react";
 import Button from "@/app/(site)/components/Button";
 import Select from "@/app/(site)/components/inputs/Select";
 import {Chip} from "@nextui-org/chip";
@@ -25,7 +25,7 @@ const DreamTagSelect: FC<Props> = ({onModalOpen, isDisabled, tags, register}) =>
                     color="cta"
                     size="sm"
                     onPress={onModalOpen}
-                    startContent={<PlusIcon width={20} />}
+                    startContent={<PlusIcon width={20}/>}
                     isDisabled={isDisabled}
                 >
                     Add New Tag
@@ -36,7 +36,7 @@ const DreamTagSelect: FC<Props> = ({onModalOpen, isDisabled, tags, register}) =>
                 aria-label="Dream Tags"
                 register={register}
                 id="tags"
-                items={tags.data}
+                items={tags.data.sort((a, b) => a.tag.localeCompare(b.tag))}
                 placeholder="Describe your dream with one or two words"
                 selectionMode={"multiple"}
                 renderValue={(items) => {

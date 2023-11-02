@@ -1,11 +1,13 @@
 "use client"
 
-import {FC, Fragment, useState} from "react";
+import {FC, Fragment} from "react";
 import Button from "@/app/(site)/components/Button";
 import Select from "@/app/(site)/components/inputs/Select";
 import {Chip} from "@nextui-org/chip";
 import {SelectItem} from "@nextui-org/react";
-import {DreamCharactersState} from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/hooks/useDreamCharacters";
+import {
+    DreamCharactersState
+} from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/hooks/useDreamCharacters";
 import {UseFormRegister} from "react-hook-form";
 import PlusIcon from "@/app/(site)/components/icons/PlusIcon";
 
@@ -17,8 +19,6 @@ type Props = {
 }
 
 const DreamCharacterSelect: FC<Props> = ({onModalOpen, isDisabled, characters, register}) => {
-    const [modalOpen, setModalOpen] = useState(false)
-
     return (
         <Fragment>
             <div className="flex gap-4 mb-2">
@@ -38,7 +38,7 @@ const DreamCharacterSelect: FC<Props> = ({onModalOpen, isDisabled, characters, r
                 aria-label="Dream Characters"
                 register={register}
                 id="characters"
-                items={characters.data}
+                items={characters.data.sort((a, b) => a.name.localeCompare(b.name))}
                 placeholder="Who was in your dream?"
                 selectionMode={"multiple"}
                 renderValue={(items) => {
