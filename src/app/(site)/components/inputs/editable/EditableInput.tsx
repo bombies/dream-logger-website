@@ -1,22 +1,26 @@
 "use client"
 
-import {FC, PropsWithChildren, useCallback, useEffect, useState} from "react";
+import {FC, PropsWithChildren, useCallback, useEffect, useRef, useState} from "react";
 import {AnimatePresence, motion} from "framer-motion";
 import Input, {InputProps} from "@/app/(site)/components/inputs/Input";
 import {Button} from "@nextui-org/button";
 import {SubmitHandler, useForm} from "react-hook-form";
 import CheckIcon from "@/app/(site)/components/icons/CheckIcon";
 import CloseIcon from "@/app/(site)/components/icons/CloseIcon";
+import useOnClickOutside from "use-onclickoutside";
 
 type FormProps = {
     value: string
 }
 
-type Props = {
-    isEditable?: boolean,
-    value?: string,
-    onEdit?: (value?: string) => void,
-} & Pick<InputProps, "classNames" | "placeholder" | "label" | "size" | "isRequired" | "maxLength" | "minLength" | "validate"> & PropsWithChildren
+type Props =
+    {
+        isEditable?: boolean,
+        value?: string,
+        onEdit?: (value?: string) => void,
+    }
+    & Pick<InputProps, "classNames" | "placeholder" | "label" | "size" | "isRequired" | "maxLength" | "minLength" | "validate">
+    & PropsWithChildren
 
 const EditableInput: FC<Props> = ({isEditable, value, children, onEdit, ...inputProps}) => {
     const {register, handleSubmit} = useForm<FormProps>()
@@ -42,10 +46,16 @@ const EditableInput: FC<Props> = ({isEditable, value, children, onEdit, ...input
         setCurrentValue(value ?? "")
     }, [inputProps.validate, onEdit, value])
 
+    const formRef = useRef<HTMLFormElement>(null)
+    useOnClickOutside(formRef, () => {
+        setEditToggled(false)
+    })
+
     return (
         <AnimatePresence>
             {isEditable ? (editToggled ?
                     <motion.form
+                        ref={formRef}
                         initial={{opacity: 0}}
                         animate={{opacity: 1}}
                         exit={{opacity: 1}}
@@ -64,19 +74,21 @@ const EditableInput: FC<Props> = ({isEditable, value, children, onEdit, ...input
                                         color="success"
                                         variant="light"
                                         type="submit"
+                                        size="sm"
                                     >
-                                        <CheckIcon/>
+                                        <CheckIcon width={16}/>
                                     </Button>
                                     <Button
                                         isIconOnly
                                         color="danger"
                                         variant="light"
+                                        size="sm"
                                         onPress={() => {
                                             setEditToggled(false)
                                             setCurrentValue(value ?? "")
                                         }}
                                     >
-                                        <CloseIcon/>
+                                        <CloseIcon width={16}/>
                                     </Button>
                                 </div>
                             }

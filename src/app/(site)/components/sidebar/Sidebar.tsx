@@ -27,7 +27,6 @@ const Sidebar: FC<Props> = ({children, headerText}) => {
         setOpen(false)
     })
 
-
     return (
         <motion.aside
             ref={sidebarRef}
