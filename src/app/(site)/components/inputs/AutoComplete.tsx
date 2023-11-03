@@ -1,14 +1,13 @@
 "use memo"
 import {useMemo} from "react";
-import {SelectProps, Select as NextSelect} from "@nextui-org/react";
+import {Autocomplete ,AutocompleteProps} from "@nextui-org/react";
 import {UseFormRegister} from "react-hook-form";
-import clsx from "clsx";
 
 type Props<T> = {
     register?: UseFormRegister<any>,
-} & SelectProps<T>
+} & AutocompleteProps<T>
 
-export default function Select<T>({
+export default function AutoComplete<T>({
                                       classNames,
                                       listboxProps,
                                       popoverProps,
@@ -18,13 +17,14 @@ export default function Select<T>({
                                       ...props
                                   }: Props<T>) {
     // @ts-ignore
-    const defAttributes: SelectProps<T> = useMemo(() => ({
+    const defAttributes: AutocompleteProps<T> = useMemo(() => ({
         id,
         color: "primary",
         size: "lg",
+        className: "h-fit rounded-xl bg-[#9E23FF1A]/10 border-1 border-[#3E0070] hover:!bg-[#9E23FF1A]/20 focus-within:!bg-[#9E23FF1A]/20",
         classNames: {
-            trigger: clsx("h-fit rounded-xl bg-[#9E23FF1A]/10 border-1 border-[#3E0070] hover:!bg-[#9E23FF1A]/20 focus-within:!bg-[#9E23FF1A]/20", classNames?.trigger),
-            label: clsx("text-lg text-[#EAE0FF]", classNames?.label),
+            // trigger: clsx("h-fit rounded-xl bg-[#9E23FF1A]/10 border-1 border-[#3E0070] hover:!bg-[#9E23FF1A]/20 focus-within:!bg-[#9E23FF1A]/20", classNames?.trigger),
+            // label: clsx("text-lg text-[#EAE0FF]", classNames?.label),
         },
         listboxProps: {
             ...listboxProps,
@@ -45,20 +45,20 @@ export default function Select<T>({
             }
         },
         ...props
-    }), [classNames, id, listboxProps, popoverProps, props])
+    }), [id, listboxProps, popoverProps, props])
 
     return register && id ? (
-        <NextSelect
+        <Autocomplete
             {...register(id, {required: props.required || props.isRequired})}
             {...defAttributes}
         >
             {children}
-        </NextSelect>
+        </Autocomplete>
     ) : (
-        <NextSelect
+        <Autocomplete
             {...defAttributes}
         >
             {children}
-        </NextSelect>
+        </Autocomplete>
     )
 }

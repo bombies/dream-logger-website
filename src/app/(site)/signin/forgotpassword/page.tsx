@@ -83,12 +83,9 @@ const ForgotPasswordPage: FC = () => {
                             <Fragment>
                                 <p>{`If ${email} is an email of a registered user an email has been sent with a link to
                                     reset the password.`}</p>
-                                <Spacer y={6}/>
-                                <p>{`Didn't get the email? Click on the button below to resend the email`}</p>
                             </Fragment>
                         )
                     }
-
                 </CardBody>
             </Card>
         </div>

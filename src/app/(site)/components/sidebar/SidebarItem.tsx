@@ -43,9 +43,7 @@ const SidebarItem: FC<SidebarItemProps> = ({title, startContent, href, onClick})
             content={title}
             placement="right"
             closeDelay={10}
-            classNames={{
-                base: "bg-secondary/90 border border-primary/40 backdrop-blur-md p-3 font-semibold text-lg"
-            }}
+            className="bg-secondary/90 border border-primary/40 backdrop-blur-md p-3 font-semibold text-lg"
         >
             {item}
         </Tooltip>

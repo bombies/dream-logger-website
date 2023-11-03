@@ -49,7 +49,6 @@ const ConfirmationModal: FC<Props> = ({
                     {acceptContent ?? "I'm sure"}
                 </Button>
                 <Button
-                    isDisabled={controlsDisabled}
                     color="danger"
                     variant="shadow"
                     onPress={onReject}

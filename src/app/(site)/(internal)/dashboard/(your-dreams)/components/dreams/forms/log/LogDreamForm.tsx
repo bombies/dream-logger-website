@@ -19,6 +19,7 @@ import {useSession} from "next-auth/react";
 import toast from "react-hot-toast";
 import AddTagModal from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/forms/tags/AddTagModal";
 import AddCharacterModal from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/forms/characters/AddCharacterModal";
+import {Spacer} from "@nextui-org/react";
 
 type FormProps = Omit<PostDreamDto, 'tags' | 'characters'> & {
     tags?: string[] | string
@@ -140,6 +141,7 @@ const LogDreamForm: FC<Props> = ({onCreate, onForget}) => {
                         isDisabled={dreamIsCreating}
                         onModalOpen={() => setAddCharacterModalOpen(true)}
                     />
+                    <Spacer y={6} />
                     <Input
                         register={register}
                         id="comments"

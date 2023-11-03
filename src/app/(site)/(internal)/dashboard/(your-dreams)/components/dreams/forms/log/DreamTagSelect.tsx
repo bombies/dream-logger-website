@@ -36,6 +36,7 @@ const DreamTagSelect: FC<Props> = ({onModalOpen, isDisabled, tags, register}) =>
                 aria-label="Dream Tags"
                 register={register}
                 id="tags"
+                labelPlacement="outside"
                 items={tags.data.sort((a, b) => a.tag.localeCompare(b.tag))}
                 placeholder="Describe your dream with one or two words"
                 selectionMode={"multiple"}

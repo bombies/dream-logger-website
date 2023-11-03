@@ -34,6 +34,7 @@ const DreamCharacterSelect: FC<Props> = ({onModalOpen, isDisabled, characters, r
                 </Button>
             </div>
             <Select
+                labelPlacement="outside"
                 isDisabled={isDisabled}
                 aria-label="Dream Characters"
                 register={register}

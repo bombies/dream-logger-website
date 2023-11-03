@@ -22,7 +22,7 @@ const UserProfile: FC<Props> = ({placement}) => {
     return (
         <Dropdown
             showArrow
-            color="gradient"
+            className="border font-semibold border-primary/30 px-4 py-6 bg-gradient-to-b from-[#8F00FF30] to-[#27007940] backdrop-blur-md"
             closeOnSelect
             placement={placement ?? "bottom"}
             offset={10}

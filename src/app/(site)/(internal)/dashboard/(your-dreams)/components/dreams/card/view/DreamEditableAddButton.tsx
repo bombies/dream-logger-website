@@ -23,7 +23,7 @@ export default function DreamEditableAddButton<T extends object>({
     return (
         <Dropdown
             size="sm"
-            color="gradient"
+            className={"border font-semibold border-primary/30 px-4 py-6 bg-gradient-to-b from-[#8F00FF30] to-[#27007940] backdrop-blur-md"}
         >
             <DropdownTrigger>
                 <Button

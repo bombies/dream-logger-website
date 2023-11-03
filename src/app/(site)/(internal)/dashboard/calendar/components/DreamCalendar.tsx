@@ -85,6 +85,7 @@ const DreamCalendar: FC = () => {
                         isIconOnly
                         color="default"
                         variant="light"
+                        className="self-center"
                         onPress={displayPreviousMonth}
                     >
                         <DoubleBackIcon width={16}/>
@@ -177,6 +178,7 @@ const DreamCalendar: FC = () => {
                         isIconOnly
                         color="default"
                         variant="light"
+                        className="self-center"
                         onPress={displayNextMonth}
                     >
                         <DoubleForwardIcon width={16}/>
