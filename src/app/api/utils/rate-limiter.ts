@@ -1,3 +1,4 @@
+import requestIp, {RequestHeaders} from "request-ip";
 import {NextRequest, NextResponse} from "next/server";
 import redis from "@/app/api/utils/redis";
 import Redis from "ioredis";
@@ -18,7 +19,8 @@ export default class RateLimiter {
     private readonly redisClient: Redis
 
     constructor(
-        private readonly LIMIT_PER_SECOND = 10,
+        private readonly NAME: string,
+        private readonly REQUEST_LIMIT = 10,
         private readonly DURATION = 60,
         private readonly GEO_LIMITS: RateLimiterGeoLimit[] = []
     ) {
@@ -26,7 +28,21 @@ export default class RateLimiter {
     }
 
     public async handle(req: NextRequest, work: () => Promise<NextResponse>): Promise<NextResponse> {
-        const ipAddr = req.ip
+        const headers: RequestHeaders = {
+            "x-client-ip": req.headers.get("x-client-ip") ?? undefined,
+            "x-forwarded-for": req.headers.get("x-forwarded-for") ?? undefined,
+            "x-real-ip": req.headers.get("x-real-ip") ?? undefined,
+            "x-cluster-client-ip": req.headers.get("x-cluster-client-ip") ?? undefined,
+            "x-forwarded": req.headers.get("x-forwarded") ?? undefined,
+            "forwarded-for": req.headers.get("forwarded-for") ?? undefined,
+            "forwarded": req.headers.get("forwarded") ?? undefined,
+        }
+
+        const ipAddr = requestIp.getClientIp({
+            ...req,
+            headers
+        })
+
         if (!ipAddr)
             return buildResponse({
                 status: 403,
@@ -39,21 +55,22 @@ export default class RateLimiter {
         )
 
         const doRateLimitCheck = async (key: string, limitMax: number) => {
-            let count = Number(await this.redisClient.get(key) || 0)
+            const fullKey = `dreamlogger_${process.env.NODE_ENV}_ratelimit_${this.NAME}:${key}`
+            let count = Number(await this.redisClient.get(fullKey) || 0)
 
             if (count >= limitMax)
                 return this.tooManyRequests()
 
-            this.redisClient.incr(key)
-            this.redisClient.expire(key, this.DURATION)
+            this.redisClient.incr(fullKey)
+            this.redisClient.expire(fullKey, this.DURATION)
             return work()
         }
 
         if (!matchingLimit)
-            return doRateLimitCheck(`dreamlogger_${process.env.NODE_ENV}_ratelimit:${ipAddr}`, this.LIMIT_PER_SECOND)
+            return doRateLimitCheck(ipAddr, this.REQUEST_LIMIT)
         else
             return doRateLimitCheck(
-                `dreamlogger_${process.env.NODE_ENV}_ratelimit:${country}:${city}:${ipAddr}`,
+                `${country}:${city}:${ipAddr}`,
                 matchingLimit.limit
             )
     }

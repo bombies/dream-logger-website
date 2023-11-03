@@ -2,11 +2,21 @@
 
 import axios, {AxiosError} from "axios";
 import toast from "react-hot-toast";
-import {Dispatch, RefObject, SetStateAction} from "react";
 
 export async function fetcher<T>(url: string): Promise<T | undefined> {
     try {
-        return (await axios.get(url)).data;
+        return (await axios.get<T>(url)).data;
+    } catch (e) {
+        console.error(e)
+    }
+}
+
+export async function fetcherWithArgs<A extends Record<string, string>, R>(url: string, args?: MutatorArgs<A>): Promise<R | undefined> {
+    try {
+        if (args)
+            return (await axios.get<R>(url + `?${new URLSearchParams(args.arg.body).toString()}`)).data;
+        else
+            return (await axios.get<R>(url)).data;
     } catch (e) {
         console.error(e)
     }

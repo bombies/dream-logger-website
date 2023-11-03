@@ -8,7 +8,7 @@ import {Link} from "@nextui-org/react";
 const Footer: FC = () => {
     const pathName = usePathname();
 
-    return !["/signin", "/resetpassword"].some(word => word === pathName) && (
+    return !["/signin", "/resetpassword"].some(word => pathName.includes(word)) && (
         <footer className="bg-[#08000F] p-20 flex justify-between phone:flex-col phone:items-center">
             <div>
                 <Image

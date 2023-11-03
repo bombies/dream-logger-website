@@ -7,6 +7,7 @@ import {Button} from "@nextui-org/button";
 import {signIn} from "next-auth/react";
 import toast from "react-hot-toast";
 import {useRouter} from "next/navigation";
+import {Link, Spacer} from "@nextui-org/react";
 
 type FormProps = {
     email: string,
@@ -67,6 +68,11 @@ const LogInForm: FC = () => {
                 maxLength={32}
                 isDisabled={isAuthenticating}
             />
+            <Link
+                className="text-xs"
+                href="/signin/forgotpassword"
+                color="primary"
+            >Forgot your password?</Link>
             <Button
                 type="submit"
                 variant="shadow"

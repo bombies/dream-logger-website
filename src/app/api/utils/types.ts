@@ -4,6 +4,7 @@ import {ZodError} from "zod";
 export type RouteResponseType<T> = {
     status?: number,
     message?: string,
+    headers?: HeadersInit,
     data?: T,
 }
 
@@ -15,7 +16,8 @@ class RouteResponse<T> {
     public toNextResponse(): NextResponse<T | null> {
         return NextResponse.json(this.data.data ?? null, {
             status: this.data.status,
-            statusText: this.data.message
+            statusText: this.data.message,
+            headers: this.data.headers,
         })
     }
 }

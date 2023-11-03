@@ -4,7 +4,6 @@ import {FC, useCallback, useEffect, useMemo, useState} from "react";
 import {useRouter, useSearchParams} from "next/navigation";
 import useSWRMutation from "swr/mutation";
 import {handleAxiosError, patchMutator, postMutator} from "@/utils/client/client-utils";
-import {DecodeAndCompareDto, UpdatePasswordDto} from "@/app/api/me/resetpassword/reset-password.dto";
 import Input, {ValidationErrors} from "@/app/(site)/components/inputs/Input";
 import {Button} from "@nextui-org/button";
 import Image from "@/app/(site)/components/Image";
@@ -15,14 +14,28 @@ import {Divider} from "@nextui-org/divider";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {PASSWORD_REGEX} from "@/app/api/auth/register/register.dto";
 import toast from "react-hot-toast";
-import {signOut} from "next-auth/react";
+import {signOut, useSession} from "next-auth/react";
+import {
+    PasswordResetJWT,
+    UpdatePasswordDto
+} from "@/app/api/auth/forgotpassword/forgot-password.dto";
+import {ResetPasswordDecodeAndCompareDto} from "@/app/api/me/resetpassword/reset-password.dto";
+import {jwtDecode} from "jwt-decode";
+
+const useValidAuthenticatedResetSession = () => {
+    return useSWRMutation('/api/me/resetpassword', postMutator<ResetPasswordDecodeAndCompareDto, PasswordResetJWT | null>())
+}
 
 const useValidResetSession = () => {
-    return useSWRMutation('/api/me/resetpassword', postMutator<DecodeAndCompareDto, null>())
+    return useSWRMutation('/api/auth/forgotpassword', postMutator<ResetPasswordDecodeAndCompareDto, PasswordResetJWT | null>())
+}
+
+const UpdateAuthenticatedPassword = () => {
+    return useSWRMutation('/api/me/resetpassword', patchMutator<UpdatePasswordDto, null>())
 }
 
 const UpdatePassword = () => {
-    return useSWRMutation('/api/me/resetpassword', patchMutator<UpdatePasswordDto, null>())
+    return useSWRMutation('/api/auth/forgotpassword', patchMutator<UpdatePasswordDto & { email: string }, null>())
 }
 
 type FormProps = {
@@ -31,43 +44,72 @@ type FormProps = {
 }
 
 const ResetPasswordPage: FC = () => {
+    const {data: session, status: sessionStatus} = useSession()
     const searchParams = useSearchParams()
     const token = useMemo(() => searchParams.get("token"), [searchParams])
     const router = useRouter();
-    const {trigger: validateSession, data: validatedState} = useValidResetSession()
     const {register, handleSubmit} = useForm<FormProps>()
     const [password, setPassword] = useState("")
     const [confirmedPassword, setConfirmedPassword] = useState("")
     const [validationErrors, setValidationErrors] = useState<ValidationErrors>({})
-    const {trigger: updatePassword, isMutating: isUpdating} = UpdatePassword()
+
+    const {
+        trigger: validateAuthenticatedSession,
+        data: validatedAuthenticatedState
+    } = useValidAuthenticatedResetSession()
+    const {
+        trigger: updateAuthenticatedPassword,
+        isMutating: isUpdatingAuthenticatedPassword
+    } = UpdateAuthenticatedPassword()
+    const {trigger: validateSession, data: validatedState} = useValidResetSession()
+    const {trigger: updatePassword, isMutating: isUpdatingPassword} = UpdatePassword()
 
     const onSubmit: SubmitHandler<FormProps> = useCallback(async (data) => {
         if (Object.keys(validationErrors).length != 0 || !token || !token.length)
             return;
         const {password} = data
-        await updatePassword({
-            body: {password, token}
-        }).then(async () => {
-            toast.success("Successfully updated your password! Please sign in again.")
-            await signOut({
-                callbackUrl: "/settings/account"
+
+        if (sessionStatus === "authenticated")
+            await updateAuthenticatedPassword({
+                body: {password, token}
+            }).then(async () => {
+                toast.success("Successfully updated your password! Please sign in again.")
+                await signOut({
+                    callbackUrl: "/settings/account"
+                })
             })
-        })
-            .catch(handleAxiosError)
-    }, [token, updatePassword, validationErrors])
+                .catch(handleAxiosError)
+        else
+            await updatePassword({
+                body: {
+                    password, token,
+                    // @ts-ignore
+                    email: validatedState?.data.email ?? jwtDecode(token).email as string
+                }
+            })
+                .then(() => {
+                    toast.success("Successfully updated your password!")
+                    router.push("/signin")
+                })
+                .catch(handleAxiosError)
+    }, [router, sessionStatus, token, updateAuthenticatedPassword, updatePassword, validatedState?.data?.email, validationErrors])
 
     useEffect(() => {
         if (!token || !token.length)
             return router.back()
 
-        validateSession({body: {token}})
-            .catch(() => router.push("/"))
-    }, [router, searchParams, token, validateSession])
+        if (sessionStatus === "authenticated")
+            validateAuthenticatedSession({body: {token}})
+                .catch(() => router.push("/"))
+        else
+            validateSession({body: {token}})
+                .catch(() => router.push("/"))
+    }, [router, searchParams, sessionStatus, token, validateAuthenticatedSession, validateSession])
 
     return (
         <div className="flex justify-center py-24 h-full">
             {
-                validatedState?.status === 200 && (
+                validatedAuthenticatedState?.status || validatedState?.status === 200 && (
                     <Card className="w-1/3 tablet:w-3/4 phone:w-[90%]">
                         <CardBody>
                             <Link className="mx-auto my-6" href="/">
@@ -80,7 +122,7 @@ const ResetPasswordPage: FC = () => {
                             <form onSubmit={handleSubmit(onSubmit)}>
                                 <div className="space-y-6">
                                     <Input
-                                        isDisabled={isUpdating}
+                                        isDisabled={isUpdatingAuthenticatedPassword || isUpdatingPassword}
                                         register={register}
                                         isRequired
                                         id="password"
@@ -102,7 +144,7 @@ const ResetPasswordPage: FC = () => {
                                         }}
                                     />
                                     <Input
-                                        isDisabled={isUpdating}
+                                        isDisabled={isUpdatingAuthenticatedPassword || isUpdatingPassword}
                                         register={register}
                                         isRequired
                                         id="confirmedPassword"
@@ -126,8 +168,8 @@ const ResetPasswordPage: FC = () => {
                                     <Divider/>
                                     <Button
                                         fullWidth
-                                        isDisabled={isUpdating}
-                                        isLoading={isUpdating}
+                                        isDisabled={isUpdatingAuthenticatedPassword || isUpdatingPassword}
+                                        isLoading={isUpdatingAuthenticatedPassword || isUpdatingPassword}
                                         type="submit"
                                     >
                                         Submit

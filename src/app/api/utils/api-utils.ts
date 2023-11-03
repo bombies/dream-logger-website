@@ -20,7 +20,8 @@ type PrismaErrorOptions = {
 }
 
 type RateLimiterOptions = {
-    LIMIT_PER_SECOND?: number,
+    NAME: string,
+    REQUEST_LIMIT?: number,
     DURATION?: number,
     GEO_LIMITS?: RateLimiterGeoLimit[]
 }
@@ -32,9 +33,9 @@ type AuthenticatedRequestOptions = {
     rateLimiter?: RateLimiterOptions
 }
 
-export const rateLimited = async (req: NextRequest, logic: () => Promise<NextResponse>, options?: RateLimiterOptions): Promise<NextResponse> => {
-    const rateLimiter = new RateLimiter(options?.LIMIT_PER_SECOND, options?.DURATION, options?.GEO_LIMITS)
-    return rateLimiter.handle(req, logic)
+export const rateLimited = async (req: NextRequest, logic: () => Promise<NextResponse>, options: RateLimiterOptions): Promise<NextResponse> => {
+    const rateLimiter = new RateLimiter(options?.NAME, options?.REQUEST_LIMIT, options?.DURATION, options?.GEO_LIMITS)
+    return await rateLimiter.handle(req, logic)
 }
 
 export const authenticated = async (logic: (session: Session, member?: Member) => Promise<NextResponse>, options?: AuthenticatedRequestOptions): Promise<NextResponse> => {
@@ -60,13 +61,13 @@ export const authenticated = async (logic: (session: Session, member?: Member) =
                 })
 
             if (options.request && options.rateLimiter)
-                return await rateLimited(options.request, () => logic(session, member))
+                return await rateLimited(options.request, () => logic(session, member), options.rateLimiter)
             else
                 return await logic(session, member)
         }
 
         if (options?.request && options?.rateLimiter)
-            return await rateLimited(options.request, () => logic(session))
+            return await rateLimited(options.request, () => logic(session), options.rateLimiter)
         else
             return await logic(session)
     } catch (e) {

@@ -9,7 +9,7 @@ import axios, {AxiosError} from "axios";
 import useSWRMutation from "swr/mutation";
 import {signIn} from "next-auth/react";
 import toast from "react-hot-toast";
-import {Checkbox, Link} from "@nextui-org/react";
+import {Checkbox, Link, Spacer} from "@nextui-org/react";
 import {Divider} from "@nextui-org/divider";
 import GoogleAuthButton from "@/app/(site)/signin/components/GoogleAuthButton";
 
@@ -180,7 +180,8 @@ const RegisterForm: FC = () => {
                     onValueChange={setTermsAccepted}
                     size="sm"
                 >
-                    You have read and agreed to the <Link className="text-sm " isExternal showAnchorIcon href="/terms">terms of service</Link>
+                    You have read and agreed to the <Link className="text-sm " isExternal showAnchorIcon href="/terms">terms
+                    of service</Link>
                 </Checkbox>
                 <Button
                     type="submit"
