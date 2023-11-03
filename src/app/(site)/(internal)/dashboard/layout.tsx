@@ -5,14 +5,15 @@ import DreamsProvider from "@/app/(site)/(internal)/dashboard/(your-dreams)/comp
 
 export const metadata: Metadata = {
     title: 'Dream Logger - Dashboard',
-    description: 'Your Dream Logger dashboard'
+    description: 'Your Dream Logger dashboard',
 }
 
 const DashboardLayout: FC<PropsWithChildren> = ({children}) => {
     return (
         <main className="relative flex min-h-screen">
-            <DashboardSidebar />
-            <div className="flex-grow py-32 w-screen overflow-hidden phone:pt-32 flex flex-col phone:items-center phone-min:ml-16 tablet-min:ml-32">
+            <DashboardSidebar/>
+            <div
+                className="flex-grow py-32 w-screen overflow-hidden phone:pt-32 flex flex-col phone:items-center phone-min:ml-16 tablet-min:ml-32">
                 <DreamsProvider>
                     {children}
                 </DreamsProvider>

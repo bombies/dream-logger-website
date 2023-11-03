@@ -13,8 +13,16 @@ const inter = Inter({subsets: ['latin']})
 export const metadata: Metadata = {
     title: 'Dream Logger',
     description: 'Your Personal Dream Journal and Character Odyssey',
+    metadataBase: new URL(process.env.CANONICAL_URL ?? ""),
     openGraph: {
-        images: '/opengraph-image.png'
+        title: "DreamLogger",
+        description: "Your Personal Dream Journal and Character Odyssey",
+        images: 'url/opengraph-image.png'
+    },
+    twitter: {
+        title: "DreamLogger",
+        description: "Your Personal Dream Journal and Character Odyssey",
+        images: 'url/opengraph-image.png'
     }
 }
 
