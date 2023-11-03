@@ -1,10 +1,11 @@
-import {NextResponse} from "next/server";
+import {NextRequest, NextResponse} from "next/server";
 import {getServerSession, Session} from "next-auth";
 import authOptions from "@/app/api/auth/[...nextauth]/utils";
 import {buildResponse} from "@/app/api/utils/types";
 import {Member, Prisma} from "@prisma/client";
 import prisma from "@/libs/prisma";
 import PrismaClientKnownRequestError = Prisma.PrismaClientKnownRequestError;
+import RateLimiter, {RateLimiterGeoLimit} from "@/app/api/utils/rate-limiter";
 
 export type RouteContext<T extends { [K: string]: string }> = {
     params: T
@@ -18,9 +19,22 @@ type PrismaErrorOptions = {
 
 }
 
+type RateLimiterOptions = {
+    LIMIT_PER_SECOND?: number,
+    DURATION?: number,
+    GEO_LIMITS?: RateLimiterGeoLimit[]
+}
+
 type AuthenticatedRequestOptions = {
-    fetchMember?: boolean
-    prismaErrors?: PrismaErrorOptions
+    request?: NextRequest,
+    fetchMember?: boolean,
+    prismaErrors?: PrismaErrorOptions,
+    rateLimiter?: RateLimiterOptions
+}
+
+export const rateLimited = async (req: NextRequest, logic: () => Promise<NextResponse>, options?: RateLimiterOptions): Promise<NextResponse> => {
+    const rateLimiter = new RateLimiter(options?.LIMIT_PER_SECOND, options?.DURATION, options?.GEO_LIMITS)
+    return rateLimiter.handle(req, logic)
 }
 
 export const authenticated = async (logic: (session: Session, member?: Member) => Promise<NextResponse>, options?: AuthenticatedRequestOptions): Promise<NextResponse> => {
@@ -45,10 +59,16 @@ export const authenticated = async (logic: (session: Session, member?: Member) =
                     message: "Couldn't find information for your user!"
                 })
 
-            return await logic(session, member)
+            if (options.request && options.rateLimiter)
+                return await rateLimited(options.request, () => logic(session, member))
+            else
+                return await logic(session, member)
         }
 
-        return await logic(session)
+        if (options?.request && options?.rateLimiter)
+            return await rateLimited(options.request, () => logic(session))
+        else
+            return await logic(session)
     } catch (e) {
         const prismaError = prismaErrorHandler(e, options?.prismaErrors)
         if (prismaError)
