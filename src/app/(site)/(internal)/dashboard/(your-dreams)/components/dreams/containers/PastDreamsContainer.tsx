@@ -15,7 +15,7 @@ import {CardBody} from "@nextui-org/card";
 import {useRouter} from "next/navigation";
 import CloudIcon from "@/app/(site)/components/icons/CloudIcon";
 import useDayDreams from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/hooks/useDayDreams";
-import {useTutorialsData} from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/TutorialsProvider";
+import {useTutorialsData} from "@/app/(site)/(internal)/dashboard/components/TutorialsProvider";
 
 export type GroupedDreams = {
     [K: string]: Dream[]

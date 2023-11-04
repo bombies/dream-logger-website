@@ -1,5 +1,5 @@
 import {FC, PropsWithChildren} from "react";
-import DashboardSidebar from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/DashboardSidebar";
+import DashboardSidebar from "@/app/(site)/(internal)/dashboard/components/DashboardSidebar";
 import {Metadata} from "next";
 import DreamsProvider from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/DreamsProvider";
 

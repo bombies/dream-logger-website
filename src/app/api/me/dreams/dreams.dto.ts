@@ -1,5 +1,11 @@
 import {z} from "zod";
 import {Dream, DreamCharacter, DreamTag, Member} from "@prisma/client";
+import {zfd} from "zod-form-data";
+
+export const FetchDreamsSchema = zfd.formData({
+    tags: z.string().optional(),
+    characters: z.string().optional()
+})
 
 export type PostDreamDto = {
     title: string,

@@ -14,6 +14,7 @@ const Modal: FC<Props> = ({classNames, header, footer, title, subtitle, children
             placement="center"
             scrollBehavior="outside"
             classNames={{
+                wrapper: "overflow-x-hidden",
                 base: "py-6 px-3 phone:px-0 bg-secondary",
                 closeButton: "hover:bg-primary/20",
                 ...classNames
@@ -23,7 +24,7 @@ const Modal: FC<Props> = ({classNames, header, footer, title, subtitle, children
             <ModalContent>
                 {(title || subtitle || header) && (
                     <ModalHeader>
-                        <div>
+                        <div className="break-all">
                             {title && <h1 className="text-4xl">{title}</h1>}
                             {subtitle && <h3 className="text-sm text-subtext mt-3">{subtitle}</h3>}
                             {header}

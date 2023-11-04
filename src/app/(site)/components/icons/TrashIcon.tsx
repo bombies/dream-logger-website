@@ -6,8 +6,8 @@ const TrashIcon = ({className, fill, width, height}: IconProps) => (
     <svg
         xmlns="http://www.w3.org/2000/svg"
         className={clsx("self-center", className)}
-        width={width ?? 24}
-        height={height ?? width ?? 24}
+        width={width ?? 16}
+        height={height ?? width ?? 16}
         fill="none"
         viewBox="0 0 24 24"
     >

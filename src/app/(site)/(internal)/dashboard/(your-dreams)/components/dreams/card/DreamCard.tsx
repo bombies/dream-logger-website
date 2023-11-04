@@ -60,20 +60,20 @@ const DreamCard: FC<Props> = ({isDisabled, dream, allTags, allCharacters, optimi
                 }}
                 classNames={{
                     base: "hover:scale-105",
-                    header: "bg-[#0C0015] pt-6 px-8 pb-0 z-1",
-                    body: "bg-[#0C0015] px-8 pt-4",
-                    footer: "bg-[#0C0015] px-8",
+                    header: "bg-[#0C0015] pt-6 px-8 phone:px-4 pb-0 z-1",
+                    body: "bg-[#0C0015] px-8 phone:px-4 pt-4 phone:pt-2",
+                    footer: "bg-[#0C0015] px-8 phone:px-4",
                 }}>
                 <CardHeader className="flex justify-between">
-                    <h2 className="text-3xl tablet:text-xl font-semibold whitespace-nowrap overflow-hidden overflow-ellipsis max-w-[80%] tablet:max-w-[70%] phone:max-w-[50%]">{dream.title}</h2>
-                    <p className="text-subtext text-lg self-end">
+                    <h2 className="text-3xl tablet:text-xl font-semibold whitespace-nowrap overflow-hidden overflow-ellipsis max-w-[80%] tablet:max-w-[70%] phone:max-w-[75%]">{dream.title}</h2>
+                    <p className="text-subtext text-lg phone:text-sm self-end">
                         {new Date(dream.createdAt.toString()).toLocaleTimeString("en-US", {
                             timeStyle: 'short'
                         })}
                     </p>
                 </CardHeader>
                 <CardBody>
-                    <p className="mb-4 text-subtext max-w-[85%] overflow-hidden whitespace-nowrap overflow-ellipsis">
+                    <p className="mb-4 phone:text-sm text-subtext max-w-[85%] overflow-hidden whitespace-nowrap overflow-ellipsis">
                         {dream.description.substring(0, Math.min(dream.description.length, 100))}
                     </p>
                 </CardBody>

@@ -2,9 +2,9 @@ import {authenticated} from "@/app/api/utils/api-utils";
 import dreamsService from "@/app/api/me/dreams/dreams.service";
 import {PostDreamDto} from "@/app/api/me/dreams/dreams.dto";
 
-export const GET = async () => {
+export const GET = async (req: Request) => {
     return authenticated((session) => (
-        dreamsService.fetchDreams(session)
+        dreamsService.fetchDreams(session, new URL(req.url).searchParams)
     ))
 }
 

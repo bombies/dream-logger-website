@@ -27,7 +27,7 @@ const DashboardSidebar: FC = () => {
                 <SidebarItem
                     startContent={<TagIcon/>}
                     title="Tags & Characters"
-                    href="/dashboard"
+                    href="/dashboard/tags"
                 />
                 <SidebarItem
                     startContent={<SearchFilledIcon/>}

@@ -6,7 +6,7 @@ import CurrentDreamsContainer
 import PastDreamsContainer
     from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/containers/PastDreamsContainer";
 import {Step, Steps} from "intro.js-react";
-import {useTutorialsData} from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/TutorialsProvider";
+import {useTutorialsData} from "@/app/(site)/(internal)/dashboard/components/TutorialsProvider";
 import useComponentDidMount from "@/app/(site)/hooks/useComponentDidMount";
 
 const steps: Step[] = [

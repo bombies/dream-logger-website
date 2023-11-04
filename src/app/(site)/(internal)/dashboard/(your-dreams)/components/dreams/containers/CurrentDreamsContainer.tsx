@@ -7,7 +7,7 @@ import DreamCardSkeleton
     from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/card/DreamCardSkeleton";
 import DreamContainer
     from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/containers/DreamContainer";
-import {useTutorialsData} from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/TutorialsProvider";
+import {useTutorialsData} from "@/app/(site)/(internal)/dashboard/components/TutorialsProvider";
 
 const CurrentDreamsContainer: FC = () => {
     const [tutorialsState] = useTutorialsData()

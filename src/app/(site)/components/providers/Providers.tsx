@@ -9,7 +9,7 @@ import {Session} from "next-auth";
 import {AppProgressBar} from "next-nprogress-bar";
 import {Toaster} from "react-hot-toast";
 import UserProvider from "@/app/(site)/components/providers/user-data/UserProvider";
-import TutorialsProvider from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/TutorialsProvider";
+import TutorialsProvider from "@/app/(site)/(internal)/dashboard/components/TutorialsProvider";
 
 type Props = PropsWithChildren & {
     session: Session | null;

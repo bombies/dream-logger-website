@@ -4,7 +4,7 @@ import prisma from "@/libs/prisma";
 import {NextResponse} from "next/server";
 import {Session} from "next-auth";
 import {
-    DreamWithRelations, PatchDreamCharacterDto, PatchDreamCharacterSchema,
+    DreamWithRelations, FetchDreamsSchema, PatchDreamCharacterDto, PatchDreamCharacterSchema,
     PatchDreamDto, PatchDreamSchema, PatchDreamTagDto, PatchDreamTagSchema,
     PostDreamCharacterDto,
     PostDreamCharacterSchema,
@@ -16,11 +16,37 @@ import {
 
 class DreamsService {
 
-    public async fetchDreams(session: Session): Promise<NextResponse<Dream[] | null>> {
+    public async fetchDreams(session: Session, searchParams?: URLSearchParams): Promise<NextResponse<DreamWithRelations[] | null>> {
+        const paramsValidated = FetchDreamsSchema.safeParse(searchParams)
+        if (!paramsValidated.success)
+            return buildFailedValidationResponse(paramsValidated.error)
+
+        const {tags: tagsString, characters: charactersString} = paramsValidated.data
+        const tags = tagsString?.split(",")
+        const characters = charactersString?.split(",")
+
         const member = session.user
         const dreams = await prisma.dream.findMany({
             where: {
-                userId: member.id
+                userId: member.id,
+                tags: tags && {
+                    some: {
+                        id: {
+                            in: tags
+                        }
+                    }
+                },
+                characters: characters && {
+                    some: {
+                        id: {
+                            in: characters
+                        }
+                    }
+                }
+            },
+            include: (tags || characters) && {
+                tags: tags !== undefined,
+                characters: characters !== undefined
             }
         });
 
