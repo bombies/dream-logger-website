@@ -68,9 +68,10 @@ export default function Home() {
                     </div>
                 </div>
                 <Image
-                    src="/images/hero-bg.jpg"
+                    priority
+                    src="/images/bg-2.png"
                     alt=''
-                    className="!absolute w-full h-full top-0 left-0 opacity-10 z-[1] pointer-events-none"
+                    className="!absolute w-full h-full top-0 left-0 opacity-30 z-[1] pointer-events-none"
                     fill
                     style={{
                         objectFit: "cover"
