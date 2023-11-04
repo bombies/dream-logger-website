@@ -17,6 +17,7 @@ import clsx from "clsx";
 import Image from "@/app/(site)/components/Image";
 import {useSession} from "next-auth/react";
 import UserProfile from "@/app/(site)/components/UserProfile";
+import SignInIcon from "@/app/(site)/components/icons/SignInIcon";
 
 const NavBar: FC = () => {
     const pathName = usePathname();
@@ -58,6 +59,7 @@ const NavBar: FC = () => {
                                 <Button
                                     color="secondary"
                                     onPress={() => router.push("/signin")}
+                                    startContent={<SignInIcon />}
                                 >
                                     Log In
                                 </Button>
@@ -107,6 +109,7 @@ const NavBar: FC = () => {
                                     color="secondary"
                                     fullWidth
                                     onPress={() => router.push("/signin")}
+                                    startContent={<SignInIcon />}
                                 >
                                     Log In
                                 </Button>

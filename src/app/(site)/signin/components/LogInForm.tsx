@@ -8,6 +8,7 @@ import {signIn} from "next-auth/react";
 import toast from "react-hot-toast";
 import {useRouter} from "next/navigation";
 import {Link, Spacer} from "@nextui-org/react";
+import SignInIcon from "@/app/(site)/components/icons/SignInIcon";
 
 type FormProps = {
     email: string,
@@ -78,6 +79,7 @@ const LogInForm: FC = () => {
                 variant="shadow"
                 isDisabled={isAuthenticating}
                 isLoading={isAuthenticating}
+                startContent={<SignInIcon/>}
             >Sign In</Button>
         </form>
     )

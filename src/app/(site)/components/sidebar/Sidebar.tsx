@@ -49,9 +49,9 @@ const Sidebar: FC<Props> = ({children, headerText}) => {
                 >
                     {
                         isOpen ?
-                            <CollapseIcon/>
+                            <CollapseIcon className="text-white" width={16}/>
                             :
-                            <ExpandIcon/>
+                            <ExpandIcon className="text-white" width={16}/>
                     }
                 </Button>
             </div>

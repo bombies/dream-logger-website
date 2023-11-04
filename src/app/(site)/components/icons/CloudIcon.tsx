@@ -7,14 +7,14 @@ const CloudIcon = ({width, className, fill, height, svgClassName}: IconProps) =>
         className={svgClassName}
         xmlns="http://www.w3.org/2000/svg"
         width={width ?? 24}
-        height={height ?? width ?? 24}
+        height={height ?? width ?? 25}
         fill="none"
-        viewBox="0 0 24 24"
+        viewBox="0 0 24 25"
     >
         <path
             className={clsx("self-center", className)}
             fill={clsx(fill ?? "currentColor")}
-            d="M16.286 20C19.442 20 22 17.472 22 14.353c0-2.472-1.607-4.573-3.845-5.338C17.837 6.194 15.415 4 12.476 4 9.32 4 6.762 6.528 6.762 9.647c0 .69.125 1.35.354 1.962a4.351 4.351 0 0 0-.83-.08C3.919 11.53 2 13.426 2 15.765 2 18.104 3.919 20 6.286 20h10Z"
+            d="M15.2 4.968c-2.8 0-5.3 1.5-6.7 3.9-.5-.1-1-.2-1.5-.2-3.3 0-6 2.8-6 6.1s2.7 6.2 6 6.2h8.2c4.3 0 7.8-3.6 7.8-8s-3.5-8-7.8-8Z"
         />
     </svg>
 )

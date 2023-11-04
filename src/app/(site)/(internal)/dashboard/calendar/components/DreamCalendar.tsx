@@ -79,7 +79,7 @@ const DreamCalendar: FC = () => {
     return (
         <div id="calendar-root" className="flex flex-col justify-center w-3/4 laptop:w-5/6 phone:w-[90%]">
             <div id="calendar-nav" className="flex justify-center mb-12 gap-4">
-                <div className="flex w-3/4 phone:w-full gap-2">
+                <div className="flex w-3/4 phone:w-full items-center gap-2">
                     <Button
                         disableRipple
                         isIconOnly
@@ -93,8 +93,8 @@ const DreamCalendar: FC = () => {
                     <Select
                         classNames={{
                             trigger: "py-0",
+                            label: "text-primary"
                         }}
-                        labelPlacement="outside"
                         label="Month"
                         id="month_selector"
                         items={selectMonths}
@@ -133,9 +133,9 @@ const DreamCalendar: FC = () => {
                     </Select>
                     <Select
                         classNames={{
-                            trigger: "py-0"
+                            trigger: "py-0",
+                            label: "text-primary"
                         }}
-                        labelPlacement="outside"
                         label="Year"
                         aria-label="Calendar Year"
                         id="year_selector"

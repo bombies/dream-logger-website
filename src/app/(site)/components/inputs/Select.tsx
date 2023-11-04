@@ -23,7 +23,7 @@ export default function Select<T>({
         color: "primary",
         size: "lg",
         classNames: {
-            trigger: clsx("h-fit rounded-xl bg-[#9E23FF1A]/10 border-1 border-[#3E0070] hover:!bg-[#9E23FF1A]/20 focus-within:!bg-[#9E23FF1A]/20", classNames?.trigger),
+            trigger: clsx("bg-[#9E23FF1A]/10 border-1 border-[#3E0070] hover:!bg-[#9E23FF1A]/20 focus-within:!bg-[#9E23FF1A]/20", classNames?.trigger),
             label: clsx("text-lg text-[#EAE0FF]", classNames?.label),
         },
         listboxProps: {

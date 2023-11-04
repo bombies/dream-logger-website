@@ -14,10 +14,9 @@ const DashboardIcon = ({className, fill, width, height}: IconProps) => (
             className={clsx("self-center", className)}
             fill={clsx(fill ?? "currentColor")}
         >
-            <rect width={9} height={11} x={2} y={2} rx={2}/>
-            <rect width={9} height={7} x={13} y={2} rx={2}/>
-            <rect width={9} height={7} x={2} y={15} rx={2}/>
-            <rect width={9} height={11} x={13} y={11} rx={2}/>
+            <path
+                d="M6.3 2H11v20H6.3C3.9 22 2 20.1 2 17.7V6.3C2 3.9 3.9 2 6.3 2ZM22 6.3v1.5h-9V2h4.7C20.1 2 22 3.9 22 6.3ZM22 9.7h-9v4.5h9V9.7ZM13 16.3h9v1.5c0 2.3-1.9 4.3-4.3 4.3H13v-5.8Z"
+            />
         </g>
     </svg>
 )
