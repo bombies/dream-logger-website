@@ -116,7 +116,7 @@ const GenericTagContainer: FC<Props> = ({state, stateType, allTags, allCharacter
                 </Tooltip>
             </div>
             {
-                state.data.length && (
+                state.data.length > 0 && (
                     <div className="w-96 phone:w-full">
                         <Input
                             label="Search..."
@@ -134,7 +134,7 @@ const GenericTagContainer: FC<Props> = ({state, stateType, allTags, allCharacter
                     state.loading ? (
                         <Spinner/>
                     ) : (
-                        tagElements.length ?
+                        tagElements.length > 0 ?
                             tagElements
                             :
                             <p className="text-xl p-12 bg-secondary rounded-3xl col-span-2 phone:col-span-1">
