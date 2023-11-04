@@ -17,6 +17,10 @@ import SortIcon from "@/app/(site)/components/icons/SortIcon";
 import {Chip} from "@nextui-org/chip";
 import Pagination from "@/app/(site)/components/Pagination";
 import usePagination from "@/app/(site)/hooks/usePagination";
+import PlusIcon from "@/app/(site)/components/icons/PlusIcon";
+import AddTagModal from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/forms/tags/AddTagModal";
+import AddCharacterModal
+    from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/forms/characters/AddCharacterModal";
 
 type Props = {
     state: DreamTagsState | DreamCharactersState,
@@ -31,6 +35,7 @@ export enum SortOrder {
 const MAX_ITEMS_PER_PAGE = 8;
 
 const GenericTagContainer: FC<Props> = ({state, stateType}) => {
+    const [addModalOpen, setAddModalOpen] = useState(false)
     const [tagSearch, setTagSearch] = useState<string>()
     const [sortOrder, setSortOrder] = useState<SortOrder>()
     const {paginatedData, totalPages, setCurrentPage} = usePagination<DreamTag | DreamCharacter>(state.data, MAX_ITEMS_PER_PAGE, {
@@ -82,78 +87,98 @@ const GenericTagContainer: FC<Props> = ({state, stateType}) => {
 
 
     return (
-        <div className="w-5/6 bg-primary/20 p-12 rounded-3xl ">
-            <div className="flex phone:flex-col items-center gap-4 mb-6">
-                <div className="flex gap-2">
-                    <h2 className="text-3xl phone:text-xl font-bold">Your {stateType === 'tags' ? "Tags" : "Characters"}</h2>
-                    <Chip className="self-start" size="sm" variant="flat">
-                        {state.data.length}
-                    </Chip>
-                </div>
-                <Tooltip
-                    content="Sort"
-                    className="bg-secondary/90 border border-primary/40 backdrop-blur-md p-3"
-                    closeDelay={10}
-                >
-                    <Button
-                        isIconOnly
-                        onPress={switchSortOrder}
-                        variant="flat"
-                        size="sm"
-                    >
-                        {sortOrder === undefined ? (<SortIcon/>) : (
-                            sortOrder === SortOrder.ASCENDING ? (<SortAlphaUpIcon/>)
-                                :
-                                (<SortAlphaDownIcon/>)
-                        )}
-                    </Button>
-                </Tooltip>
-            </div>
+        <Fragment>
             {
-                state.data.length > 0 && (
-                    <div className="w-96 phone:w-full">
-                        <Input
-                            label="Search..."
-                            startContent={<SearchIcon/>}
-                            value={tagSearch}
-                            onValueChange={setTagSearch}
-                            isClearable
-                        />
-                        <Spacer y={6}/>
-                    </div>
+                stateType === "tags" ? (
+                    <AddTagModal isOpen={addModalOpen} onClose={() => setAddModalOpen(false)}/>
+                ) : (
+                    <AddCharacterModal isOpen={addModalOpen} onClose={() => setAddModalOpen(false)}/>
                 )
             }
-            <div className="grid grid-cols-4 tablet:grid-cols-2 phone:grid-cols-1 gap-6">
+            <div className="w-5/6 bg-primary/20 p-12 rounded-3xl ">
+                <div className="flex phone:flex-col items-center gap-8 phone:gap-4 mb-6">
+                    <div className="flex gap-2">
+                        <h2 className="text-3xl phone:text-xl font-bold">Your {stateType === 'tags' ? "Tags" : "Characters"}</h2>
+                        <Chip className="self-start" size="sm" variant="flat">
+                            {state.data.length}
+                        </Chip>
+                    </div>
+                    <div className="flex gap-4">
+                        <Tooltip
+                            content="Sort"
+                            className="bg-secondary/90 border border-primary/40 backdrop-blur-md p-3"
+                            closeDelay={10}
+                        >
+                            <Button
+                                isIconOnly
+                                onPress={switchSortOrder}
+                                variant="flat"
+                                size="sm"
+                            >
+                                {sortOrder === undefined ? (<SortIcon/>) : (
+                                    sortOrder === SortOrder.ASCENDING ? (<SortAlphaUpIcon/>)
+                                        :
+                                        (<SortAlphaDownIcon/>)
+                                )}
+                            </Button>
+                        </Tooltip>
+                        <Button
+                            isIconOnly
+                            variant="shadow"
+                            className="rounded-full"
+                            size="sm"
+                            onPress={() => setAddModalOpen(true)}
+                        >
+                            <PlusIcon/>
+                        </Button>
+                    </div>
+                </div>
                 {
-                    state.loading ? (
-                        <Spinner/>
-                    ) : (
-                        tagElements.length > 0 ?
-                            tagElements
-                            :
-                            <p className="text-xl p-12 bg-secondary rounded-3xl col-span-2 phone:col-span-1">
-                                There is nothing here...
-                            </p>
+                    state.data.length > 0 && (
+                        <div className="w-96 phone:w-full">
+                            <Input
+                                label="Search..."
+                                startContent={<SearchIcon/>}
+                                value={tagSearch}
+                                onValueChange={setTagSearch}
+                                isClearable
+                            />
+                            <Spacer y={6}/>
+                        </div>
+                    )
+                }
+                <div className="grid grid-cols-4 tablet:grid-cols-2 phone:grid-cols-1 gap-6">
+                    {
+                        state.loading ? (
+                            <Spinner/>
+                        ) : (
+                            tagElements.length > 0 ?
+                                tagElements
+                                :
+                                <p className="text-xl p-12 bg-secondary rounded-3xl col-span-2 phone:col-span-1">
+                                    There is nothing here...
+                                </p>
+                        )
+                    }
+                </div>
+                {
+                    totalPages > 1 && (
+                        <Fragment>
+                            <Spacer y={6}/>
+                            <Pagination
+                                showControls
+                                total={totalPages}
+                                classNames={{
+                                    base: "phone:flex phone:justify-center phone:!max-w-full"
+                                }}
+                                initialPage={1}
+                                onChange={setCurrentPage}
+                            />
+                        </Fragment>
                     )
                 }
             </div>
-            {
-                totalPages > 1 && (
-                    <Fragment>
-                        <Spacer y={6}/>
-                        <Pagination
-                            showControls
-                            total={totalPages}
-                            classNames={{
-                                base: "phone:flex phone:justify-center phone:!max-w-full"
-                            }}
-                            initialPage={1}
-                            onChange={setCurrentPage}
-                        />
-                    </Fragment>
-                )
-            }
-        </div>
+        </Fragment>
     )
 }
 
