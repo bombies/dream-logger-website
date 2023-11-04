@@ -15,8 +15,10 @@ import useDayDreams from "@/app/(site)/(internal)/dashboard/(your-dreams)/compon
 import {Button} from "@nextui-org/button";
 import DoubleBackIcon from "@/app/(site)/components/icons/DoubleBackIcon";
 import DoubleForwardIcon from "@/app/(site)/components/icons/DoubleForwardIcon";
+import {useTutorialsData} from "@/app/(site)/(internal)/dashboard/components/TutorialsProvider";
 
 const DreamCalendar: FC = () => {
+    const [tutorialsState] = useTutorialsData()
     const [[currentYear, currentMonth], setCurrentYearAndMonth] = useState<[number, number]>([new Date().getFullYear(), new Date().getMonth() + 1]);
 
     let currentMonthDays = createDaysForCurrentMonth(currentYear, currentMonth);
@@ -81,6 +83,7 @@ const DreamCalendar: FC = () => {
             <div id="calendar-nav" className="flex justify-center mb-12 gap-4">
                 <div className="flex w-3/4 phone:w-full items-center gap-2">
                     <Button
+                        isDisabled={!tutorialsState?.dreamCalendar}
                         disableRipple
                         isIconOnly
                         color="default"
@@ -91,6 +94,7 @@ const DreamCalendar: FC = () => {
                         <DoubleBackIcon width={16}/>
                     </Button>
                     <Select
+                        isDisabled={!tutorialsState?.dreamCalendar}
                         classNames={{
                             trigger: "py-0",
                             label: "text-primary"
@@ -132,6 +136,7 @@ const DreamCalendar: FC = () => {
                         )}
                     </Select>
                     <Select
+                        isDisabled={!tutorialsState?.dreamCalendar}
                         classNames={{
                             trigger: "py-0",
                             label: "text-primary"
@@ -174,6 +179,7 @@ const DreamCalendar: FC = () => {
                         )}
                     </Select>
                     <Button
+                        isDisabled={!tutorialsState?.dreamCalendar}
                         disableRipple
                         isIconOnly
                         color="default"

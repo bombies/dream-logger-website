@@ -12,10 +12,10 @@ import DreamCardSkeleton
 import {Divider} from "@nextui-org/divider";
 import Card from "@/app/(site)/components/Card";
 import {CardBody} from "@nextui-org/card";
-import {useRouter} from "next/navigation";
 import CloudIcon from "@/app/(site)/components/icons/CloudIcon";
 import useDayDreams from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/hooks/useDayDreams";
 import {useTutorialsData} from "@/app/(site)/(internal)/dashboard/components/TutorialsProvider";
+import Link from "next/link";
 
 export type GroupedDreams = {
     [K: string]: Dream[]
@@ -30,7 +30,6 @@ const NUMBER_OF_DAYS = 7
 
 const PastDreamsContainer: FC = () => {
     const [tutorialsState] = useTutorialsData()
-    const router = useRouter()
     const {dreams} = useDreamsData()
     const latestDate = useEndOfDay({
         dayOffset: -1
@@ -69,22 +68,23 @@ const PastDreamsContainer: FC = () => {
                 <Fragment>
                     {dreamItems}
                     <Divider className="my-3"/>
-                    <Card
-                        onPress={() => router.push("/dashboard/calendar")}
-                        isPressable
-                        isBlurred
-                        classNames={{
-                            base: "hover:scale-105",
-                            body: "bg-secondary py-8"
-                        }}
-                    >
-                        <CardBody>
-                            <div className="flex gap-4">
-                                <CloudIcon width={32}/>
-                                <p className="font-semibold text-lg phone:text-medium self-center">View All Dreams</p>
-                            </div>
-                        </CardBody>
-                    </Card>
+                    <Link href="/dashboard/calendar">
+                        <Card
+                            isPressable
+                            isBlurred
+                            classNames={{
+                                base: "hover:scale-105",
+                                body: "bg-secondary py-8"
+                            }}
+                        >
+                            <CardBody>
+                                <div className="flex gap-4">
+                                    <CloudIcon width={32}/>
+                                    <p className="font-semibold text-lg phone:text-medium self-center">View All Dreams</p>
+                                </div>
+                            </CardBody>
+                        </Card>
+                    </Link>
                 </Fragment>
                 :
                 <h3 className="text-center font-light text-3xl tablet:text-xl text-subtext/30 py-6">You have no previous

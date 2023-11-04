@@ -15,6 +15,7 @@ import {Dream} from "@prisma/client";
 import {OptimisticWorker} from "@/utils/client/client-data-utils";
 import LogDreamCard from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/LogDreamCard";
 import PlusIcon from "@/app/(site)/components/icons/PlusIcon";
+import {useTutorialsData} from "@/app/(site)/(internal)/dashboard/components/TutorialsProvider";
 
 type Props = {
     dreams?: DayDreams
@@ -24,6 +25,7 @@ type Props = {
 }
 
 const DreamCalendarDay: FC<Props> = ({dreams, day, optimisticRemove, isToday}) => {
+    const [tutorialsState] = useTutorialsData()
     const [modalOpen, setModalOpen] = useState(false)
     const dateStrSplit = day.dateString.split("-")
 
@@ -52,12 +54,13 @@ const DreamCalendarDay: FC<Props> = ({dreams, day, optimisticRemove, isToday}) =
                 </DreamContainer>
             </Modal>
             <div
+                id={isToday ? "#dream_calendar_day_today" : undefined}
                 className={clsx(
                     "min-h-[8rem] tablet:min-h-[5rem] bg-[#9E23FF1A] border-primary ease-in-out duration-300 tablet:border-0 tablet:border-b-1",
                     ((dreams || isToday) && day.isCurrentMonth) && "cursor-pointer hover:bg-primary/30"
                 )}
                 onClick={() => {
-                    if ((dreams || isToday) && day.isCurrentMonth)
+                    if ((dreams || isToday) && day.isCurrentMonth && tutorialsState?.dreamCalendar)
                         setModalOpen(true)
                 }}
             >
