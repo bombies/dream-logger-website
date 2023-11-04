@@ -17,7 +17,9 @@ type Props = PropsWithChildren & {
 
 const Providers: FC<Props> = ({children, session}) => {
     return (
-        <SWRConfig>
+        <SWRConfig value={{
+            refreshInterval: 1000 * 60
+        }}>
             <NextUIProvider>
                 <ThemeProvider attribute="class" defaultTheme="dark">
                     <SessionProvider session={session}>

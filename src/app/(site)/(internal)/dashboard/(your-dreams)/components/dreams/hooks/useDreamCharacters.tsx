@@ -31,7 +31,9 @@ const useDreamCharacters = (args?: Args): DreamCharactersState => {
         }
 
         await mutate(doWork, {
-            optimisticData: [...characters, optimisticCharacter]
+            optimisticData: [...characters, optimisticCharacter],
+            rollbackOnError: true,
+            revalidate: false,
         })
     }, [characters, mutateCharacters])
 
@@ -47,7 +49,9 @@ const useDreamCharacters = (args?: Args): DreamCharactersState => {
         }
 
         await mutate(doWork, {
-            optimisticData: characters.filter(dream => dream.id !== removedOptimisticCharacter.id)
+            optimisticData: characters.filter(dream => dream.id !== removedOptimisticCharacter.id),
+            rollbackOnError: true,
+            revalidate: false,
         })
     }, [characters, mutateCharacters])
 
@@ -74,7 +78,8 @@ const useDreamCharacters = (args?: Args): DreamCharactersState => {
 
         await mutateCharacters(doWork, {
             optimisticData: doUpdate(editedOptimisticCharacter),
-            rollbackOnError: true
+            rollbackOnError: true,
+            revalidate: false,
         })
     }, [characters, mutateCharacters])
 

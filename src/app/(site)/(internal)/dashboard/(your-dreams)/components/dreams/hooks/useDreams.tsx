@@ -22,7 +22,8 @@ const useDreams = (): DreamsState => {
 
         await mutate(doWork, {
             optimisticData: [...dreams, optimisticDream],
-            rollbackOnError: true
+            rollbackOnError: true,
+            revalidate: false,
         })
     }, [dreams, mutateDreams])
 
@@ -40,6 +41,7 @@ const useDreams = (): DreamsState => {
         await mutate(doWork, {
             optimisticData: dreams.filter(dream => dream.id !== removedOptimisticDream.id),
             rollbackOnError: true,
+            revalidate: false,
         })
     }, [dreams, mutateDreams])
 
@@ -65,6 +67,7 @@ const useDreams = (): DreamsState => {
         await mutate(doWork, {
             optimisticData: doUpdate(editedOptimisticDream),
             rollbackOnError: true,
+            revalidate: false,
         })
     }, [dreams, mutateDreams])
 

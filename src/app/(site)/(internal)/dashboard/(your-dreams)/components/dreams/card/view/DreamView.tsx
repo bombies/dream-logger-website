@@ -27,10 +27,17 @@ type Props = {
 }
 
 const DreamView: FC<Props> = ({dream, fetchDream}) => {
-    const {tags: {data: allTags}, characters: {data: allCharacters}} = useDreamsData()
-    const {data: fullDream, error: fullDreamError, mutate: mutateFullDream} = FetchFullDream(dream, fetchDream ?? true)
+    const {
+        data: fullDream,
+        error: fullDreamError,
+        mutate: mutateFullDream
+    } = FetchFullDream(dream.id, fetchDream ?? true)
     const {trigger: updateDream} = UpdateDream(dream.id)
-    const {dreams: {optimisticData: {editOptimisticData}}} = useDreamsData()
+    const {
+        dreams: {optimisticData: {editOptimisticData}},
+        tags: {data: allTags},
+        characters: {data: allCharacters}
+    } = useDreamsData()
 
     const [editMode, setEditMode] = useState(false)
     const dreamTagIds = useMemo(() => fullDream?.tags?.map(tag => tag.id) ?? [], [fullDream?.tags])
@@ -58,12 +65,16 @@ const DreamView: FC<Props> = ({dream, fetchDream}) => {
             await mutateFullDream({
                 ...fullDream,
                 characters: allCharacters.filter(char => newCharacters.some(newCharId => newCharId === char.id))
+            }, {
+                revalidate: false
             })
 
         if (newTags && fullDream)
             await mutateFullDream({
                 ...fullDream,
                 tags: allTags.filter(tag => newTags.some(newTagId => newTagId === tag.id))
+            }, {
+                revalidate: false
             })
     }, [allCharacters, allTags, doUpdate, dream, editOptimisticData, fullDream, mutateFullDream])
 

@@ -30,7 +30,9 @@ const useDreamTags = (args?: Args): DreamTagsState => {
         }
 
         await mutate(doWork, {
-            optimisticData: [...tags, optimisticCharacter]
+            optimisticData: [...tags, optimisticCharacter],
+            rollbackOnError: true,
+            revalidate: false
         })
     }, [tags, mutateTags])
 
@@ -46,7 +48,9 @@ const useDreamTags = (args?: Args): DreamTagsState => {
         }
 
         await mutate(doWork, {
-            optimisticData: tags.filter(dream => dream.id !== removedOptimisticCharacter.id)
+            optimisticData: tags.filter(dream => dream.id !== removedOptimisticCharacter.id),
+            rollbackOnError: true,
+            revalidate: false
         })
     }, [tags, mutateTags])
 
@@ -69,7 +73,8 @@ const useDreamTags = (args?: Args): DreamTagsState => {
 
         await mutateTags(doWork, {
             optimisticData: doUpdate(editedOptimisticTag),
-            rollbackOnError: true
+            rollbackOnError: true,
+            revalidate: false
         })
     }, [mutateTags, tags])
 
