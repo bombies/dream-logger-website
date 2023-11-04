@@ -34,11 +34,11 @@ const DashboardSidebar: FC = () => {
                     title="Search Dreams"
                     href="/dashboard/search"
                 />
-                <SidebarItem
-                    startContent={<StatisticsIcon/>}
-                    title="Dream Reports"
-                    href="/dashboard"
-                />
+                {/*<SidebarItem*/}
+                {/*    startContent={<StatisticsIcon/>}*/}
+                {/*    title="Dream Reports"*/}
+                {/*    href="/dashboard/reports"*/}
+                {/*/>*/}
             </Sidebar>
         </SidebarProvider>
     )

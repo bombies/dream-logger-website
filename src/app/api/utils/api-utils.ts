@@ -7,9 +7,13 @@ import prisma from "@/libs/prisma";
 import PrismaClientKnownRequestError = Prisma.PrismaClientKnownRequestError;
 import RateLimiter, {RateLimiterGeoLimit} from "@/app/api/utils/rate-limiter";
 
-export type RouteContext<T extends { [K: string]: string }> = {
+export type RouteContext<T extends { [K: string]: string } | unknown> = {
     params: T
 }
+
+export type ApiRoute<T extends {
+    [K: string]: string
+} | unknown = unknown> = (request: NextRequest, context: RouteContext<T>) => Promise<NextResponse<any>>
 
 export type IdObject = { id: string }
 
