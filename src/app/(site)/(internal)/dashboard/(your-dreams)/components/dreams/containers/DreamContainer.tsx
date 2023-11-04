@@ -15,7 +15,7 @@ const DreamContainer: FC<Props> = ({id, title, children, className, containerCla
             <div
                 className={clsx(
                     containerClassName,
-                    "bg-primary/20 rounded-3xl py-6 px-4 phone:p-3 w-[36rem] tablet:w-[24rem] phone:w-[20rem] tablet:self-center flex flex-col gap-y-6 phone:gap-y-3"
+                    "bg-secondary rounded-3xl py-6 px-4 phone:p-3 w-[36rem] tablet:w-[24rem] phone:w-[20rem] tablet:self-center flex flex-col gap-y-6 phone:gap-y-3"
                 )}>
                 {children}
             </div>

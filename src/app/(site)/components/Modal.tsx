@@ -10,12 +10,12 @@ type Props = {
 const Modal: FC<Props> = ({classNames, header, footer, title, subtitle, children, ...props}) => {
     return (
         <NextModal
-            backdrop="blur"
+            backdrop="opaque"
             placement="center"
             scrollBehavior="outside"
             classNames={{
                 wrapper: "overflow-x-hidden",
-                base: "py-6 px-3 phone:px-0 bg-secondary",
+                base: "py-6 px-3 phone:px-0 bg-dark",
                 closeButton: "hover:bg-primary/20",
                 ...classNames
             }}

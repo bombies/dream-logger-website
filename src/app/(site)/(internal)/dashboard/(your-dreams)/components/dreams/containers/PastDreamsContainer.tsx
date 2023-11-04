@@ -74,7 +74,7 @@ const PastDreamsContainer: FC = () => {
                             isBlurred
                             classNames={{
                                 base: "hover:scale-105 w-full",
-                                body: "bg-secondary py-8"
+                                body: "bg-dark py-8"
                             }}
                         >
                             <CardBody>
