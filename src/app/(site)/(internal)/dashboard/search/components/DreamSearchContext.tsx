@@ -30,8 +30,8 @@ const DoSearch = () => {
 
 type FormProps = {
     title?: string,
-    characters?: string,
-    tags?: string,
+    characters?: string[],
+    tags?: string[],
 }
 
 const MAX_ITEMS_PER_PAGE = 10
@@ -49,7 +49,11 @@ const DreamSearchContext: FC = () => {
 
     const onSubmit: SubmitHandler<FormProps> = useCallback(async ({tags, title, characters}) => {
         await search({
-            body: {tags, title, characters}
+            body: {
+                tags: tags?.length ? tags.toString() : undefined,
+                title,
+                characters: characters?.length ? characters.toString() : undefined,
+            }
         })
     }, [search])
 
@@ -90,12 +94,14 @@ const DreamSearchContext: FC = () => {
                                     label="Title"
                                 />
                                 <DreamTagSelect
+                                    isDisabled={isSearching}
                                     register={register}
                                     tags={tags}
                                     placeholder="Select tags..."
                                     label="Tags"
                                 />
                                 <DreamCharacterSelect
+                                    isDisabled={isSearching}
                                     register={register}
                                     characters={characters}
                                     label="Characters"
