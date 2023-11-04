@@ -12,7 +12,7 @@ import {useTutorialsData} from "@/app/(site)/(internal)/dashboard/components/Tut
 const CurrentDreamsContainer: FC = () => {
     const [tutorialsState] = useTutorialsData()
     const [startOfToday, endOfToday] = useTodayTimeRange()
-    const {dreams, tags, characters} = useDreamsData()
+    const {dreams} = useDreamsData()
     const dreamCards = useMemo(() => dreams.data
         .filter(dream => {
             const creationDate = new Date(dream.createdAt.toString());
@@ -24,11 +24,9 @@ const CurrentDreamsContainer: FC = () => {
                 isDisabled={!tutorialsState?.yourDreams}
                 key={dream.id}
                 dream={dream}
-                allTags={tags.data}
-                allCharacters={characters.data}
                 optimisticRemove={dreams.optimisticData.removeOptimisticData}
             />
-        )), [characters.data, dreams.data, dreams.optimisticData.removeOptimisticData, endOfToday, startOfToday, tags.data, tutorialsState?.yourDreams])
+        )), [dreams.data, dreams.optimisticData.removeOptimisticData, endOfToday, startOfToday, tutorialsState?.yourDreams])
 
     return (
         <DreamContainer id="today_dreams" title={`Today
@@ -37,7 +35,7 @@ const CurrentDreamsContainer: FC = () => {
                 dateStyle: "medium"
             })
         }`}>
-            <LogDreamCard isDisabled={!tutorialsState?.yourDreams} />
+            <LogDreamCard isDisabled={!tutorialsState?.yourDreams}/>
             {dreams.loading ? (
                 <Fragment>
                     <DreamCardSkeleton/>

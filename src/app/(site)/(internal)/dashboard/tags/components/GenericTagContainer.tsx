@@ -20,8 +20,6 @@ import usePagination from "@/app/(site)/hooks/usePagination";
 
 type Props = {
     state: DreamTagsState | DreamCharactersState,
-    allCharacters: DreamCharacter[],
-    allTags: DreamTag[],
     stateType: "tags" | "characters"
 }
 
@@ -32,7 +30,7 @@ export enum SortOrder {
 
 const MAX_ITEMS_PER_PAGE = 8;
 
-const GenericTagContainer: FC<Props> = ({state, stateType, allTags, allCharacters}) => {
+const GenericTagContainer: FC<Props> = ({state, stateType}) => {
     const [tagSearch, setTagSearch] = useState<string>()
     const [sortOrder, setSortOrder] = useState<SortOrder>()
     const {paginatedData, totalPages, setCurrentPage} = usePagination<DreamTag | DreamCharacter>(state.data, MAX_ITEMS_PER_PAGE)
@@ -80,11 +78,9 @@ const GenericTagContainer: FC<Props> = ({state, stateType, allTags, allCharacter
                 key={stateData.id}
                 data={stateData}
                 stateType={stateType}
-                allTags={allTags}
-                allCharacters={allCharacters}
             />
         ))
-    ), [allCharacters, allTags, stateType, visibleData])
+    ), [stateType, visibleData])
 
 
     return (

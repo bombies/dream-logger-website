@@ -1,6 +1,6 @@
 "use client"
 
-import {FC, Fragment} from "react";
+import {FC} from "react";
 import {useDreamsData} from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/DreamsProvider";
 import GenericTagContainer from "@/app/(site)/(internal)/dashboard/tags/components/GenericTagContainer";
 
@@ -15,14 +15,10 @@ const TagsPage: FC = () => {
                 <GenericTagContainer
                     state={tags}
                     stateType="tags"
-                    allTags={tags.data}
-                    allCharacters={characters.data}
                 />
                 <GenericTagContainer
                     state={characters}
                     stateType="characters"
-                    allTags={tags.data}
-                    allCharacters={characters.data}
                 />
             </div>
         </div>

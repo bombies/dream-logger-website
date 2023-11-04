@@ -33,7 +33,7 @@ const DreamCalendar: FC = () => {
     ];
 
 
-    const {dreams, tags, characters} = useDreamsData()
+    const {dreams} = useDreamsData()
     const dayDreams = useDayDreams({dreams: dreams.data})
     const earliestYear = useMemo(() => dayDreams.length ? new Date(dayDreams[0].timestamp).getFullYear() : undefined, [dayDreams])
 
@@ -232,8 +232,6 @@ const DreamCalendar: FC = () => {
                             <DreamCalendarDay
                                 key={day.dateString}
                                 day={day}
-                                allTags={tags.data}
-                                allCharacters={characters.data}
                                 optimisticRemove={dreams.optimisticData.removeOptimisticData}
                                 isToday={dayIsToday()}
                                 dreams={dreamsForDay}

@@ -9,11 +9,9 @@ import GenericTagModal from "@/app/(site)/(internal)/dashboard/tags/components/G
 type Props = {
     data: DreamCharacter | DreamTag,
     stateType: "tags" | "characters",
-    allCharacters: DreamCharacter[],
-    allTags: DreamTag[],
 }
 
-const GenericTagCard: FC<Props> = ({data, stateType, allTags, allCharacters}) => {
+const GenericTagCard: FC<Props> = ({data, stateType}) => {
     const [modalOpen, setModalOpen] = useState(false)
 
     return (
@@ -23,8 +21,6 @@ const GenericTagCard: FC<Props> = ({data, stateType, allTags, allCharacters}) =>
                 onClose={() => setModalOpen(false)}
                 item={data}
                 itemType={stateType}
-                allCharacters={allCharacters}
-                allTags={allTags}
             />
             <Card
                 isPressable

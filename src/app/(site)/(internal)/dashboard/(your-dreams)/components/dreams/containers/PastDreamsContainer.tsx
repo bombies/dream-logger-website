@@ -31,7 +31,7 @@ const NUMBER_OF_DAYS = 7
 const PastDreamsContainer: FC = () => {
     const [tutorialsState] = useTutorialsData()
     const router = useRouter()
-    const {dreams, tags, characters} = useDreamsData()
+    const {dreams} = useDreamsData()
     const latestDate = useEndOfDay({
         dayOffset: -1
     })
@@ -49,10 +49,8 @@ const PastDreamsContainer: FC = () => {
             isDisabled={!tutorialsState?.yourDreams}
             key={dream.timestamp}
             dream={dream}
-            allTags={tags.data}
-            allCharacters={characters.data}
         />
-    )), [characters.data, pastDreams, tags.data, tutorialsState?.yourDreams])
+    )), [pastDreams, tutorialsState?.yourDreams])
 
 
     return (

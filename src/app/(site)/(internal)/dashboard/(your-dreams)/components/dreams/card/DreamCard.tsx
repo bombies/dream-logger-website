@@ -1,7 +1,7 @@
 "use client"
 
 import {FC, Fragment, useCallback, useState} from "react";
-import {Dream, DreamCharacter, DreamTag} from "@prisma/client";
+import {Dream} from "@prisma/client";
 import {CardBody, CardHeader} from "@nextui-org/card";
 import Card from "@/app/(site)/components/Card";
 import DreamModal from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/card/DreamModal";
@@ -13,8 +13,6 @@ import {deleteMutator, handleAxiosError} from "@/utils/client/client-utils";
 type Props = {
     dream: Dream,
     isDisabled?: boolean,
-    allCharacters: DreamCharacter[],
-    allTags: DreamTag[],
     optimisticRemove?: OptimisticWorker<Dream>,
 }
 
@@ -22,7 +20,7 @@ const DeleteDream = (dreamId: string) => {
     return useSWRMutation(`/api/me/dreams/${dreamId}`, deleteMutator<Dream>())
 }
 
-const DreamCard: FC<Props> = ({isDisabled, dream, allTags, allCharacters, optimisticRemove}) => {
+const DreamCard: FC<Props> = ({isDisabled, dream, optimisticRemove}) => {
     const [modalOpen, setModalOpen] = useState(false)
     const {trigger: deleteDream} = DeleteDream(dream.id)
 
@@ -36,8 +34,6 @@ const DreamCard: FC<Props> = ({isDisabled, dream, allTags, allCharacters, optimi
         <Fragment>
             <DreamModal
                 dream={dream}
-                allCharacters={allCharacters}
-                allTags={allTags}
                 isOpen={modalOpen}
                 onClose={() => setModalOpen(false)}
                 onDelete={() => {

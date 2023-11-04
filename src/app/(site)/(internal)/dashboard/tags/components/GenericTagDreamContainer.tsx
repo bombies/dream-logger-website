@@ -3,7 +3,6 @@
 import {FC, Fragment, useMemo} from "react";
 import DreamCard from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/card/DreamCard";
 import {DreamWithRelations} from "@/app/api/me/dreams/dreams.dto";
-import {DreamCharacter, DreamTag} from "@prisma/client";
 import DreamContainer
     from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/containers/DreamContainer";
 import usePagination from "@/app/(site)/hooks/usePagination";
@@ -12,13 +11,11 @@ import Pagination from "@/app/(site)/components/Pagination";
 
 type Props = {
     dreams?: DreamWithRelations[] | null
-    allCharacters: DreamCharacter[],
-    allTags: DreamTag[],
 }
 
 const MAX_ITEMS_PER_PAGE = 5
 
-const GenericTagDreamContainer: FC<Props> = ({dreams, allTags, allCharacters}) => {
+const GenericTagDreamContainer: FC<Props> = ({dreams}) => {
     const {paginatedData, totalPages, setCurrentPage} = usePagination(dreams ?? [], MAX_ITEMS_PER_PAGE)
 
     const dreamCards = useMemo(() => {
@@ -29,11 +26,9 @@ const GenericTagDreamContainer: FC<Props> = ({dreams, allTags, allCharacters}) =
             <DreamCard
                 key={dream.id}
                 dream={dream}
-                allCharacters={allCharacters}
-                allTags={allTags}
             />
         ))
-    }, [allCharacters, allTags, paginatedData])
+    }, [paginatedData])
 
 
     return (

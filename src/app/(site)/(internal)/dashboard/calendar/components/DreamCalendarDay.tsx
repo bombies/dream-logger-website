@@ -11,7 +11,7 @@ import Modal from "@/app/(site)/components/Modal";
 import DreamContainer
     from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/containers/DreamContainer";
 import DreamCard from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/card/DreamCard";
-import {Dream, DreamCharacter, DreamTag} from "@prisma/client";
+import {Dream} from "@prisma/client";
 import {OptimisticWorker} from "@/utils/client/client-data-utils";
 import LogDreamCard from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/LogDreamCard";
 import PlusIcon from "@/app/(site)/components/icons/PlusIcon";
@@ -19,13 +19,11 @@ import PlusIcon from "@/app/(site)/components/icons/PlusIcon";
 type Props = {
     dreams?: DayDreams
     day: CalendarMonthDay,
-    allCharacters: DreamCharacter[],
-    allTags: DreamTag[],
     optimisticRemove?: OptimisticWorker<Dream>,
     isToday: boolean,
 }
 
-const DreamCalendarDay: FC<Props> = ({dreams, day, allTags, allCharacters, optimisticRemove, isToday}) => {
+const DreamCalendarDay: FC<Props> = ({dreams, day, optimisticRemove, isToday}) => {
     const [modalOpen, setModalOpen] = useState(false)
     const dateStrSplit = day.dateString.split("-")
 
@@ -47,8 +45,6 @@ const DreamCalendarDay: FC<Props> = ({dreams, day, allTags, allCharacters, optim
                             <DreamCard
                                 key={dream.id}
                                 dream={dream}
-                                allCharacters={allCharacters}
-                                allTags={allTags}
                                 optimisticRemove={optimisticRemove}
                             />
                         ))}

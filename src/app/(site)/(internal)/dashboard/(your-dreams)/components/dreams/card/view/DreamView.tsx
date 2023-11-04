@@ -1,7 +1,7 @@
 "use client"
 
 import {FC, Fragment, useCallback, useEffect, useMemo, useState} from "react";
-import {Dream, DreamCharacter, DreamTag} from "@prisma/client";
+import {Dream} from "@prisma/client";
 import {PatchDreamDto} from "@/app/api/me/dreams/dreams.dto";
 import {calcEstimatedReadingTime, handleAxiosError,} from "@/utils/client/client-utils";
 import {Chip} from "@nextui-org/chip";
@@ -14,17 +14,20 @@ import DreamEditableChip from "@/app/(site)/(internal)/dashboard/(your-dreams)/c
 import {DropdownItem, Spacer} from "@nextui-org/react";
 import DreamEditableAddButton
     from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/card/view/DreamEditableAddButton";
-import {useDreamsData} from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/DreamsProvider";
+import {
+    useDreamsData, useUserDreamCharacters,
+    useUserDreamTags
+} from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/DreamsProvider";
 import {FetchFullDream, UpdateDream} from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/hooks/dream-api-utils";
 
 type Props = {
     dream: Dream,
-    allCharacters: DreamCharacter[],
-    allTags: DreamTag[]
     fetchDream?: boolean,
 }
 
-const DreamView: FC<Props> = ({dream, allTags, allCharacters, fetchDream}) => {
+const DreamView: FC<Props> = ({dream, fetchDream}) => {
+    const {data: allTags} = useUserDreamTags()
+    const {data: allCharacters} = useUserDreamCharacters()
     const {data: fullDream, error: fullDreamError, mutate: mutateFullDream} = FetchFullDream(dream, fetchDream ?? true)
     const {trigger: updateDream} = UpdateDream(dream.id)
     const {dreams: {optimisticData: {editOptimisticData}}} = useDreamsData()

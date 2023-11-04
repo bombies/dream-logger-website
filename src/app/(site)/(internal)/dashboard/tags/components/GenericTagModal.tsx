@@ -1,6 +1,6 @@
 "use client"
 
-import {FC, Fragment, useCallback, useMemo, useState} from "react";
+import {FC, Fragment, useCallback, useState} from "react";
 import Modal from "@/app/(site)/components/Modal";
 import {DreamCharacter, DreamTag} from "@prisma/client";
 import {Divider} from "@nextui-org/divider";
@@ -21,8 +21,6 @@ type Props = {
     onClose?: () => void,
     item: DreamTag | DreamCharacter,
     itemType: "tags" | "characters",
-    allCharacters: DreamCharacter[],
-    allTags: DreamTag[],
 }
 
 const FetchDreams = (item: DreamTag | DreamCharacter, stateType: "tags" | "characters", isOpen?: boolean) => {
@@ -32,10 +30,9 @@ const FetchDreams = (item: DreamTag | DreamCharacter, stateType: "tags" | "chara
     )
 }
 
-const GenericTagModal: FC<Props> = ({isOpen, onClose, item, itemType, allTags, allCharacters}) => {
+const GenericTagModal: FC<Props> = ({isOpen, onClose, item, itemType}) => {
     const {data: dreams} = FetchDreams(item, itemType, isOpen)
     const [deleteModalOpen, setDeleteModalOpen] = useState(false)
-
     const getItemName = useCallback(() => itemType === "tags" ? (item as DreamTag).tag : (item as DreamCharacter).name, [item, itemType])
 
     return (
@@ -88,11 +85,7 @@ const GenericTagModal: FC<Props> = ({isOpen, onClose, item, itemType, allTags, a
                         (dreams && dreams.length > 0) && (
                             <Fragment>
                                 <Spacer y={6}/>
-                                <GenericTagDreamContainer
-                                    dreams={dreams}
-                                    allCharacters={allCharacters}
-                                    allTags={allTags}
-                                />
+                                <GenericTagDreamContainer dreams={dreams}/>
                             </Fragment>
 
                         )

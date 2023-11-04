@@ -10,20 +10,16 @@ import {DreamCharacter, DreamTag} from "@prisma/client";
 type Props = {
     isDisabled?: boolean,
     dream: DayDreams,
-    allCharacters: DreamCharacter[],
-    allTags: DreamTag[],
 }
 
-const PastDreamItem: FC<Props> = ({isDisabled, dream, allTags, allCharacters}) => {
+const PastDreamItem: FC<Props> = ({isDisabled, dream}) => {
     const cards = useMemo(() => dream.dreams.map(pastDream => (
         <DreamCard
             isDisabled={isDisabled}
             key={pastDream.id}
             dream={pastDream}
-            allCharacters={allCharacters}
-            allTags={allTags}
         />
-    )), [allCharacters, allTags, dream.dreams, isDisabled])
+    )), [dream.dreams, isDisabled])
 
     return (
         <Fragment>

@@ -2,7 +2,7 @@
 
 import {FC, Fragment, useState} from "react";
 import Modal from "@/app/(site)/components/Modal";
-import {Dream, DreamCharacter, DreamTag} from "@prisma/client";
+import {Dream} from "@prisma/client";
 import {Divider} from "@nextui-org/divider";
 import {Button} from "@nextui-org/react";
 import ConfirmationModal from "@/app/(site)/components/ConfirmationModal";
@@ -11,8 +11,6 @@ import DreamView from "@/app/(site)/(internal)/dashboard/(your-dreams)/component
 
 type Props = {
     dream: Dream,
-    allCharacters: DreamCharacter[],
-    allTags: DreamTag[],
     isOpen?: boolean,
     onClose?: () => void,
     onDelete?: () => void,
@@ -20,7 +18,7 @@ type Props = {
 
 
 
-const DreamModal: FC<Props> = ({dream, allTags, allCharacters, isOpen, onClose, onDelete}) => {
+const DreamModal: FC<Props> = ({dream, isOpen, onClose, onDelete}) => {
     const [deleteModalOpen, setDeleteModalOpen] = useState(false)
 
     return (
@@ -41,8 +39,6 @@ const DreamModal: FC<Props> = ({dream, allTags, allCharacters, isOpen, onClose, 
             >
                 <DreamView
                     dream={dream}
-                    allCharacters={allCharacters}
-                    allTags={allTags}
                     fetchDream={isOpen}
                 />
                 <Divider className="my-6"/>
