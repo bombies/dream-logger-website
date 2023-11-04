@@ -32,7 +32,7 @@ const DashboardSidebar: FC = () => {
                 <SidebarItem
                     startContent={<SearchFilledIcon/>}
                     title="Search Dreams"
-                    href="/dashboard"
+                    href="/dashboard/search"
                 />
                 <SidebarItem
                     startContent={<StatisticsIcon/>}

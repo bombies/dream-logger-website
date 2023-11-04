@@ -20,11 +20,10 @@ import {useTutorialsData} from "@/app/(site)/(internal)/dashboard/components/Tut
 type Props = {
     dreams?: DayDreams
     day: CalendarMonthDay,
-    optimisticRemove?: OptimisticWorker<Dream>,
     isToday: boolean,
 }
 
-const DreamCalendarDay: FC<Props> = ({dreams, day, optimisticRemove, isToday}) => {
+const DreamCalendarDay: FC<Props> = ({dreams, day, isToday}) => {
     const [tutorialsState] = useTutorialsData()
     const [modalOpen, setModalOpen] = useState(false)
     const dateStrSplit = day.dateString.split("-")
@@ -47,7 +46,6 @@ const DreamCalendarDay: FC<Props> = ({dreams, day, optimisticRemove, isToday}) =
                             <DreamCard
                                 key={dream.id}
                                 dream={dream}
-                                optimisticRemove={optimisticRemove}
                             />
                         ))}
                     </Fragment>

@@ -68,12 +68,12 @@ const PastDreamsContainer: FC = () => {
                 <Fragment>
                     {dreamItems}
                     <Divider className="my-3"/>
-                    <Link href="/dashboard/calendar">
+                    <Link href="/dashboard/calendar" className="!w-full">
                         <Card
                             isPressable
                             isBlurred
                             classNames={{
-                                base: "hover:scale-105",
+                                base: "hover:scale-105 w-full",
                                 body: "bg-secondary py-8"
                             }}
                         >

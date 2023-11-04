@@ -80,6 +80,7 @@ const config: Config = {
         primary: "#9E23FF",
         subtext: "#828282",
         secondary: "#1A002F",
+        dark: "#0C0015",
         danger: "#FF4A4A",
         "cta-start": "#8F00FF",
         "cta-end": "#270079"

@@ -21,7 +21,7 @@ class DreamsService {
         if (!paramsValidated.success)
             return buildFailedValidationResponse(paramsValidated.error)
 
-        const {tags: tagsString, characters: charactersString} = paramsValidated.data
+        const {tags: tagsString, characters: charactersString, title: searchedTitle} = paramsValidated.data
         const tags = tagsString?.split(",")
         const characters = charactersString?.split(",")
 
@@ -29,6 +29,10 @@ class DreamsService {
         const dreams = await prisma.dream.findMany({
             where: {
                 userId: member.id,
+                title: searchedTitle && {
+                    contains: searchedTitle,
+                    mode: "insensitive"
+                },
                 tags: tags && {
                     some: {
                         id: {

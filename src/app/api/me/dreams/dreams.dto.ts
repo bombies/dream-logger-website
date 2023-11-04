@@ -4,7 +4,8 @@ import {zfd} from "zod-form-data";
 
 export const FetchDreamsSchema = zfd.formData({
     tags: z.string().optional(),
-    characters: z.string().optional()
+    characters: z.string().optional(),
+    title: z.string().optional()
 })
 
 export type PostDreamDto = {

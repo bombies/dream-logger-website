@@ -13,32 +13,36 @@ type Props = {
     register?: UseFormRegister<any>,
     tags: DreamTagsState,
     isDisabled?: boolean,
-    onModalOpen?: () => void
+    onModalOpen?: () => void,
+    placeholder?: string,
+    label?: string,
 }
 
-const DreamTagSelect: FC<Props> = ({onModalOpen, isDisabled, tags, register}) => {
+const DreamTagSelect: FC<Props> = ({onModalOpen, isDisabled, tags, register, label, placeholder}) => {
     return (
         <Fragment>
-            <div className="flex gap-4 mb-2">
-                <label className="text-lg phone:text-medium text-[#EAE0FF] self-center">Dream Tags</label>
-                <Button
-                    color="cta"
-                    size="sm"
-                    onPress={onModalOpen}
-                    startContent={<PlusIcon width={20}/>}
-                    isDisabled={isDisabled}
-                >
-                    Add New Tag
-                </Button>
-            </div>
+            {onModalOpen && (
+                <div className="flex gap-4 mb-2">
+                    <label className="text-lg phone:text-medium text-[#EAE0FF] self-center">Dream Tags</label>
+                    <Button
+                        color="cta"
+                        size="sm"
+                        onPress={onModalOpen}
+                        startContent={<PlusIcon width={20}/>}
+                        isDisabled={isDisabled}
+                    >
+                        Add New Tag
+                    </Button>
+                </div>
+            )}
             <Select
                 isDisabled={isDisabled}
                 aria-label="Dream Tags"
                 register={register}
                 id="tags"
-                labelPlacement="outside"
                 items={tags.data.sort((a, b) => a.tag.localeCompare(b.tag))}
-                placeholder="Describe your dream with one or two words"
+                placeholder={placeholder ?? "Describe your dream with one or two words"}
+                label={label}
                 selectionMode={"multiple"}
                 renderValue={(items) => {
                     return (

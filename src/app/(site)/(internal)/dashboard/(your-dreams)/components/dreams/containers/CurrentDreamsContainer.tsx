@@ -24,9 +24,8 @@ const CurrentDreamsContainer: FC = () => {
                 isDisabled={!tutorialsState?.yourDreams}
                 key={dream.id}
                 dream={dream}
-                optimisticRemove={dreams.optimisticData.removeOptimisticData}
             />
-        )), [dreams.data, dreams.optimisticData.removeOptimisticData, endOfToday, startOfToday, tutorialsState?.yourDreams])
+        )), [dreams.data, endOfToday, startOfToday, tutorialsState?.yourDreams])
 
     return (
         <DreamContainer id="today_dreams" title={`Today

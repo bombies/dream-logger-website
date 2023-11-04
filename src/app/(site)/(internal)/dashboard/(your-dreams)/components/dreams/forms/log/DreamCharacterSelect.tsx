@@ -16,31 +16,35 @@ type Props = {
     characters: DreamCharactersState,
     isDisabled?: boolean,
     onModalOpen?: () => void,
+    placeholder?: string,
+    label?: string,
 }
 
-const DreamCharacterSelect: FC<Props> = ({onModalOpen, isDisabled, characters, register}) => {
+const DreamCharacterSelect: FC<Props> = ({onModalOpen, isDisabled, characters, register, placeholder, label}) => {
     return (
         <Fragment>
-            <div className="flex gap-4 mb-2">
-                <label className="text-lg phone:text-medium text-[#EAE0FF] self-center">Dream Characters</label>
-                <Button
-                    color="cta"
-                    size="sm"
-                    onPress={onModalOpen}
-                    isDisabled={isDisabled}
-                    startContent={<PlusIcon width={20}/>}
-                >
-                    Add New Character
-                </Button>
-            </div>
+            {onModalOpen && (
+                <div className="flex gap-4 mb-2">
+                    <label className="text-lg phone:text-medium text-[#EAE0FF] self-center">Dream Characters</label>
+                    <Button
+                        color="cta"
+                        size="sm"
+                        onPress={onModalOpen}
+                        isDisabled={isDisabled}
+                        startContent={<PlusIcon width={20}/>}
+                    >
+                        Add New Character
+                    </Button>
+                </div>
+            )}
             <Select
-                labelPlacement="outside"
                 isDisabled={isDisabled}
                 aria-label="Dream Characters"
                 register={register}
                 id="characters"
                 items={characters.data.sort((a, b) => a.name.localeCompare(b.name))}
-                placeholder="Who was in your dream?"
+                placeholder={placeholder ?? "Who was in your dream?"}
+                label={label}
                 selectionMode={"multiple"}
                 renderValue={(items) => {
                     return (

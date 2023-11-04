@@ -10,9 +10,9 @@ const Pagination: FC<Props> = ({classNames, ...paginationProps}) => {
             {...paginationProps}
             classNames={{
                 ...classNames,
-                item: clsx("bg-secondary hover:!bg-primary/30", classNames?.item),
-                prev: clsx("bg-secondary hover:!bg-primary/30", classNames?.prev),
-                next: clsx("bg-secondary hover:!bg-primary/30", classNames?.next)
+                item: clsx("bg-dark hover:!bg-primary/30", classNames?.item),
+                prev: clsx("bg-dark hover:!bg-primary/30", classNames?.prev),
+                next: clsx("bg-dark hover:!bg-primary/30", classNames?.next)
             }}
         />
     )

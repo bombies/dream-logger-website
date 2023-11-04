@@ -238,7 +238,6 @@ const DreamCalendar: FC = () => {
                             <DreamCalendarDay
                                 key={day.dateString}
                                 day={day}
-                                optimisticRemove={dreams.optimisticData.removeOptimisticData}
                                 isToday={dayIsToday()}
                                 dreams={dreamsForDay}
                             />
