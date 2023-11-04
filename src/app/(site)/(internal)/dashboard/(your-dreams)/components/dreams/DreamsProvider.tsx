@@ -19,9 +19,6 @@ interface DreamsContextProps extends DataContextProps {
 }
 
 const [DreamsContext, useHook] = createDataContext<DreamsContextProps>("useDreamsData must be used in a DreamsProvider!")
-const [UserDreamsContext, useUserDreamsHook] = createDataContext<DreamsState>("useUserDreams must be used in a UserDreamsProvider!")
-const [UserDreamTagsContext, useUserDreamTagsHook] = createDataContext<DreamTagsState>("useUserDreamTags must be used in a UserDreamTagsProvider!")
-const [UserDreamCharactersContext, useUserDreamCharactersHook] = createDataContext<DreamCharactersState>("useUserDreamCharacters must be used in a UserDreamCharactersProvider!")
 
 const DreamsProvider: FC<PropsWithChildren> = ({children}) => {
     const dreams = useDreams()
@@ -30,19 +27,10 @@ const DreamsProvider: FC<PropsWithChildren> = ({children}) => {
 
     return (
         <DreamsContext.Provider value={{dreams, characters, tags}}>
-            <UserDreamsContext.Provider value={dreams}>
-                <UserDreamTagsContext.Provider value={tags}>
-                    <UserDreamCharactersContext.Provider value={characters}>
-                        {children}
-                    </UserDreamCharactersContext.Provider>
-                </UserDreamTagsContext.Provider>
-            </UserDreamsContext.Provider>
+            {children}
         </DreamsContext.Provider>
     )
 }
 
 export default DreamsProvider
 export const useDreamsData = useHook
-export const useUserDreams = useUserDreamsHook
-export const useUserDreamTags = useUserDreamTagsHook
-export const useUserDreamCharacters = useUserDreamCharactersHook

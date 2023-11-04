@@ -10,15 +10,16 @@ import {Button} from "@nextui-org/button";
 import {EditIcon} from "@nextui-org/shared-icons";
 import toast from "react-hot-toast";
 import EditableTextArea from "@/app/(site)/components/inputs/editable/EditableTextArea";
-import DreamEditableChip from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/card/view/DreamEditableChip";
+import DreamEditableChip
+    from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/card/view/DreamEditableChip";
 import {DropdownItem, Spacer} from "@nextui-org/react";
 import DreamEditableAddButton
     from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/card/view/DreamEditableAddButton";
+import {useDreamsData} from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/DreamsProvider";
 import {
-    useDreamsData, useUserDreamCharacters,
-    useUserDreamTags
-} from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/DreamsProvider";
-import {FetchFullDream, UpdateDream} from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/hooks/dream-api-utils";
+    FetchFullDream,
+    UpdateDream
+} from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/hooks/dream-api-utils";
 
 type Props = {
     dream: Dream,
@@ -26,8 +27,7 @@ type Props = {
 }
 
 const DreamView: FC<Props> = ({dream, fetchDream}) => {
-    const {data: allTags} = useUserDreamTags()
-    const {data: allCharacters} = useUserDreamCharacters()
+    const {tags: {data: allTags}, characters: {data: allCharacters}} = useDreamsData()
     const {data: fullDream, error: fullDreamError, mutate: mutateFullDream} = FetchFullDream(dream, fetchDream ?? true)
     const {trigger: updateDream} = UpdateDream(dream.id)
     const {dreams: {optimisticData: {editOptimisticData}}} = useDreamsData()
