@@ -33,7 +33,25 @@ const MAX_ITEMS_PER_PAGE = 8;
 const GenericTagContainer: FC<Props> = ({state, stateType}) => {
     const [tagSearch, setTagSearch] = useState<string>()
     const [sortOrder, setSortOrder] = useState<SortOrder>()
-    const {paginatedData, totalPages, setCurrentPage} = usePagination<DreamTag | DreamCharacter>(state.data, MAX_ITEMS_PER_PAGE)
+    const {paginatedData, totalPages, setCurrentPage} = usePagination<DreamTag | DreamCharacter>(state.data, MAX_ITEMS_PER_PAGE, {
+        sort(a, b) {
+            if (sortOrder) {
+                let sortResult = stateType === "tags" ? (a as DreamTag).tag.localeCompare((b as DreamTag).tag) : (a as DreamCharacter).name.localeCompare((b as DreamCharacter).name)
+                if (sortOrder === SortOrder.DESCENDING)
+                    sortResult *= -1
+                return sortResult
+            } else {
+                return new Date(a.createdAt.toString()).getTime() - new Date(b.createdAt.toString()).getTime()
+            }
+        },
+        filter(item) {
+            if (tagSearch) {
+                if (stateType === "tags")
+                    return (item as DreamTag).tag.toLowerCase().includes(tagSearch.toLowerCase())
+                else return (item as DreamCharacter).name.toLowerCase().includes(tagSearch.toLowerCase())
+            } else return true
+        }
+    })
 
     const switchSortOrder = useCallback(() => {
         setSortOrder(prev => {
@@ -51,36 +69,16 @@ const GenericTagContainer: FC<Props> = ({state, stateType}) => {
         })
     }, [setSortOrder])
 
-    const visibleData = useMemo(() => {
-        let data = [...paginatedData];
-
-        if (sortOrder)
-            data = data.sort((a: DreamTag | DreamCharacter, b: DreamTag | DreamCharacter) => {
-                let sortResult = stateType === "tags" ? (a as DreamTag).tag.localeCompare((b as DreamTag).tag) : (a as DreamCharacter).name.localeCompare((b as DreamCharacter).name)
-                if (sortOrder === SortOrder.DESCENDING)
-                    sortResult *= -1
-                return sortResult
-            })
-
-        if (tagSearch)
-            data = data.filter((stateData: DreamTag | DreamCharacter) => {
-                if (stateType === "tags")
-                    return (stateData as DreamTag).tag.toLowerCase().includes(tagSearch.toLowerCase())
-                else return (stateData as DreamCharacter).name.toLowerCase().includes(tagSearch.toLowerCase())
-            })
-
-        return data
-    }, [paginatedData, sortOrder, stateType, tagSearch])
-
     const tagElements = useMemo(() => (
-        visibleData.map((stateData: DreamTag | DreamCharacter) => (
-            <GenericTagCard
-                key={stateData.id}
-                data={stateData}
-                stateType={stateType}
-            />
-        ))
-    ), [stateType, visibleData])
+        paginatedData
+            .map((stateData: DreamTag | DreamCharacter) => (
+                <GenericTagCard
+                    key={stateData.id}
+                    data={stateData}
+                    stateType={stateType}
+                />
+            ))
+    ), [paginatedData, stateType])
 
 
     return (

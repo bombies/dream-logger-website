@@ -2,8 +2,7 @@ import useSWR, {KeyedMutator} from "swr";
 import {fetcher} from "@/utils/client/client-utils";
 import {DreamTag} from "@prisma/client";
 import {useCallback} from "react";
-import {DataContextState} from "@/utils/client/client-data-utils";
-import useSWRMutation from "swr/mutation";
+import {DataContextState, OptimisticWorker} from "@/utils/client/client-data-utils";
 
 export type DreamTagsState = DataContextState<DreamTag[], DreamTag>
 
@@ -12,11 +11,6 @@ type Args = {
 }
 
 const API_ROUTE = '/api/me/dreams/tags'
-
-export const FetchDreamTags = () => {
-    return useSWRMutation(API_ROUTE, fetcher<DreamTag[]>)
-}
-
 const useDreamTags = (args?: Args): DreamTagsState => {
     const {
         data: tags,
@@ -24,7 +18,7 @@ const useDreamTags = (args?: Args): DreamTagsState => {
         mutate: mutateTags
     } = useSWR(args?.load !== false && API_ROUTE, fetcher<DreamTag[]>)
 
-    const addOptimisticCharacter = useCallback(async (work: () => Promise<DreamTag | undefined | null>, optimisticCharacter: DreamTag) => {
+    const addOptimisticCharacter = useCallback<OptimisticWorker<DreamTag>>(async (work, optimisticCharacter) => {
         if (!tags)
             return
         const mutate = mutateTags as KeyedMutator<DreamTag[]>
@@ -40,7 +34,7 @@ const useDreamTags = (args?: Args): DreamTagsState => {
         })
     }, [tags, mutateTags])
 
-    const removeOptimisticCharacter = useCallback(async (work: () => Promise<DreamTag | undefined | null>, removedOptimisticCharacter: DreamTag) => {
+    const removeOptimisticCharacter = useCallback<OptimisticWorker<DreamTag>>(async (work, removedOptimisticCharacter) => {
         if (!tags)
             return
         const mutate = mutateTags as KeyedMutator<DreamTag[]>
@@ -56,13 +50,37 @@ const useDreamTags = (args?: Args): DreamTagsState => {
         })
     }, [tags, mutateTags])
 
+    const editOptimisticTag = useCallback<OptimisticWorker<DreamTag>>(async (work, editedOptimisticTag) => {
+        if (!tags)
+            return;
+
+        const doUpdate = (editedTag: DreamTag): DreamTag[] => {
+            const newArr = tags.filter(tag => tag.id !== editedTag.id)
+            newArr.push(editedTag)
+            return newArr
+        }
+
+        const doWork = async (): Promise<DreamTag[]> => {
+            const updatedTag = await work()
+            if (!updatedTag)
+                return tags
+            return doUpdate(updatedTag)
+        }
+
+        await mutateTags(doWork, {
+            optimisticData: doUpdate(editedOptimisticTag),
+            rollbackOnError: true
+        })
+    }, [mutateTags, tags])
+
     return {
         data: tags ?? [],
         loading: tagsLoading,
         mutateData: tags ? (mutateTags as KeyedMutator<DreamTag[]>) : undefined,
         optimisticData: {
             addOptimisticData: addOptimisticCharacter,
-            removeOptimisticData: removeOptimisticCharacter
+            removeOptimisticData: removeOptimisticCharacter,
+            editOptimisticData: editOptimisticTag
         }
     }
 }

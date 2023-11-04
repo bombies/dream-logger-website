@@ -9,12 +9,14 @@ import TrashIcon from "@/app/(site)/components/icons/TrashIcon";
 import ConfirmationModal from "@/app/(site)/components/ConfirmationModal";
 import {Chip} from "@nextui-org/chip";
 import useSWR from "swr";
-import {fetcher} from "@/utils/client/client-utils";
-import {DreamWithRelations} from "@/app/api/me/dreams/dreams.dto";
+import {deleteMutator, fetcher, handleAxiosError, patchMutator} from "@/utils/client/client-utils";
+import {DreamWithRelations, PatchDreamCharacterDto, PatchDreamTagDto} from "@/app/api/me/dreams/dreams.dto";
 import EditableInput from "@/app/(site)/components/inputs/editable/EditableInput";
 import {EditIcon} from "@nextui-org/shared-icons";
 import {Spacer} from "@nextui-org/react";
 import GenericTagDreamContainer from "@/app/(site)/(internal)/dashboard/tags/components/GenericTagDreamContainer";
+import {useDreamsData} from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/DreamsProvider";
+import useSWRMutation from "swr/mutation";
 
 type Props = {
     isOpen?: boolean,
@@ -30,18 +32,40 @@ const FetchDreams = (item: DreamTag | DreamCharacter, stateType: "tags" | "chara
     )
 }
 
+const DeleteDreamMeta = (item: DreamTag | DreamCharacter, stateType: "tags" | "characters") => {
+    return useSWRMutation(`/api/me/dreams/${stateType}/${item.id}`, deleteMutator<DreamTag | DreamCharacter>())
+}
+
+const UpdateDreamMeta = (item: DreamTag | DreamCharacter, stateType: "tags" | "characters") => {
+    return useSWRMutation(`/api/me/dreams/${stateType}/${item.id}`, patchMutator<PatchDreamTagDto | PatchDreamCharacterDto, DreamTag | DreamCharacter>())
+}
+
 const GenericTagModal: FC<Props> = ({isOpen, onClose, item, itemType}) => {
+    const {tags: {optimisticData: optimisticTagData}, characters: {optimisticData: optimisticCharacterData}} = useDreamsData()
     const {data: dreams} = FetchDreams(item, itemType, isOpen)
+    const {trigger: deleteDreamMetaItem} = DeleteDreamMeta(item, itemType)
+    const {trigger: updateDreamMetaItem} = UpdateDreamMeta(item, itemType)
+
     const [deleteModalOpen, setDeleteModalOpen] = useState(false)
     const getItemName = useCallback(() => itemType === "tags" ? (item as DreamTag).tag : (item as DreamCharacter).name, [item, itemType])
 
     return (
         <Fragment>
             <ConfirmationModal
-                title="Delete Tag"
+                title={`Delete ${itemType === "tags" ? "Tag" : "Character"}`}
                 size="xl"
                 isOpen={deleteModalOpen}
                 onReject={() => setDeleteModalOpen(false)}
+                onAccept={async () => {
+                    const deleteItem = () => deleteDreamMetaItem()
+                        .then((res) => res.data)
+                        .catch(handleAxiosError)
+
+                    if (itemType === "tags" && optimisticTagData.removeOptimisticData)
+                        await optimisticTagData.removeOptimisticData(deleteItem as () => Promise<DreamTag>, item as DreamTag)
+                    else if (itemType === "characters" && optimisticCharacterData.removeOptimisticData)
+                        await optimisticCharacterData.removeOptimisticData(deleteItem as () => Promise<DreamCharacter>, item as DreamCharacter)
+                }}
             >
                 <p className="break-all">Are you sure you want to
                     delete <Chip variant="flat">
@@ -72,9 +96,31 @@ const GenericTagModal: FC<Props> = ({isOpen, onClose, item, itemType}) => {
                             onEdit={async (newValue) => {
                                 if (!newValue)
                                     return
+
+                                const updateItem = () => updateDreamMetaItem({
+                                    body: itemType === "tags" ? {
+                                        tag: newValue.toLowerCase()
+                                    } : {
+                                        name: newValue.toLowerCase()
+                                    }
+                                })
+                                    .then((res) => res.data)
+                                    .catch(handleAxiosError)
+
+                                if (itemType === "tags" && optimisticTagData.editOptimisticData) {
+                                    await optimisticTagData.editOptimisticData(updateItem as () => Promise<DreamTag>, {
+                                        ...item,
+                                        tag: newValue.toLowerCase()
+                                    } as DreamTag)
+                                } else if (itemType === "characters" && optimisticCharacterData.editOptimisticData) {
+                                    await optimisticCharacterData.editOptimisticData(updateItem as () => Promise<DreamCharacter>, {
+                                        ...item,
+                                        name: newValue.toLowerCase()
+                                    } as DreamCharacter)
+                                }
                             }}
                         >
-                            <p className="flex justify-between gap-2">{getItemName()}
+                            <p className="flex justify-between gap-2 break-all">{getItemName()}
                                 <span className="self-center">
                                     <EditIcon/>
                                 </span>
