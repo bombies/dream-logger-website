@@ -28,6 +28,7 @@
     "axios": "^1.6.0",
     "bcrypt": "^5.1.1",
     "dayjs": "^1.11.10",
+    "draft-js": "^0.11.7",
     "framer-motion": "^10.16.4",
     "intro.js-react": "^1.0.0",
     "ioredis": "^5.3.2",
@@ -57,6 +58,7 @@
   "devDependencies": {
     "@next-auth/prisma-adapter": "^1.0.7",
     "@types/bcrypt": "^5.0.1",
+    "@types/draft-js": "^0.11.14",
     "@types/jsonwebtoken": "^9.0.4",
     "@types/multer": "^1.4.9",
     "@types/node": "^20",

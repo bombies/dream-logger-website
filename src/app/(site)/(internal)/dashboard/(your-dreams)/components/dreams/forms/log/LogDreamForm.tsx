@@ -7,7 +7,8 @@ import Input from "@/app/(site)/components/inputs/Input";
 import TextArea from "@/app/(site)/components/inputs/TextArea";
 import Button from "@/app/(site)/components/Button";
 import {useDreamsData} from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/DreamsProvider";
-import DreamCharacterSelect from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/forms/log/DreamCharacterSelect";
+import DreamCharacterSelect
+    from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/forms/log/DreamCharacterSelect";
 import DreamTagSelect from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/forms/log/DreamTagSelect";
 import {Divider} from "@nextui-org/divider";
 import PencilIcon from "@/app/(site)/components/icons/PencilIcon";
@@ -18,8 +19,11 @@ import {handleAxiosError, postMutator} from "@/utils/client/client-utils";
 import {useSession} from "next-auth/react";
 import toast from "react-hot-toast";
 import AddTagModal from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/forms/tags/AddTagModal";
-import AddCharacterModal from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/forms/characters/AddCharacterModal";
+import AddCharacterModal
+    from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/forms/characters/AddCharacterModal";
 import {Spacer} from "@nextui-org/react";
+import Editor from "@/app/(site)/components/Editor";
+import {EditorState} from "draft-js";
 
 type FormProps = Omit<PostDreamDto, 'tags' | 'characters'> & {
     tags?: string[] | string
@@ -42,6 +46,7 @@ const LogDreamForm: FC<Props> = ({onCreate, onForget}) => {
     const {characters, tags, dreams} = useDreamsData()
     const {register, handleSubmit} = useForm<FormProps>()
     const {trigger: createDream, isMutating: dreamIsCreating} = CreateDream()
+    const [editorState, setEditorState] = useState(EditorState.createEmpty())
 
     const handleDreamCreation = useCallback(async (dto: PostDreamDto) => (
         createDream({body: dto})
@@ -93,6 +98,8 @@ const LogDreamForm: FC<Props> = ({onCreate, onForget}) => {
             )
     }, [dreams.optimisticData, handleDreamCreation, session?.user])
 
+    console.log(editorState.toJS())
+
     return (
         <Fragment>
             <AddTagModal
@@ -119,6 +126,7 @@ const LogDreamForm: FC<Props> = ({onCreate, onForget}) => {
                         maxLength={500}
                         isDisabled={dreamIsCreating}
                     />
+                    <Editor state={editorState} onChange={setEditorState}/>
                     <TextArea
                         isRequired
                         register={register}
@@ -141,7 +149,7 @@ const LogDreamForm: FC<Props> = ({onCreate, onForget}) => {
                         isDisabled={dreamIsCreating}
                         onModalOpen={() => setAddCharacterModalOpen(true)}
                     />
-                    <Spacer y={6} />
+                    <Spacer y={6}/>
                     <Input
                         register={register}
                         id="comments"
