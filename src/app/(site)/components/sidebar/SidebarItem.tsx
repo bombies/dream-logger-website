@@ -34,7 +34,7 @@ const SidebarItem: FC<SidebarItemProps> = ({title, startContent, href, onClick})
             onClick={onClick}
         >
             {startContent && startContent}
-            <p className={clsx(!isOpen && "hidden", "capitalize")}>{title}</p>
+            <p className={clsx(!isOpen && "hidden", "capitalize text-sm font-normal")}>{title}</p>
         </motion.div>
     ), [isOpen, onClick, startContent, title])
 

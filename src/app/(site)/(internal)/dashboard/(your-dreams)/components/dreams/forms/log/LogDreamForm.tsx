@@ -42,7 +42,7 @@ const LogDreamForm: FC<Props> = ({onCreate, onForget}) => {
     const {characters, tags, dreams} = useDreamsData()
     const {register, handleSubmit} = useForm<FormProps>()
     const {trigger: createDream, isMutating: dreamIsCreating} = CreateDream()
-
+ 
     const handleDreamCreation = useCallback(async (dto: PostDreamDto) => (
         createDream({body: dto})
             .then(res => {

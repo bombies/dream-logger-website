@@ -9,31 +9,34 @@ import CalendarIcon from "@/app/(site)/components/icons/CalendarIcon";
 import SearchFilledIcon from "@/app/(site)/components/icons/SearchFilledIcon";
 import StatisticsIcon from "@/app/(site)/components/icons/StatisticsIcon";
 import TagIcon from "@/app/(site)/components/icons/TagIcon";
+import SidebarSection from "@/app/(site)/components/sidebar/SidebarSection";
 
 const DashboardSidebar: FC = () => {
     return (
         <SidebarProvider>
             <Sidebar headerText="Your Dashboard">
-                <SidebarItem
-                    startContent={<CloudIcon/>}
-                    title="Your Dreams"
-                    href="/dashboard"
-                />
-                <SidebarItem
-                    startContent={<CalendarIcon/>}
-                    title="Dream Calendar"
-                    href="/dashboard/calendar"
-                />
-                <SidebarItem
-                    startContent={<TagIcon/>}
-                    title="Tags & Characters"
-                    href="/dashboard/tags"
-                />
-                <SidebarItem
-                    startContent={<SearchFilledIcon/>}
-                    title="Search Dreams"
-                    href="/dashboard/search"
-                />
+                <SidebarSection title="Main">
+                    <SidebarItem
+                        startContent={<CloudIcon width={20}/>}
+                        title="Your Dreams"
+                        href="/dashboard"
+                    />
+                    <SidebarItem
+                        startContent={<CalendarIcon width={20}/>}
+                        title="Dream Calendar"
+                        href="/dashboard/calendar"
+                    />
+                    <SidebarItem
+                        startContent={<TagIcon width={20}/>}
+                        title="Tags & Characters"
+                        href="/dashboard/tags"
+                    />
+                    <SidebarItem
+                        startContent={<SearchFilledIcon width={20}/>}
+                        title="Search Dreams"
+                        href="/dashboard/search"
+                    />
+                </SidebarSection>
                 {/*<SidebarItem*/}
                 {/*    startContent={<StatisticsIcon/>}*/}
                 {/*    title="Dream Reports"*/}

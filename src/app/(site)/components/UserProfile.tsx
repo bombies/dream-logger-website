@@ -10,6 +10,7 @@ import HomeIcon from "@/app/(site)/components/icons/HomeIcon";
 import Dropdown from "@/app/(site)/components/Dropdown";
 import {useMemberData} from "@/app/(site)/components/providers/user-data/UserProvider";
 import useCDNUrl from "@/app/(site)/hooks/s3/useCDNUrl";
+import SignOutIcon from "@/app/(site)/components/icons/SignOutIcon";
 
 type Props = {
     placement?: OverlayPlacement
@@ -88,7 +89,11 @@ const UserProfile: FC<Props> = ({placement}) => {
                         Settings
                     </DropdownItem>
                 </DropdownSection>
-                <DropdownItem color="danger" key="log_out">
+                <DropdownItem
+                    color="danger"
+                    key="log_out"
+                    startContent={<SignOutIcon width={16}/>}
+                >
                     Sign Out
                 </DropdownItem>
             </DropdownMenu>
