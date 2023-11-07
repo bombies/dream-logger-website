@@ -84,7 +84,7 @@ const GenericTagModal: FC<Props> = ({isOpen, onClose, item, itemType}) => {
                 })}`}
             >
                 <div>
-                    <div className="bg-[#0C0015] p-8 rounded-3xl">
+                    <div className="bg-secondary p-8 rounded-3xl">
                         <h4 className="text-subtext font-semibold mb-2">NAME</h4>
                         <EditableInput
                             isEditable
