@@ -40,8 +40,8 @@ const Sidebar: FC<Props> = ({children, headerText}) => {
         <motion.aside
             ref={sidebarRef}
             className={clsx(
-                "relative bg-secondary min-h-screen data-[isopen=true]:w-96 w-24 pt-12 px-2",
-                "z-[100] tablet:!bg-opacity-0 tablet:data-[isopen=true]:!bg-opacity-90 tablet:data-[isopen=true]:backdrop-blur-md tablet:w-16 data-[isopen=true]:tablet:w-72 tablet:fixed",
+                "relative bg-secondary/50 min-h-screen data-[isopen=true]:w-96 w-24 pt-12 px-2",
+                "z-[100] tablet:!bg-secondary/0 tablet:data-[isopen=true]:!bg-opacity-90 tablet:data-[isopen=true]:backdrop-blur-md tablet:w-16 data-[isopen=true]:tablet:w-72 tablet:fixed",
                 "phone:w-12 data-[isopen=true]:phone:w-64",
                 "data-[isopen=true]:p-6 flex flex-col data-[isopen=false]:items-center data-[isopen=false]:z-0"
             )}
@@ -103,10 +103,10 @@ const Sidebar: FC<Props> = ({children, headerText}) => {
                         <UserProfile placement="right-end"/>
                     </div>
                     {isOpen && (
-                        <Fragment>
+                        <div className="flex justify-between w-full">
                             <div className="overflow-hidden flex-grow-0">
                                 <p className="text-purple-400 break-all">@{memberData.data?.username}</p>
-                                <p className="text-sm text-subtext">{memberData.data?.email}</p>
+                                <p className="text-xs text-subtext">{memberData.data?.email}</p>
                             </div>
                             <Tooltip
                                 placement="right"
@@ -122,7 +122,7 @@ const Sidebar: FC<Props> = ({children, headerText}) => {
                                     <SignOutLinedIcon width={20}/>
                                 </Button>
                             </Tooltip>
-                        </Fragment>
+                        </div>
                     )}
                 </div>
             </div>
