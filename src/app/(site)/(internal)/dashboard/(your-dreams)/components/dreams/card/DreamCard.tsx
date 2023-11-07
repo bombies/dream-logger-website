@@ -10,20 +10,20 @@ import useSWRMutation from "swr/mutation";
 import {deleteMutator, handleAxiosError} from "@/utils/client/client-utils";
 import {useDreamsData} from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/DreamsProvider";
 import clsx from "clsx";
-import {Divider} from "@nextui-org/divider";
 
 type Props = {
     dream: Dream,
     isDisabled?: boolean,
     hideTime?: boolean,
     showCreatedAt?: boolean,
+    onDelete?: (dream: Dream) => void,
 }
 
 const DeleteDream = (dreamId: string) => {
     return useSWRMutation(`/api/me/dreams/${dreamId}`, deleteMutator<Dream>())
 }
 
-const DreamCard: FC<Props> = ({isDisabled, dream, hideTime, showCreatedAt}) => {
+const DreamCard: FC<Props> = ({isDisabled, dream, hideTime, showCreatedAt, onDelete}) => {
     const {dreams: {optimisticData: {removeOptimisticData: optimisticRemove}}} = useDreamsData()
     const [modalOpen, setModalOpen] = useState(false)
     const {trigger: deleteDream} = DeleteDream(dream.id)
@@ -49,6 +49,8 @@ const DreamCard: FC<Props> = ({isDisabled, dream, hideTime, showCreatedAt}) => {
                             .then(() => {
                                 toast.success("Successfully removed that dream!")
                             })
+                    if (onDelete)
+                        onDelete(dream)
                     setModalOpen(false)
                 }}
             />

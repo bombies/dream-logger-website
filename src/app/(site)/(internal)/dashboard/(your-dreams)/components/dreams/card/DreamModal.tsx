@@ -17,7 +17,6 @@ type Props = {
 }
 
 
-
 const DreamModal: FC<Props> = ({dream, isOpen, onClose, onDelete}) => {
     const [deleteModalOpen, setDeleteModalOpen] = useState(false)
 
@@ -27,7 +26,11 @@ const DreamModal: FC<Props> = ({dream, isOpen, onClose, onDelete}) => {
                 title={`Delete Dream`}
                 size="xl"
                 isOpen={deleteModalOpen}
-                onAccept={onDelete}
+                onAccept={() => {
+                    if (onDelete)
+                        onDelete()
+                    setDeleteModalOpen(false)
+                }}
                 onReject={() => setDeleteModalOpen(false)}
             >
                 Are you sure you want to delete this dream?
@@ -49,7 +52,7 @@ const DreamModal: FC<Props> = ({dream, isOpen, onClose, onDelete}) => {
                         color="danger"
                         variant="flat"
                         onPress={() => setDeleteModalOpen(true)}
-                        startContent={<TrashIcon width={18} />}
+                        startContent={<TrashIcon width={18}/>}
                     >
                         Delete Dream
                     </Button>
