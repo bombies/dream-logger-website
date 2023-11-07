@@ -61,7 +61,7 @@ const DreamCard: FC<Props> = ({isDisabled, dream, hideTime, showCreatedAt}) => {
                 classNames={{
                     base: "hover:scale-105",
                     header: "bg-dark pt-6 px-8 phone:px-4 pb-0 z-1",
-                    body: "bg-dark px-8 phone:px-4 pt-4 phone:pt-2",
+                    body: "bg-dark px-8 phone:px-4 py-6 phone:py-4",
                     footer: "bg-dark px-8 phone:px-4",
                 }}>
                 <CardHeader className="flex justify-between">
