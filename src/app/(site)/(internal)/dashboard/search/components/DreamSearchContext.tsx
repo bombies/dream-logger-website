@@ -1,8 +1,7 @@
 "use client"
 
-import {FC, Fragment, useCallback, useMemo} from "react";
-import {fetcherWithArgs} from "@/utils/client/client-utils";
-import useSWRMutation from "swr/mutation";
+import {FC, Fragment, useCallback, useEffect, useMemo, useState} from "react";
+import {fetcher} from "@/utils/client/client-utils";
 import {DreamWithRelations} from "@/app/api/me/dreams/dreams.dto";
 import Card from "@/app/(site)/components/Card";
 import {CardBody, CardHeader} from "@nextui-org/card";
@@ -19,13 +18,21 @@ import {useDreamsData} from "@/app/(site)/(internal)/dashboard/(your-dreams)/com
 import DreamTagSelect from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/forms/log/DreamTagSelect";
 import DreamCharacterSelect
     from "@/app/(site)/(internal)/dashboard/(your-dreams)/components/dreams/forms/log/DreamCharacterSelect";
+import useSWR from "swr";
 
-const DoSearch = () => {
-    return useSWRMutation('/api/me/dreams', fetcherWithArgs<{
-        tags?: string,
-        characters?: string,
-        title?: string,
-    }, DreamWithRelations[] | null>)
+type SearchParams = {
+    tags?: string,
+    characters?: string,
+    title?: string,
+}
+
+const DoSearch = (args?: SearchParams) => {
+    const filteredSearchParams = {...args}
+    Object.keys(filteredSearchParams).forEach((key) => {
+        if (!filteredSearchParams[key as keyof SearchParams])
+            delete filteredSearchParams[key as keyof SearchParams]
+    })
+    return useSWR(args && '/api/me/dreams' + `?${new URLSearchParams(filteredSearchParams).toString()}`, fetcher<DreamWithRelations[] | null>)
 }
 
 type FormProps = {
@@ -38,7 +45,8 @@ const MAX_ITEMS_PER_PAGE = 10
 
 const DreamSearchContext: FC = () => {
     const {tags, characters} = useDreamsData()
-    const {trigger: search, isMutating: isSearching, data: fetchedData} = DoSearch()
+    const [searchParams, setSearchParams] = useState<SearchParams>()
+    const {isLoading: isSearching, data: fetchedData, mutate: mutateFetchedData} = DoSearch(searchParams)
     const {register, handleSubmit} = useForm<FormProps>()
     const {
         currentPage,
@@ -48,14 +56,12 @@ const DreamSearchContext: FC = () => {
     } = usePagination(fetchedData ?? [], MAX_ITEMS_PER_PAGE)
 
     const onSubmit: SubmitHandler<FormProps> = useCallback(async ({tags, title, characters}) => {
-        await search({
-            body: {
-                tags: tags?.length ? tags.toString() : undefined,
-                title,
-                characters: characters?.length ? characters.toString() : undefined,
-            }
-        })
-    }, [search])
+        setSearchParams(({
+            tags: tags?.length ? tags.toString() : undefined,
+            title,
+            characters: characters?.length ? characters.toString() : undefined,
+        }))
+    }, [])
 
     const dreamCards = useMemo(() => (
         paginatedData?.map(dream => (
@@ -64,9 +70,17 @@ const DreamSearchContext: FC = () => {
                 dream={dream}
                 hideTime
                 showCreatedAt
+                onDelete={async (dream) => {
+                    if (!fetchedData)
+                        return
+                    const newData = [...fetchedData.filter(fetchedDream => dream.id !== fetchedDream.id)]
+                    await mutateFetchedData(newData, {
+                        revalidate: false
+                    })
+                }}
             />
         ))
-    ), [paginatedData])
+    ), [fetchedData, mutateFetchedData, paginatedData])
 
     return (
         <Fragment>
