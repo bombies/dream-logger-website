@@ -9,7 +9,7 @@ const Footer: FC = () => {
     const pathName = usePathname();
 
     return !["/signin", "/resetpassword"].some(word => pathName.includes(word)) && (
-        <footer className="bg-[#08000F] p-20 flex justify-between phone:flex-col phone:items-center">
+        <footer className="bg-[#08000F] p-20 flex justify-between phone:flex-col phone:items-center !z-[2]">
             <div>
                 <Image
                     className="phone:flex phone:justify-center"

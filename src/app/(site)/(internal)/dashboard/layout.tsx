@@ -25,7 +25,7 @@ const DashboardLayout: FC<PropsWithChildren> = ({children}) => {
                 priority
                 src="/images/mesh-bg.png"
                 alt=''
-                className="!absolute w-full h-full top-0 left-0 opacity-10 z-[1] pointer-events-none"
+                className="!fixed w-full h-full top-0 left-0 opacity-10 z-[1] pointer-events-none"
                 fill
                 style={{
                     objectFit: "cover"
