@@ -51,6 +51,7 @@ const EditableMemberAvatar: FC<Props> = ({
         >
             {(ref) => (
                 <Avatar
+                    color="primary"
                     src={srcOverride ?? (avatarUrl ?? fetchedAvatarUrl)}
                     onClick={() => ref.current?.click()}
                     classNames={{

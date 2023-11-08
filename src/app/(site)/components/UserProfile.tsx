@@ -30,6 +30,7 @@ const UserProfile: FC<Props> = ({placement}) => {
         >
             <DropdownTrigger>
                 <Avatar
+                    color="primary"
                     isBordered
                     as="button"
                     className="transition-transform"
