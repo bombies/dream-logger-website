@@ -11,6 +11,7 @@ import Dropdown from "@/app/(site)/components/Dropdown";
 import {useMemberData} from "@/app/(site)/components/providers/user-data/UserProvider";
 import useCDNUrl from "@/app/(site)/hooks/s3/useCDNUrl";
 import SignOutIcon from "@/app/(site)/components/icons/SignOutIcon";
+import DarkModeSwitch from "@/app/(site)/components/DarkModeSwitch";
 
 type Props = {
     placement?: OverlayPlacement
@@ -88,6 +89,14 @@ const UserProfile: FC<Props> = ({placement}) => {
                         startContent={<SettingsIcon width={16}/>}
                     >
                         Settings
+                    </DropdownItem>
+                </DropdownSection>
+                <DropdownSection showDivider>
+                    <DropdownItem
+                        isReadOnly
+                        key="darkmode_switch"
+                    >
+                        <DarkModeSwitch showLabel/>
                     </DropdownItem>
                 </DropdownSection>
                 <DropdownItem

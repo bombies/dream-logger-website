@@ -32,7 +32,6 @@ const EditableMemberAvatar: FC<Props> = ({
                                          }) => {
     const fetchedAvatarUrl = useCDNUrl(avatarUrl === undefined && member?.image ? `avatars/${member.image}` : null)
 
-
     return (
         <FileUpload
             oldKey={member?.image ?? undefined}

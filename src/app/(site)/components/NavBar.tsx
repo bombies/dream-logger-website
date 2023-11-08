@@ -18,6 +18,7 @@ import Image from "@/app/(site)/components/Image";
 import {useSession} from "next-auth/react";
 import UserProfile from "@/app/(site)/components/UserProfile";
 import SignInIcon from "@/app/(site)/components/icons/SignInIcon";
+import DarkModeSwitch from "@/app/(site)/components/DarkModeSwitch";
 
 const NavBar: FC = () => {
     const pathName = usePathname();
@@ -59,7 +60,7 @@ const NavBar: FC = () => {
                                 <Button
                                     color="secondary"
                                     onPress={() => router.push("/signin")}
-                                    startContent={<SignInIcon />}
+                                    startContent={<SignInIcon/>}
                                 >
                                     Log In
                                 </Button>
@@ -72,6 +73,9 @@ const NavBar: FC = () => {
                                 >
                                     Sign Up
                                 </Button>
+                            </NavbarItem>
+                            <NavbarItem>
+                                <DarkModeSwitch/>
                             </NavbarItem>
                         </Fragment>
                     )
@@ -109,7 +113,7 @@ const NavBar: FC = () => {
                                     color="secondary"
                                     fullWidth
                                     onPress={() => router.push("/signin")}
-                                    startContent={<SignInIcon />}
+                                    startContent={<SignInIcon/>}
                                 >
                                     Log In
                                 </Button>
@@ -123,6 +127,9 @@ const NavBar: FC = () => {
                                 >
                                     Sign Up
                                 </Button>
+                            </NavbarMenuItem>
+                            <NavbarMenuItem>
+                                <DarkModeSwitch size="lg" showLabel />
                             </NavbarMenuItem>
                         </Fragment>
                     )
