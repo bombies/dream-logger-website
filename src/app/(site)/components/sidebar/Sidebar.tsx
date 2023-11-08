@@ -41,7 +41,7 @@ const Sidebar: FC<Props> = ({children, headerText}) => {
             ref={sidebarRef}
             className={clsx(
                 "relative bg-secondary/50 min-h-screen data-[isopen=true]:w-96 w-24 pt-12 px-2",
-                "z-[100] tablet:!bg-secondary/0 tablet:data-[isopen=true]:!bg-opacity-90 tablet:data-[isopen=true]:backdrop-blur-md tablet:w-16 data-[isopen=true]:tablet:w-72 tablet:fixed",
+                "z-[100] tablet:!bg-secondary/0 tablet:data-[isopen=true]:!bg-secondary/90 tablet:data-[isopen=true]:backdrop-blur-md tablet:w-16 data-[isopen=true]:tablet:w-72 tablet:fixed",
                 "phone:w-12 data-[isopen=true]:phone:w-64",
                 "data-[isopen=true]:p-6 flex flex-col data-[isopen=false]:items-center data-[isopen=false]:z-0"
             )}
