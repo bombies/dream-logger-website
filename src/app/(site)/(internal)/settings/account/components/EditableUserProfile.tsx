@@ -88,7 +88,7 @@ const EditableUserProfile: FC = () => {
                                 </div>
                                 <Spacer y={6}/>
                                 <Card classNames={{
-                                    body: "space-y-6 bg-[#0C0015] p-12"
+                                    base: "space-y-6 bg-light-secondary border border-primary dark:border-none dark:bg-dark p-12 rounded-3xl"
                                 }}>
                                     <CardBody>
                                         <div>
@@ -131,7 +131,7 @@ const EditableUserProfile: FC = () => {
                                                     })
                                                 }}
                                             >
-                                                <p className="flex justify-between gap-2">{member?.username}
+                                                <p className="flex justify-between gap-2 text-dark dark:text-light hover:text-primary ease-in-out duration-300">{member?.username}
                                                     <span className="self-center">
                                                         <EditIcon/>
                                                     </span>
@@ -162,7 +162,7 @@ const EditableUserProfile: FC = () => {
                                                         )
                                                 }}
                                             >
-                                                <p className="capitalize flex justify-between gap-2">{member?.firstName}
+                                                <p className="capitalize flex justify-between gap-2 text-dark dark:text-light hover:text-primary ease-in-out duration-300">{member?.firstName}
                                                     <span className="self-center">
                                                             <EditIcon/>
                                                         </span>
@@ -192,7 +192,7 @@ const EditableUserProfile: FC = () => {
                                                         )
                                                 }}
                                             >
-                                                <p className="capitalize flex justify-between gap-2 break-all">{member?.lastName}
+                                                <p className="capitalize flex justify-between gap-2 break-all text-dark dark:text-light hover:text-primary ease-in-out duration-300">{member?.lastName}
                                                     <span className="self-center">
                                                             <EditIcon/>
                                                         </span>

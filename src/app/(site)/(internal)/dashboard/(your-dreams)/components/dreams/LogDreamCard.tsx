@@ -26,8 +26,8 @@ const LogDreamCard: FC<Props> = ({isDisabled}) => {
                 }}
                 isPressable={!isDisabled}
                 classNames={{
-                    base: "hover:scale-105",
-                    body: "bg-primary py-8"
+                    base: "bg-primary rounded-3xl text-light hover:scale-105",
+                    body: "py-8"
                 }}
             >
                 <CardBody>

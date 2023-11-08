@@ -23,8 +23,8 @@ export default function Select<T>({
         color: "primary",
         size: "lg",
         classNames: {
-            trigger: clsx("bg-[#9E23FF1A]/10 border-1 border-[#3E0070] hover:!bg-[#9E23FF1A]/20 focus-within:!bg-[#9E23FF1A]/20", classNames?.trigger),
-            label: clsx("text-lg text-[#EAE0FF]", classNames?.label),
+            trigger: clsx("bg-[#9E23FF1A]/10 border border-primary dark:border-[#3E0070] hover:!bg-[#9E23FF1A]/20 focus-within:!bg-[#9E23FF1A]/20", classNames?.trigger),
+            label: clsx("dark:text-light text-dark", classNames?.label),
         },
         listboxProps: {
             ...listboxProps,
@@ -40,7 +40,7 @@ export default function Select<T>({
         popoverProps: {
             ...popoverProps,
             classNames: {
-                content: "bg-secondary/90 border-1 border-[#3E0070] backdrop-blur-md",
+                content: "bg-light/70 dark:bg-secondary/90 border-1 border-primary dark:border-[#3E0070] backdrop-blur-md",
                 ...popoverProps?.classNames
             }
         },

@@ -153,6 +153,7 @@ const DreamView: FC<Props> = ({dream, fetchDream}) => {
                 )}
                 <div className="flex flex-shrink justify-end">
                     <Button
+                        className="text-primary dark:text-light"
                         isIconOnly
                         variant="light"
                         onPress={() => {
@@ -183,7 +184,7 @@ const DreamView: FC<Props> = ({dream, fetchDream}) => {
                     await update({title: value})
                 }}
             >
-                <h1 className="text-4xl phone:text-2xl font-bold">{dream.title}</h1>
+                <h1 className="text-4xl phone:text-2xl font-bold text-dark dark:text-light">{dream.title}</h1>
             </EditableInput>
             {dream.comments && (
                 <EditableInput
@@ -215,7 +216,7 @@ const DreamView: FC<Props> = ({dream, fetchDream}) => {
                 }}
             >
                 <article
-                    className="text-[#EAE0FF] phone:text-sm whitespace-pre-wrap rounded-3xl border border-primary/40 bg-[#0C0015]/50 p-6 mt-6">
+                    className="text-dark dark:text-light phone:text-sm whitespace-pre-wrap rounded-3xl border border-primary shadow-md dark:shadow-none dark:border-primary/40 dark:bg-[#0C0015]/50 p-6 mt-6">
                     {dream.description}
                 </article>
             </EditableTextArea>

@@ -86,7 +86,7 @@ const DreamCalendar: FC = () => {
                         isDisabled={!tutorialsState?.dreamCalendar}
                         disableRipple
                         isIconOnly
-                        color="default"
+                        color="primary"
                         variant="light"
                         className="self-center"
                         onPress={displayPreviousMonth}
@@ -182,7 +182,7 @@ const DreamCalendar: FC = () => {
                         isDisabled={!tutorialsState?.dreamCalendar}
                         disableRipple
                         isIconOnly
-                        color="default"
+                        color="primary"
                         variant="light"
                         className="self-center"
                         onPress={displayNextMonth}
@@ -206,7 +206,7 @@ const DreamCalendar: FC = () => {
                 {daysOfWeek.map((day, i) => (
                     <p
                         key={i}
-                        className="text-center font-semibold"
+                        className="text-center font-semibold tablet:text-light"
                     >
                         {day.charAt(0)}
                     </p>

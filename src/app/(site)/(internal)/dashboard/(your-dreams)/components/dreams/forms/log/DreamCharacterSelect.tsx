@@ -25,7 +25,7 @@ const DreamCharacterSelect: FC<Props> = ({onModalOpen, isDisabled, characters, r
         <Fragment>
             {onModalOpen && (
                 <div className="flex gap-4 mb-2">
-                    <label className="text-lg phone:text-medium text-[#EAE0FF] self-center">Dream Characters</label>
+                    <label className="text-lg phone:text-medium self-center">Dream Characters</label>
                     <Button
                         color="cta"
                         size="sm"

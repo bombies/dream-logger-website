@@ -52,7 +52,7 @@ const DeleteAccountButton: FC = () => {
                 acceptContent={"Delete Account"}
             >
                 <p className="font-bold p-6 bg-danger/30 rounded-3xl w-fit phone:w-3/4 mb-6">Deleting your account is a
-                    permanent action and cannot be undone! Are you sure you want to delete your password?</p>
+                    permanent action and cannot be undone! Are you sure you want to delete your account?</p>
                 <Checkbox
                     isSelected={isConfirmed}
                     onValueChange={setIsConfirmed}

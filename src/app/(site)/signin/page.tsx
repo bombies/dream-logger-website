@@ -12,7 +12,7 @@ import RegisterForm from "@/app/(site)/signin/components/RegisterForm";
 import LogInForm from "@/app/(site)/signin/components/LogInForm";
 import Image from "@/app/(site)/components/Image";
 import Link from "next/link";
-import Logo from "@/app/(site)/components/Logo";
+import Logo from "@/app/(site)/components/logo/Logo";
 
 const SignInPage: FC = () => {
     const {data: sessionData, status: sessionStatus} = useSession()

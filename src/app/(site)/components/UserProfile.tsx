@@ -12,7 +12,7 @@ import {useMemberData} from "@/app/(site)/components/providers/user-data/UserPro
 import useCDNUrl from "@/app/(site)/hooks/s3/useCDNUrl";
 import SignOutIcon from "@/app/(site)/components/icons/SignOutIcon";
 import DarkModeSwitch from "@/app/(site)/components/DarkModeSwitch";
-import Logo from "@/app/(site)/components/Logo";
+import Logo from "@/app/(site)/components/logo/Logo";
 
 type Props = {
     placement?: OverlayPlacement

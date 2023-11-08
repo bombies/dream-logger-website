@@ -6,7 +6,6 @@ import useSWRMutation from "swr/mutation";
 import {handleAxiosError, patchMutator, postMutator} from "@/utils/client/client-utils";
 import Input, {ValidationErrors} from "@/app/(site)/components/inputs/Input";
 import {Button} from "@nextui-org/button";
-import Image from "@/app/(site)/components/Image";
 import Link from "next/link";
 import Card from "@/app/(site)/components/Card";
 import {CardBody} from "@nextui-org/card";
@@ -21,6 +20,7 @@ import {
 } from "@/app/api/auth/forgotpassword/forgot-password.dto";
 import {ResetPasswordDecodeAndCompareDto} from "@/app/api/me/resetpassword/reset-password.dto";
 import {jwtDecode} from "jwt-decode";
+import Logo from "@/app/(site)/components/logo/Logo";
 
 const useValidAuthenticatedResetSession = () => {
     return useSWRMutation('/api/me/resetpassword', postMutator<ResetPasswordDecodeAndCompareDto, PasswordResetJWT | null>())
@@ -44,7 +44,7 @@ type FormProps = {
 }
 
 const ResetPasswordPage: FC = () => {
-    const {data: session, status: sessionStatus} = useSession()
+    const {status: sessionStatus} = useSession()
     const searchParams = useSearchParams()
     const token = useMemo(() => searchParams.get("token"), [searchParams])
     const router = useRouter();
@@ -113,11 +113,7 @@ const ResetPasswordPage: FC = () => {
                     <Card className="w-1/3 tablet:w-3/4 phone:w-[90%]">
                         <CardBody>
                             <Link className="mx-auto my-6" href="/">
-                                <Image
-                                    src="/images/DreamLoggerFull.png"
-                                    alt="Logo"
-                                    imgWidth={250} imgHeight={100}
-                                />
+                                <Logo width={250} height={100} />
                             </Link>
                             <form onSubmit={handleSubmit(onSubmit)}>
                                 <div className="space-y-6">

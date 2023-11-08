@@ -95,7 +95,7 @@ const GenericTagContainer: FC<Props> = ({state, stateType}) => {
                     <AddCharacterModal isOpen={addModalOpen} onClose={() => setAddModalOpen(false)}/>
                 )
             }
-            <div className="w-5/6 bg-secondary p-12 rounded-3xl ">
+            <div className="w-5/6 bg-light-secondary border border-primary dark:border-none shadow-md dark:shadow-none dark:bg-secondary p-12 rounded-3xl ">
                 <div className="flex phone:flex-col items-center gap-8 phone:gap-4 mb-6">
                     <div className="flex gap-2">
                         <h2 className="text-3xl phone:text-xl font-bold">Your {stateType === 'tags' ? "Tags" : "Characters"}</h2>
@@ -106,7 +106,7 @@ const GenericTagContainer: FC<Props> = ({state, stateType}) => {
                     <div className="flex gap-4">
                         <Tooltip
                             content="Sort"
-                            className="bg-secondary/90 border border-primary/40 backdrop-blur-md p-3"
+                            className="bg-light dark:bg-secondary/90 border border-primary dark:border-primary/40 backdrop-blur-md p-3"
                             closeDelay={10}
                         >
                             <Button
@@ -155,7 +155,7 @@ const GenericTagContainer: FC<Props> = ({state, stateType}) => {
                             tagElements.length > 0 ?
                                 tagElements
                                 :
-                                <p className="text-xl p-12 bg-dark/50 border border-primary/40 rounded-3xl col-span-2 phone:col-span-1">
+                                <p className="p-12 text-xl phone:text-sm phone:p-6  border-primary shadow-md dark:shadow-none dark:bg-dark/50 border border-primary/40 rounded-3xl col-span-2 phone:col-span-1">
                                     There is nothing here...
                                 </p>
                         )

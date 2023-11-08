@@ -73,8 +73,8 @@ const PastDreamsContainer: FC = () => {
                             isPressable
                             isBlurred
                             classNames={{
-                                base: "hover:scale-105 w-full",
-                                body: "bg-dark py-8"
+                                base: "hover:scale-105 dark:bg-dark bg-primary text-light rounded-3xl w-full",
+                                body: "py-8"
                             }}
                         >
                             <CardBody>

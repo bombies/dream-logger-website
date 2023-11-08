@@ -11,6 +11,7 @@ import {SubmitHandler, useForm} from "react-hook-form";
 import Input from "@/app/(site)/components/inputs/Input";
 import {Button} from "@nextui-org/button";
 import {Spacer} from "@nextui-org/react";
+import Logo from "@/app/(site)/components/logo/Logo";
 
 const SendPasswordResetRequest = () => {
     return useSWRMutation('/api/auth/forgotpassword', fetcherWithArgs<{
@@ -46,16 +47,12 @@ const ForgotPasswordPage: FC = () => {
             <Card className="w-1/3 tablet:w-3/4 phone:w-[90%]">
                 <CardBody>
                     <Link className="mx-auto my-6" href="/">
-                        <Image
-                            src="/images/DreamLoggerFull.png"
-                            alt="Logo"
-                            imgWidth={250} imgHeight={100}
-                        />
+                        <Logo width={250} height={100}/>
                     </Link>
                     {
                         !submitted ? (
                             <form onSubmit={handleSubmit(onSubmit)}>
-                                <p className="mb-6 bg-primary/80 p-6 rounded-3xl">
+                                <p className="mb-6 bg-light-secondary border border-primary dark:border-primary/40 dark:bg-primary/80 p-6 rounded-3xl text-dark dark:text-light shadow-md dark:shadow-none">
                                     Forgot your password? Don&apos;t worry, it happens to the best of us.
                                     Enter your email address in the field below to start that password reset
                                     process.</p>
@@ -81,7 +78,7 @@ const ForgotPasswordPage: FC = () => {
                             </form>
                         ) : (
                             <Fragment>
-                                <p>{`If ${email} is an email of a registered user an email has been sent with a link to
+                                <p className="p-6 rounded-3xl border border-primary dark:border-primary/40 shadow-md dark:shadow-none">{`If ${email} is an email of a registered user an email has been sent with a link to
                                     reset the password.`}</p>
                             </Fragment>
                         )

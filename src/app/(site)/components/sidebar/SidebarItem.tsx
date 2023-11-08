@@ -3,7 +3,7 @@ import Link from "next/link";
 import {useSidebar} from "@/app/(site)/components/sidebar/SidebarProvider";
 import {Tooltip} from "@nextui-org/react";
 import clsx from "clsx";
-import { motion } from "framer-motion";
+import {motion} from "framer-motion";
 
 export type SidebarItemProps = {
     title: string,
@@ -33,8 +33,13 @@ const SidebarItem: FC<SidebarItemProps> = ({title, startContent, href, onClick})
             className="flex gap-4 cursor-pointer rounded-lg font-semibold p-3"
             onClick={onClick}
         >
-            {startContent && startContent}
-            <p className={clsx(!isOpen && "hidden", "capitalize text-sm font-normal")}>{title}</p>
+
+            {startContent && (
+                <span className="text-primary dark:text-light">
+                    {startContent}
+                </span>
+            )}
+            <p className={clsx(!isOpen && "hidden", "capitalize text-sm font-normal text-dark dark:text-light")}>{title}</p>
         </motion.div>
     ), [isOpen, onClick, startContent, title])
 
@@ -43,7 +48,7 @@ const SidebarItem: FC<SidebarItemProps> = ({title, startContent, href, onClick})
             content={title}
             placement="right"
             closeDelay={10}
-            className="bg-secondary/90 border border-primary/40 backdrop-blur-md p-3 font-semibold text-lg"
+            className="bg-light dark:bg-secondary/90 border border-primary dark:border-primary/40 backdrop-blur-md p-3 font-semibold text-lg"
         >
             {item}
         </Tooltip>

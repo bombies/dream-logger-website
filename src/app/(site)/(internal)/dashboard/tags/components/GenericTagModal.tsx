@@ -84,7 +84,7 @@ const GenericTagModal: FC<Props> = ({isOpen, onClose, item, itemType}) => {
                 })}`}
             >
                 <div>
-                    <div className="bg-secondary p-8 rounded-3xl">
+                    <div className="border border-primary dark:border-none bg-light dark:bg-secondary p-8 rounded-3xl">
                         <h4 className="text-subtext font-semibold mb-2">NAME</h4>
                         <EditableInput
                             isEditable
@@ -120,7 +120,7 @@ const GenericTagModal: FC<Props> = ({isOpen, onClose, item, itemType}) => {
                                 }
                             }}
                         >
-                            <p className="flex justify-between gap-2 break-all">{getItemName()}
+                            <p className="flex justify-between gap-2 break-all text-dark dark:text-light">{getItemName()}
                                 <span className="self-center">
                                     <EditIcon/>
                                 </span>

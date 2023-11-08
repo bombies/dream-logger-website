@@ -61,10 +61,10 @@ const DreamCard: FC<Props> = ({isDisabled, dream, hideTime, showCreatedAt, onDel
                         setModalOpen(true)
                 }}
                 classNames={{
-                    base: "hover:scale-105",
-                    header: "bg-dark pt-6 px-8 phone:px-4 pb-0 z-1",
-                    body: "bg-dark px-8 phone:px-4 py-6 phone:py-4",
-                    footer: "bg-dark px-8 phone:px-4",
+                    base: "hover:scale-105 dark:bg-dark bg-light-secondary rounded-3xl",
+                    header: "px-8 phone:px-4 pb-0 z-1",
+                    body: " px-8 phone:px-4 py-6 phone:py-4",
+                    footer: "px-8 phone:px-4",
                 }}>
                 <CardHeader className="flex justify-between">
                     <h2 className={clsx(
@@ -82,7 +82,7 @@ const DreamCard: FC<Props> = ({isDisabled, dream, hideTime, showCreatedAt, onDel
                     }
                 </CardHeader>
                 <CardBody>
-                    <p className="phone:text-sm text-subtext max-w-[85%] overflow-hidden whitespace-nowrap overflow-ellipsis">
+                    <p className="phone:text-sm dark:text-subtext text-neutral-500 max-w-[85%] overflow-hidden whitespace-nowrap overflow-ellipsis">
                         {dream.description.substring(0, Math.min(dream.description.length, 100))}
                     </p>
                 </CardBody>

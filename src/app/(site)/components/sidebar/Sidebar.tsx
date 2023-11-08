@@ -20,6 +20,8 @@ import SignOutLinedIcon from "@/app/(site)/components/icons/SignOutLinedIcon";
 import {signOut} from "next-auth/react";
 import CircledArrowIcon from "@/app/(site)/components/icons/CircledArrowIcon";
 import CircledBackArrowIcon from "@/app/(site)/components/icons/CircledBackArrowIcon";
+import Logo from "@/app/(site)/components/logo/Logo";
+import SmallLogo from "@/app/(site)/components/logo/SmallLogo";
 
 type Props = {
     children?: ReactElement<SidebarItemProps | SidebarSectionProps> | ReactElement<SidebarItemProps | SidebarSectionProps>[],
@@ -40,8 +42,8 @@ const Sidebar: FC<Props> = ({children, headerText}) => {
         <motion.aside
             ref={sidebarRef}
             className={clsx(
-                "relative bg-secondary/50 min-h-screen data-[isopen=true]:w-96 w-24 pt-12 px-2",
-                "z-[100] tablet:!bg-secondary/0 tablet:data-[isopen=true]:!bg-secondary/90 tablet:data-[isopen=true]:backdrop-blur-md tablet:w-16 data-[isopen=true]:tablet:w-72 tablet:fixed",
+                "relative bg-light dark:bg-secondary/50 min-h-screen data-[isopen=true]:w-96 w-24 pt-12 px-2",
+                "z-[100] tablet:!bg-secondary/0 tablet:data-[isopen=true]:dark:!bg-secondary/90 tablet:data-[isopen=true]:!bg-light/90 tablet:data-[isopen=true]:backdrop-blur-md tablet:w-16 data-[isopen=true]:tablet:w-72 tablet:fixed",
                 "phone:w-12 data-[isopen=true]:phone:w-64",
                 "data-[isopen=true]:p-6 flex flex-col data-[isopen=false]:items-center data-[isopen=false]:z-0"
             )}
@@ -70,11 +72,7 @@ const Sidebar: FC<Props> = ({children, headerText}) => {
                         isOpen ? (
                             <Fragment>
                                 <Link href="/">
-                                    <Image
-                                        src="/images/DreamLoggerFull.png"
-                                        alt="Logo"
-                                        imgWidth={175} imgHeight={50}
-                                    />
+                                    <Logo width={175} height={50}/>
                                 </Link>
                                 <h3 className="font-semibold text-medium">{headerText}</h3>
                                 <Divider className="my-6"/>
@@ -82,11 +80,7 @@ const Sidebar: FC<Props> = ({children, headerText}) => {
 
                         ) : (
                             <Link href="/">
-                                <Image
-                                    src="/images/DreamLoggerSmall.png"
-                                    alt="Logo"
-                                    imgWidth={40} imgHeight={40}
-                                />
+                                <SmallLogo width={40} height={40}/>
                             </Link>
                         )
                     }
@@ -110,7 +104,7 @@ const Sidebar: FC<Props> = ({children, headerText}) => {
                             </div>
                             <Tooltip
                                 placement="right"
-                                className="bg-secondary/90 border border-primary/40 backdrop-blur-md p-3 font-semibold text-lg"
+                                className="bg-light dark:bg-secondary/90 border border-primary dark:border-primary/40 backdrop-blur-md p-3 font-semibold text-lg"
                                 content="Sign Out"
                             >
                                 <Button

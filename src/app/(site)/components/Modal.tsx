@@ -15,7 +15,7 @@ const Modal: FC<Props> = ({classNames, header, footer, title, subtitle, children
             scrollBehavior="outside"
             classNames={{
                 wrapper: "overflow-x-hidden",
-                base: "py-6 px-3 phone:px-0 bg-dark",
+                base: "py-6 px-3 phone:px-0  bg-light border border-primary dark:border-none dark:bg-dark",
                 closeButton: "hover:bg-primary/20",
                 ...classNames
             }}

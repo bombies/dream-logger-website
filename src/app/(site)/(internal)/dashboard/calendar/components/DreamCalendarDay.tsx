@@ -66,7 +66,7 @@ const DreamCalendarDay: FC<Props> = ({dreams, day, isToday}) => {
                     <div className="flex flex-col h-full border-x border-b border-primary tablet:border-0">
                         <div
                             className="bg-primary tablet:bg-primary/0 p-2 font-semibold text-xl phone:text-medium tablet:justify-center flex gap-2">
-                            <p className={clsx(isToday && "tablet:text-primary")}>{day.dayOfMonth}</p>
+                            <p className={clsx("text-light tablet:text-dark tablet:dark:text-light", isToday && "tablet:text-primary")}>{day.dayOfMonth}</p>
                             {isToday && (
                                 <Chip
                                     variant="flat"

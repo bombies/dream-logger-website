@@ -23,7 +23,7 @@ const DreamTagSelect: FC<Props> = ({onModalOpen, isDisabled, tags, register, lab
         <Fragment>
             {onModalOpen && (
                 <div className="flex gap-4 mb-2">
-                    <label className="text-lg phone:text-medium text-[#EAE0FF] self-center">Dream Tags</label>
+                    <label className="text-lg phone:text-medium self-center">Dream Tags</label>
                     <Button
                         color="cta"
                         size="sm"

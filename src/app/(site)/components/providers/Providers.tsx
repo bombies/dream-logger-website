@@ -38,16 +38,16 @@ const Providers: FC<Props> = ({children, session}) => {
                                         reverseOrder
                                         toastOptions={{
                                             className: `
-                                        bg-secondary/90
+                                            text-dark dark:text-light
+                                        bg-light-secondary/90 border border-primary
+                                        dark:border-primary/40
+                                        dark:bg-dark/90
                                         backdrop-blur-sm p-6
                                         min-w-96 max-w-[32rem]
                                         flex
                                         gap-4
                                         justify-between`,
                                             style: {
-                                                background: "#100f1090",
-                                                color: "#ffffff",
-                                                border: "2px solid #00000005",
                                                 borderRadius: "1.5rem",
                                                 padding: "1.5rem"
                                             }

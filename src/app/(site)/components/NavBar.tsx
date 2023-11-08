@@ -18,7 +18,7 @@ import {useSession} from "next-auth/react";
 import UserProfile from "@/app/(site)/components/UserProfile";
 import SignInIcon from "@/app/(site)/components/icons/SignInIcon";
 import DarkModeSwitch from "@/app/(site)/components/DarkModeSwitch";
-import Logo from "./Logo";
+import Logo from "./logo/Logo";
 
 const NavBar: FC = () => {
     const pathName = usePathname();
@@ -36,13 +36,13 @@ const NavBar: FC = () => {
                 <NavbarMenuToggle className="laptop-min:hidden"/>
                 <NavbarBrand>
                     <Link href="/">
-                        <Logo width={150} height={75} />
+                        <Logo width={150} height={75}/>
                     </Link>
                 </NavbarBrand>
             </NavbarContent>
             <NavbarContent className="laptop:hidden gap-4" justify="center">
                 <NavbarItem isActive={pathName.includes("#about")}>
-                    <Link href="#about">
+                    <Link href="/#about">
                         ABOUT
                     </Link>
                 </NavbarItem>
@@ -86,7 +86,7 @@ const NavBar: FC = () => {
             }
             <NavbarMenu className="bg-light/80 dark:bg-dark/95 backdrop-blur-md">
                 <NavbarMenuItem>
-                    <Link className="w-full" href="#about">
+                    <Link className="w-full" href="/#about">
                         ABOUT
                     </Link>
                 </NavbarMenuItem>

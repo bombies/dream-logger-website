@@ -163,7 +163,7 @@ const DreamSearchContext: FC = () => {
                                 <Spinner size="lg"/>
                             ) : (
                                 fetchedData === undefined ? (
-                                    <h3 className="p-12 text-xl phone:text-sm phone:p-6 bg-dark/50 border border-primary/40 rounded-3xl">You
+                                    <h3 className="p-12 text-xl phone:text-sm phone:p-6  border-primary shadow-md dark:shadow-none dark:bg-dark/50 border border-primary/40 rounded-3xl">You
                                         haven&apos;t made a search
                                         yet...</h3>
                                 ) : (fetchedData === null || !fetchedData.length ? (

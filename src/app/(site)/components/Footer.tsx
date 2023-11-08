@@ -4,7 +4,7 @@ import {FC} from "react";
 import Image from "@/app/(site)/components/Image";
 import {usePathname} from "next/navigation";
 import {Link} from "@nextui-org/react";
-import Logo from "@/app/(site)/components/Logo";
+import Logo from "@/app/(site)/components/logo/Logo";
 
 const Footer: FC = () => {
     const pathName = usePathname();
