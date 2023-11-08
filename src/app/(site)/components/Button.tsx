@@ -4,8 +4,8 @@ import {motion} from "framer-motion";
 const Button = extendVariants(NextUIButton, {
     variants: {
         color: {
-            cta: 'bg-gradient-to-r from-[#8F00FF] to-[#270079] font-semibold',
-            secondary: 'bg-white text-secondary font-semibold'
+            cta: 'bg-gradient-to-r from-[#8F00FF] to-[#270079] font-semibold text-light',
+            secondary: 'bg-white text-dark font-semibold'
         },
         size: {
             xl: "px-unit-8 min-w-unit-28 h-unit-14 text-large gap-unit-4 rounded-medium",

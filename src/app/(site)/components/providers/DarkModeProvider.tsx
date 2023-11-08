@@ -3,6 +3,7 @@
 import {createGenericContext} from "@/utils/client/client-data-utils";
 import {FC, PropsWithChildren, useCallback, useEffect, useState} from "react";
 import useLocalStorage from "@/app/(site)/hooks/useLocalStorage";
+import {useTheme} from "next-themes";
 
 
 const [DarkModeContext, hook] = createGenericContext<[boolean, (newVal: boolean) => void]>("useDarkMode must be used in a DarkModeProvider!")
@@ -10,6 +11,7 @@ const [DarkModeContext, hook] = createGenericContext<[boolean, (newVal: boolean)
 const DarkModeProvider: FC<PropsWithChildren> = ({children}) => {
     const localStorage = useLocalStorage()
     const [darkMode, setDarkMode] = useState<boolean>(localStorage?.darkMode ?? true)
+    const {theme, setTheme} = useTheme()
 
     useEffect(() => {
         if (!localStorage)
@@ -21,9 +23,10 @@ const DarkModeProvider: FC<PropsWithChildren> = ({children}) => {
         setDarkMode(() => {
             if (localStorage)
                 localStorage.darkMode = newVal
+            setTheme(newVal ? "dark" : "light")
             return newVal
         })
-    }, [localStorage])
+    }, [localStorage, setTheme])
 
     return (
         <DarkModeContext.Provider value={[darkMode, changeDarkMode]}>

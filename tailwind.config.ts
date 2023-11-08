@@ -25,6 +25,9 @@ const config: Config = {
                 subtext: "#828282",
                 secondary: "#1A002F",
                 dark: "#0C0015",
+                darker: "#08000F",
+                light: "#f3e1ff",
+                "light-secondary": "#f0d8ff",
                 danger: "#FF4A4A",
                 "cta-start": "#8F00FF",
                 "cta-end": "#270079"
@@ -36,24 +39,30 @@ const config: Config = {
         themes: {
             light: {
                 colors: {
-                    background: "#0C0015",
-                    foreground: "#EAE0FF",
+                    divider: "#d79cff",
+                    background: "#EAE0FF",
+                    foreground: "#0C0015",
                     primary: {
+                        foreground: "#EAE0FF",
                         DEFAULT: "#9E23FF"
                     },
                     secondary: {
+                        foreground: "#EAE0FF",
                         DEFAULT: "#1A002F"
                     },
                     default: {
+                        foreground: "#EAE0FF",
                         DEFAULT: "#9E23FF"
                     },
                     danger: {
+                        foreground: "#EAE0FF",
                         DEFAULT: "#FF4A4A"
                     }
                 }
             },
             dark: {
                 colors: {
+                    divider: "#49007f",
                     background: "#0C0015",
                     foreground: "#EAE0FF",
                     primary: {

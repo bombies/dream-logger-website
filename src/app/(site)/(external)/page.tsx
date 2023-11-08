@@ -36,7 +36,7 @@ export default function Home() {
                                 />
                             </div>
                             <motion.h3
-                                className={clsx(montserrat.className, "laptop-min:ml-6 tablet:text-center tablet:text-lg phone:text-sm font-light laptop-min:max-w-lg text-justify")}
+                                className={clsx(montserrat.className, "text-light laptop-min:ml-6 tablet:text-center tablet:text-lg phone:text-sm font-light laptop-min:max-w-lg text-justify")}
                                 initial={{opacity: 0, y: 50}}
                                 whileInView={{opacity: 1, y: 0}}
                                 transition={{duration: 1}}
@@ -63,7 +63,7 @@ export default function Home() {
                                 behavior: "smooth"
                             })}
                         >
-                            <DownArrowIcon/>
+                            <DownArrowIcon className="text-light" />
                         </Button>
                     </div>
                 </div>
@@ -177,7 +177,7 @@ const StartDreamingButton: FC = () => {
 
                     setCurrentAnimation(animation)
                 }}
-                className='bg-gradient-to-r from-[#8F00FF] to-[#270079] font-semibold px-16 py-6 rounded-xl'
+                className='bg-gradient-to-r from-[#8F00FF] to-[#270079] font-semibold px-16 py-6 rounded-xl text-light'
                 style={{
                     filter: "drop-shadow(0px 2px 10px rgba(82, 0, 255, 0))"
                 }}

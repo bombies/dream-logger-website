@@ -14,11 +14,11 @@ import Link from "next/link";
 import {usePathname, useRouter} from "next/navigation";
 import Button from "@/app/(site)/components/Button";
 import clsx from "clsx";
-import Image from "@/app/(site)/components/Image";
 import {useSession} from "next-auth/react";
 import UserProfile from "@/app/(site)/components/UserProfile";
 import SignInIcon from "@/app/(site)/components/icons/SignInIcon";
 import DarkModeSwitch from "@/app/(site)/components/DarkModeSwitch";
+import Logo from "./Logo";
 
 const NavBar: FC = () => {
     const pathName = usePathname();
@@ -29,18 +29,14 @@ const NavBar: FC = () => {
         <Navbar
             className={clsx((["/dashboard", "/signin", "/settings", "/resetpassword"].some(name => pathName.includes(name))) && "hidden")}
             classNames={{
-                base: 'bg-[#0C0015]'
+                base: 'bg-light dark:bg-dark'
             }}
         >
             <NavbarContent>
                 <NavbarMenuToggle className="laptop-min:hidden"/>
                 <NavbarBrand>
                     <Link href="/">
-                        <Image
-                            src="/images/DreamLoggerFull.png"
-                            alt="Logo"
-                            imgWidth={150} imgHeight={75}
-                        />
+                        <Logo width={150} height={75} />
                     </Link>
                 </NavbarBrand>
             </NavbarContent>
@@ -88,7 +84,7 @@ const NavBar: FC = () => {
                     </NavbarContent>
                 )
             }
-            <NavbarMenu className="bg-[#0C0015]/95 backdrop-blur-md">
+            <NavbarMenu className="bg-light/80 dark:bg-dark/95 backdrop-blur-md">
                 <NavbarMenuItem>
                     <Link className="w-full" href="#about">
                         ABOUT
@@ -129,7 +125,7 @@ const NavBar: FC = () => {
                                 </Button>
                             </NavbarMenuItem>
                             <NavbarMenuItem>
-                                <DarkModeSwitch size="lg" showLabel />
+                                <DarkModeSwitch size="lg" showLabel/>
                             </NavbarMenuItem>
                         </Fragment>
                     )

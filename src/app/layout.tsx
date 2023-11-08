@@ -35,7 +35,7 @@ export default async function RootLayout({
 
     return (
         <html lang="en" className={inter.className}>
-        <body>
+        <body className="bg-light text-dark dark:bg-dark dark:text-light">
         <Providers session={session}>
             <NavBar/>
             {children}

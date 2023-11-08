@@ -12,6 +12,7 @@ import RegisterForm from "@/app/(site)/signin/components/RegisterForm";
 import LogInForm from "@/app/(site)/signin/components/LogInForm";
 import Image from "@/app/(site)/components/Image";
 import Link from "next/link";
+import Logo from "@/app/(site)/components/Logo";
 
 const SignInPage: FC = () => {
     const {data: sessionData, status: sessionStatus} = useSession()
@@ -30,11 +31,7 @@ const SignInPage: FC = () => {
                 <Card className="w-1/2 tablet:w-3/4 phone:w-[90%]">
                     <CardBody>
                         <Link className="mx-auto my-6" href="/">
-                            <Image
-                                src="/images/DreamLoggerFull.png"
-                                alt="Logo"
-                                imgWidth={250} imgHeight={100}
-                            />
+                            <Logo width={250} height={100}/>
                         </Link>
                         <Tabs
                             size="lg"
@@ -43,8 +40,8 @@ const SignInPage: FC = () => {
                             variant="light"
                             classNames={{
                                 base: "justify-center",
-                                tabList: "bg-secondary gap-8",
-                                tabContent: "text-[#EAE0FF]"
+                                tabList: "border-1 border-primary dark:bg-secondary gap-8",
+                                tabContent: "text-dark dark:text-light"
                             }}
                             onSelectionChange={(key) => setSelectedTab(key as string)}
                             selectedKey={selectedTab}

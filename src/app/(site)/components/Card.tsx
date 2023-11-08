@@ -6,10 +6,7 @@ const Card: FC<CardProps> = ({classNames, ...props}) => {
     return (
         <NextCard
             classNames={{
-                base: clsx("rounded-3xl", classNames?.base),
-                header: clsx("bg-secondary", classNames?.header),
-                body: clsx("bg-secondary", classNames?.body),
-                footer: clsx("bg-secondary", classNames?.footer),
+                base: clsx("rounded-3xl border border-primary bg-light-secondary dark:bg-secondary", classNames?.base),
             }}
             {...props}
         >

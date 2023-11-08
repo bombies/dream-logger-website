@@ -14,7 +14,7 @@ class LocalStorage {
             return true
         }
 
-        return Boolean(existingState)
+        return existingState === "true"
     }
 
     set darkMode(value: boolean) {

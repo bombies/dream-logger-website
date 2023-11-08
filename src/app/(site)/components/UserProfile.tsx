@@ -12,6 +12,7 @@ import {useMemberData} from "@/app/(site)/components/providers/user-data/UserPro
 import useCDNUrl from "@/app/(site)/hooks/s3/useCDNUrl";
 import SignOutIcon from "@/app/(site)/components/icons/SignOutIcon";
 import DarkModeSwitch from "@/app/(site)/components/DarkModeSwitch";
+import Logo from "@/app/(site)/components/Logo";
 
 type Props = {
     placement?: OverlayPlacement
@@ -56,11 +57,7 @@ const UserProfile: FC<Props> = ({placement}) => {
                 <DropdownSection showDivider>
                     <DropdownItem key="profile" isReadOnly>
                         <Link href="/">
-                            <Image
-                                src="/images/DreamLoggerFull.png"
-                                alt="Logo"
-                                imgWidth={75} imgHeight={45}
-                            />
+                            <Logo width={75} height={45}/>
                         </Link>
                         <p className="font-bold text-xl">Hey <span className="capitalize">{member?.firstName}</span></p>
                     </DropdownItem>

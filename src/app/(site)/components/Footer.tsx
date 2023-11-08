@@ -4,19 +4,16 @@ import {FC} from "react";
 import Image from "@/app/(site)/components/Image";
 import {usePathname} from "next/navigation";
 import {Link} from "@nextui-org/react";
+import Logo from "@/app/(site)/components/Logo";
 
 const Footer: FC = () => {
     const pathName = usePathname();
 
     return !["/signin", "/resetpassword"].some(word => pathName.includes(word)) && (
-        <footer className="bg-[#08000F] p-20 flex justify-between phone:flex-col phone:items-center !z-[2]">
+        <footer
+            className="bg-light dark:bg-darker p-20 flex justify-between phone:flex-col phone:items-center !z-[2]">
             <div>
-                <Image
-                    className="phone:flex phone:justify-center"
-                    src="/images/DreamLoggerFull.png"
-                    alt="Logo"
-                    imgWidth={250} imgHeight={100}
-                />
+                <Logo width={250} height={100}/>
                 <p className="text-subtext text-sm phone:text-center">&copy; 2023 Ajani Green - All rights reserved.</p>
             </div>
             <div className="phone:mt-12">

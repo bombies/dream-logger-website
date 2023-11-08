@@ -61,14 +61,14 @@ const Input: FC<InputProps> = ({classNames, id, register, errors, setValidationE
         size: "lg",
         classNames: {
             inputWrapper: clsx(
-                "rounded-2xl bg-[#9E23FF1A]/10 border-1 border-[#3E0070] hover:!bg-[#9E23FF1A]/20 focus-within:!bg-[#9E23FF1A]/20",
+                "rounded-2xl bg-[#9E23FF1A]/10 border border-primary dark:border-[#3E0070] hover:!bg-[#9E23FF1A]/20 focus-within:!bg-[#9E23FF1A]/20",
             ),
-            input: "text-[#EAE0FF]",
+            input: "text-dark dark:text-light",
             label: clsx(
-                "text-[#EAE0FF]",
+                "dark:text-light text-dark",
                 // props.size === "sm" ? "text-sm" : (props.size === "md" ? "text-lg" : "text-xl")
 
-            ) ,
+            ),
             ...classNames
         },
         isInvalid: errMsg != undefined,

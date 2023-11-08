@@ -2,8 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-$foreground-color: #EAE0FF;
-$background-color: #0C0015;
+$LIGHT: #EAE0FF;
+$DARK: #0C0015;
+
+$foreground-color: $LIGHT;
+$background-color: $DARK;
 
 * {
   box-sizing: border-box !important;
@@ -11,14 +14,6 @@ $background-color: #0C0015;
   padding: 0;
 }
 
-@media (prefers-color-scheme: light) {
-  // TODO: Set up light colors
-}
-
-body {
-  background-color: $background-color;
-  color: $foreground-color !important;
-}
 
 .introjs-tooltip {
   color: $foreground-color;
