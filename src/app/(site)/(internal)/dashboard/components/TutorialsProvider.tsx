@@ -2,17 +2,18 @@
 
 import {createGenericContext, UseStateArray} from "@/utils/client/client-data-utils";
 import {FC, PropsWithChildren, useEffect, useState} from "react";
+import useLocalStorage from "@/app/(site)/hooks/useLocalStorage";
 
 const [TutorialsContext, useHook] = createGenericContext<UseStateArray<TutorialsState | undefined>>("useYourDreamsTutorialData must be used in a YourDreamsTutorialProvider!")
 
-type TutorialsState = {
+export type TutorialsState = {
     yourDreams: boolean,
     dreamCalendar: boolean,
     dreamSearch: boolean,
     dreamReports: boolean,
 }
 
-const defaultTutorialsState: TutorialsState = {
+export const defaultTutorialsState: TutorialsState = {
     yourDreams: false,
     dreamCalendar: false,
     dreamSearch: false,
@@ -20,27 +21,21 @@ const defaultTutorialsState: TutorialsState = {
 }
 
 const TutorialsProvider: FC<PropsWithChildren> = ({children}) => {
-    const [tutorialsState, setTutorialsState] = useState<TutorialsState>()
+    const localStorage = useLocalStorage()
+    const [tutorialsState, setTutorialsState] = useState<TutorialsState | undefined>(localStorage?.tutorialsState)
 
     useEffect(() => {
         if (!localStorage)
-            return
-
-        const tutorialsJsonString = localStorage.getItem("tutorials_state")
-        let state: TutorialsState = {...defaultTutorialsState}
-        if (!tutorialsJsonString)
-            localStorage.setItem("tutorials_state", JSON.stringify(defaultTutorialsState))
-        else state = JSON.parse(tutorialsJsonString)
-
-        setTutorialsState(state)
-    }, [])
+            return;
+        setTutorialsState(localStorage.tutorialsState)
+    }, [localStorage]);
 
     useEffect(() => {
         if (!localStorage || !tutorialsState)
             return
-
-        localStorage.setItem("tutorials_state", JSON.stringify(tutorialsState))
-    }, [tutorialsState]);
+        
+        localStorage.tutorialsState = tutorialsState
+    }, [localStorage, tutorialsState]);
 
     return (
         <TutorialsContext.Provider value={[tutorialsState, setTutorialsState]}>
