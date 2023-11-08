@@ -6,7 +6,8 @@ const PrivacyPolicy: FC = () => {
     return (
         <main className="flex flex-col items-center py-32 phone:py-16">
             <h1 className="font-bold text-6xl phone:text-3xl mb-6">Privacy Policy</h1>
-            <article className="w-1/2 tablet:w-2/3 phone:w-5/6 bg-light-secondary border border-primary shadow-md dark:border-none dark:shadow-none dark:bg-secondary/40 rounded-3xl p-12 phone:px-6">
+            <article
+                className="w-1/2 tablet:w-2/3 phone:w-5/6 bg-light-secondary border border-primary shadow-md dark:border-none dark:shadow-none dark:bg-secondary/40 rounded-3xl p-12 phone:px-6 text-justify">
                 <h6 className="text-sm text-subtext mb-3">Last Updated: November 2, 2023</h6>
                 <p>
                     {

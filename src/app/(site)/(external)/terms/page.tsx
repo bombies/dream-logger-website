@@ -7,7 +7,7 @@ const TermsOfService: FC = () => {
         <main className="flex flex-col items-center py-32 phone:py-16">
             <h1 className="font-bold text-6xl phone:text-3xl mb-6">Terms of Service</h1>
             <article
-                className="w-1/2 tablet:w-2/3 phone:w-5/6 bg-light-secondary border border-primary shadow-md dark:border-none dark:shadow-none dark:bg-secondary/40 rounded-3xl p-12 phone:px-6">
+                className="w-1/2 tablet:w-2/3 phone:w-5/6 bg-light-secondary border border-primary shadow-md dark:border-none dark:shadow-none dark:bg-secondary/40 rounded-3xl p-12 phone:px-6 text-justify">
                 <h6 className="text-sm text-subtext mb-3">Last Updated: October 25, 2023</h6>
                 <p>
                     {"These Terms of Service (\"Terms\") govern your access to and use of the DreamLogger website or mobile application (the \"Service\"). By using the Service, you agree to these Terms."}
