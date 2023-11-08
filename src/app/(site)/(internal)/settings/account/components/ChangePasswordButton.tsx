@@ -26,7 +26,7 @@ const ChangePasswordButton: FC = () => {
                         .catch((err: AxiosError) => err.response?.statusText ?? "Couldn't generate reset link!"),
                     {
                         loading: "Generating password reset link",
-                        success: "Generate a password reset link for you! It has been sent your email, please check it. The link will expire in 15 minutes.",
+                        success: "Generated a password reset link for you! It has been sent your email, please check it. The link will expire in 15 minutes.",
                         error(msg: string) {
                             return msg
                         }

@@ -20,8 +20,8 @@ const Providers: FC<Props> = ({children, session}) => {
         <SWRConfig value={{
             refreshInterval: 1000 * 60
         }}>
-            <NextUIProvider>
-                <ThemeProvider attribute="class" defaultTheme="dark">
+            <ThemeProvider attribute="class" defaultTheme="dark">
+                <NextUIProvider>
                     <SessionProvider session={session}>
                         <UserProvider>
                             <TutorialsProvider>
@@ -55,8 +55,8 @@ const Providers: FC<Props> = ({children, session}) => {
                             </TutorialsProvider>
                         </UserProvider>
                     </SessionProvider>
-                </ThemeProvider>
-            </NextUIProvider>
+                </NextUIProvider>
+            </ThemeProvider>
         </SWRConfig>
     )
 }
