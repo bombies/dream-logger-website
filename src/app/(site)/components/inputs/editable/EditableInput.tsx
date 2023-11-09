@@ -19,7 +19,7 @@ type Props =
         value?: string,
         onEdit?: (value?: string) => void,
     }
-    & Pick<InputProps, "classNames" | "placeholder" | "label" | "size" | "isRequired" | "maxLength" | "minLength" | "validate">
+    & Pick<InputProps, "classNames" | "placeholder" | "label" | "size" | "isRequired" | "maxLength" | "minLength" | "validation">
     & PropsWithChildren
 
 const EditableInput: FC<Props> = ({isEditable, value, children, onEdit, ...inputProps}) => {
@@ -34,7 +34,7 @@ const EditableInput: FC<Props> = ({isEditable, value, children, onEdit, ...input
     }, [isEditable, value])
 
     const onSubmit: SubmitHandler<FormProps> = useCallback((data, e) => {
-        if (inputProps.validate && !inputProps.validate.predicate(data.value))
+        if (inputProps.validation && !inputProps.validation.predicate(data.value))
             return;
 
         if (data.value === value)
@@ -44,7 +44,7 @@ const EditableInput: FC<Props> = ({isEditable, value, children, onEdit, ...input
             onEdit(data.value.length === 0 ? undefined : data.value)
         setEditToggled(false)
         setCurrentValue(value ?? "")
-    }, [inputProps.validate, onEdit, value])
+    }, [inputProps.validation, onEdit, value])
 
     const formRef = useRef<HTMLFormElement>(null)
     useOnClickOutside(formRef, () => {

@@ -109,7 +109,7 @@ const RegisterForm: FC = () => {
                     isDisabled={userIsRegistering}
                     isClearable
                     setValidationErrors={setValidationErrors}
-                    validate={{
+                    validation={{
                         predicate(value) {
                             if (!value)
                                 return true
@@ -143,7 +143,7 @@ const RegisterForm: FC = () => {
                     onValueChange={setPassword}
                     isDisabled={userIsRegistering}
                     setValidationErrors={setValidationErrors}
-                    validate={{
+                    validation={{
                         predicate(value) {
                             if (!value)
                                 return true
@@ -165,7 +165,7 @@ const RegisterForm: FC = () => {
                     onValueChange={setConfirmedPassword}
                     setValidationErrors={setValidationErrors}
                     isDisabled={userIsRegistering}
-                    validate={{
+                    validation={{
                         predicate(value) {
                             if (!value)
                                 return true;

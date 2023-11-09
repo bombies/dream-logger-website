@@ -130,7 +130,7 @@ const ResetPasswordPage: FC = () => {
                                         minLength={2}
                                         maxLength={32}
                                         setValidationErrors={setValidationErrors}
-                                        validate={{
+                                        validation={{
                                             predicate(value) {
                                                 if (!value)
                                                     return true
@@ -152,7 +152,7 @@ const ResetPasswordPage: FC = () => {
                                         minLength={2}
                                         maxLength={32}
                                         setValidationErrors={setValidationErrors}
-                                        validate={{
+                                        validation={{
                                             predicate(value) {
                                                 if (!value)
                                                     return true;

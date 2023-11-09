@@ -100,7 +100,7 @@ const EditableUserProfile: FC = () => {
                                                 minLength={2}
                                                 maxLength={32}
                                                 size="sm"
-                                                validate={{
+                                                validation={{
                                                     predicate(value) {
                                                         if (!value)
                                                             return true

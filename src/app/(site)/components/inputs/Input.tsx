@@ -20,10 +20,10 @@ export type InputProps = {
     register?: UseFormRegister<any>,
     errors?: FieldErrors,
     setValidationErrors?: Dispatch<SetStateAction<ValidationErrors>>
-    validate?: ValidationObject
+    validation?: ValidationObject
 } & NextInputProps
 
-const Input: FC<InputProps> = ({classNames, id, register, errors, setValidationErrors, type, validate, ...props}) => {
+const Input: FC<InputProps> = ({classNames, id, register, errors, setValidationErrors, type, validation, ...props}) => {
     const [passwordVisible, setPasswordVisible] = useState(false)
     const [value, setValue] = useState(props.value ?? "");
     const [errMsg, setErrMsg] = useState<string>()
@@ -35,11 +35,11 @@ const Input: FC<InputProps> = ({classNames, id, register, errors, setValidationE
     }, [props.value]);
 
     useEffect(() => {
-        if (!validate)
+        if (!validation)
             return;
 
         let newErrMsg: string | undefined = undefined;
-        const {predicate, errorMsg} = validate;
+        const {predicate, errorMsg} = validation;
         if (!predicate(value)) {
             newErrMsg = errorMsg
             if (id && setValidationErrors)
