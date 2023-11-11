@@ -28,25 +28,39 @@ class DreamsService {
         const member = session.user
         const dreams = await prisma.dream.findMany({
             where: {
-                userId: member.id,
-                title: searchedTitle && {
-                    contains: searchedTitle,
-                    mode: "insensitive"
-                },
-                tags: tags && {
-                    some: {
-                        id: {
-                            in: tags
+                AND: [
+                    {userId: member.id},
+                    {
+                        title: searchedTitle && {
+                            contains: searchedTitle,
+                            mode: "insensitive"
                         }
-                    }
-                },
-                characters: characters && {
-                    some: {
-                        id: {
-                            in: characters
+                    },
+                    {
+                        tags: tags && {
+                            some: {
+                                id: {
+                                    in: tags
+                                }
+                            }
                         }
+                    },
+                    {
+                        characters: characters && {
+                            some: {
+                                id: {
+                                    in: characters
+                                }
+                            }
+                        }
+                    },
+                    {
+                        OR: [
+                            {isDraft: null},
+                            {isDraft: false}
+                        ]
                     }
-                }
+                ],
             },
             include: (tags || characters) && {
                 tags: tags !== undefined,
@@ -83,7 +97,11 @@ class DreamsService {
         return prisma.dream.findFirst({
             where: {
                 id: dreamId,
-                userId: member.id
+                userId: member.id,
+                OR: [
+                    {isDraft: null},
+                    {isDraft: false}
+                ]
             },
             include: {
                 tags: options?.withTags,
@@ -97,14 +115,19 @@ class DreamsService {
         if (!dtoValidated.success)
             return buildFailedValidationResponse(dtoValidated.error)
 
-        const dream = await prisma.dream.create({
+        const dream = await prisma.dream.update({
+            where: {
+                id: dto.id,
+                isDraft: true,
+            },
             data: {
                 title: dto.title,
                 description: dto.description,
                 comments: dto.comments,
                 userId: session.user.id,
                 tags: {connect: dto.tags?.map(id => ({id})) ?? []},
-                characters: {connect: dto.characters?.map(id => ({id})) ?? []}
+                characters: {connect: dto.characters?.map(id => ({id})) ?? []},
+                isDraft: false,
             }
         })
 
@@ -140,7 +163,11 @@ class DreamsService {
         const updatedDream = await prisma.dream.update({
             where: {
                 userId: session.user.id,
-                id: dreamId
+                id: dreamId,
+                OR: [
+                    {isDraft: null},
+                    {isDraft: false}
+                ]
             },
             data: {
                 ...restDto,
@@ -165,7 +192,11 @@ class DreamsService {
         const dream = await prisma.dream.delete({
             where: {
                 id: dreamId,
-                userId: member.id
+                userId: member.id,
+                OR: [
+                    {isDraft: null},
+                    {isDraft: false}
+                ]
             },
         })
 

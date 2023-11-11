@@ -9,6 +9,7 @@ export const FetchDreamsSchema = zfd.formData({
 })
 
 export type PostDreamDto = {
+    id: string,
     title: string,
     description: string,
     comments?: string | null,
@@ -28,6 +29,7 @@ export const DREAM_DESC_MAX = 5000
 export const DREAM_COMMENTS_MAX = 1000
 
 export const PostDreamSchema = z.object({
+    id: z.string(),
     title: z.string()
         .min(DREAM_TITLE_MIN, `The title can't be less than ${DREAM_TITLE_MIN} character!`)
         .max(DREAM_TITLE_MAX, `The title can't be more than ${DREAM_TITLE_MAX} characters!`),
