@@ -113,6 +113,7 @@ model Dream {
   comments    String?          @db.VarChar(1000)
   tags        DreamTag[]
   characters  DreamCharacter[]
+  isDraft     Boolean?
 
   user   Member @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String
