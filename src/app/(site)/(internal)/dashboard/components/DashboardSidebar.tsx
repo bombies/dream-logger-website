@@ -10,6 +10,7 @@ import SearchFilledIcon from "@/app/(site)/components/icons/SearchFilledIcon";
 import StatisticsIcon from "@/app/(site)/components/icons/StatisticsIcon";
 import TagIcon from "@/app/(site)/components/icons/TagIcon";
 import SidebarSection from "@/app/(site)/components/sidebar/SidebarSection";
+import PencilIcon from "@/app/(site)/components/icons/PencilIcon";
 
 const DashboardSidebar: FC = () => {
     return (
@@ -20,6 +21,11 @@ const DashboardSidebar: FC = () => {
                         startContent={<CloudIcon width={20}/>}
                         title="Your Dreams"
                         href="/dashboard"
+                    />
+                    <SidebarItem
+                        title="Dream Drafts"
+                        href="/dashboard/drafts"
+                        startContent={<PencilIcon width={20}/>}
                     />
                     <SidebarItem
                         startContent={<CalendarIcon width={20}/>}
