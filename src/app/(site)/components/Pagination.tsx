@@ -9,6 +9,7 @@ const Pagination: FC<Props> = ({classNames, ...paginationProps}) => {
 
     return (
         <NextPagination
+            showControls
             {...paginationProps}
             classNames={{
                 ...classNames,
