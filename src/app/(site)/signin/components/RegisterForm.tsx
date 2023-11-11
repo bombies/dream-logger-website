@@ -53,8 +53,7 @@ const RegisterForm: FC = () => {
                 if (err instanceof AxiosError) {
                     const errorText = err.response?.statusText
                     toast.error(errorText ?? "Something went wrong!")
-                    if (!errorText)
-                        console.error(err)
+                    console.error(err)
                 } else {
                     console.error(err);
                     toast.error("Something went wrong!")

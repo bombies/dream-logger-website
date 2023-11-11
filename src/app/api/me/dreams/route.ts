@@ -12,5 +12,9 @@ export const POST = async (req: Request) => {
     return authenticated(async (session) => {
         const body: PostDreamDto = await req.json()
         return dreamsService.createDream(session, body)
+    }, {
+        prismaErrors: {
+            recordNotFoundMessage: "Could not create a dream log from that draft id!"
+        }
     })
 }

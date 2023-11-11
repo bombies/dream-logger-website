@@ -7,9 +7,13 @@ import {DataContextState, OptimisticWorker} from "@/utils/client/client-data-uti
 export type DreamsState = DataContextState<Dream[], Dream>
 
 const useDreams = (): DreamsState => {
-    const {data: dreams, isLoading: dreamsLoading, mutate: mutateDreams} = useSWR('/api/me/dreams', fetcher<Dream[]>)
+    const {
+        data: dreams,
+        isLoading: dreamsLoading,
+        mutate: mutateDreams
+    } = useSWR('/api/me/dreams?includeDrafts=true', fetcher<Dream[]>)
 
-    const addOptimisticDream = useCallback<OptimisticWorker<Dream>>(async (work, optimisticDream) => {
+    const addOptimisticDream = useCallback<OptimisticWorker<Dream>>(async (work, optimisticDream, options) => {
         if (!dreams)
             return
         const mutate = mutateDreams
@@ -24,6 +28,7 @@ const useDreams = (): DreamsState => {
             optimisticData: [...dreams, optimisticDream],
             rollbackOnError: true,
             revalidate: false,
+            ...options
         })
     }, [dreams, mutateDreams])
 
@@ -45,7 +50,7 @@ const useDreams = (): DreamsState => {
         })
     }, [dreams, mutateDreams])
 
-    const editOptimisticDream = useCallback<OptimisticWorker<Dream>>(async (work, editedOptimisticDream) => {
+    const editOptimisticDream = useCallback<OptimisticWorker<Dream>>(async (work, editedOptimisticDream, options) => {
         if (!dreams)
             return
 
@@ -68,6 +73,7 @@ const useDreams = (): DreamsState => {
             optimisticData: doUpdate(editedOptimisticDream),
             rollbackOnError: true,
             revalidate: false,
+            ...options
         })
     }, [dreams, mutateDreams])
 

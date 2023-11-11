@@ -25,7 +25,13 @@ type PrismaErrorOptions = {
 
 type RateLimiterOptions = {
     NAME: string,
+    /**
+     * The number of requests that can be done within the specified duration
+     */
     REQUEST_LIMIT?: number,
+    /**
+     * The duration, in seconds, to watch for requests.
+     */
     DURATION?: number,
     GEO_LIMITS?: RateLimiterGeoLimit[]
 }

@@ -21,7 +21,12 @@ class DreamsService {
         if (!paramsValidated.success)
             return buildFailedValidationResponse(paramsValidated.error)
 
-        const {tags: tagsString, characters: charactersString, title: searchedTitle} = paramsValidated.data
+        const {
+            includeDrafts,
+            tags: tagsString,
+            characters: charactersString,
+            title: searchedTitle
+        } = paramsValidated.data
         const tags = tagsString?.split(",")
         const characters = charactersString?.split(",")
 
@@ -55,10 +60,10 @@ class DreamsService {
                         }
                     },
                     {
-                        OR: [
+                        OR: !includeDrafts || includeDrafts === "false" ? [
                             {isDraft: null},
                             {isDraft: false}
-                        ]
+                        ] : undefined
                     }
                 ],
             },
@@ -128,6 +133,8 @@ class DreamsService {
                 tags: {connect: dto.tags?.map(id => ({id})) ?? []},
                 characters: {connect: dto.characters?.map(id => ({id})) ?? []},
                 isDraft: false,
+                draftCharacters: [],
+                draftTags: []
             }
         })
 

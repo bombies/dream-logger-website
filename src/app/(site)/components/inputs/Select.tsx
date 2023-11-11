@@ -1,4 +1,5 @@
-"use memo"
+"use client";
+
 import {useMemo} from "react";
 import {SelectProps, Select as NextSelect} from "@nextui-org/react";
 import {UseFormRegister} from "react-hook-form";

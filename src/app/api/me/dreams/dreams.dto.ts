@@ -3,6 +3,7 @@ import {Dream, DreamCharacter, DreamTag, Member} from "@prisma/client";
 import {zfd} from "zod-form-data";
 
 export const FetchDreamsSchema = zfd.formData({
+    includeDrafts: z.string().regex(/(true)|(false)/).optional(),
     tags: z.string().optional(),
     characters: z.string().optional(),
     title: z.string().optional()

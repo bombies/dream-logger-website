@@ -16,9 +16,20 @@ type Props = {
     onModalOpen?: () => void,
     placeholder?: string,
     label?: string,
+    value?: string[],
+    onTagSelect?: (tagIds: string[]) => void,
 }
 
-const DreamTagSelect: FC<Props> = ({onModalOpen, isDisabled, tags, register, label, placeholder}) => {
+const DreamTagSelect: FC<Props> = ({
+                                       value,
+                                       onTagSelect,
+                                       onModalOpen,
+                                       isDisabled,
+                                       tags,
+                                       register,
+                                       label,
+                                       placeholder
+                                   }) => {
     return (
         <Fragment>
             {onModalOpen && (
@@ -36,6 +47,12 @@ const DreamTagSelect: FC<Props> = ({onModalOpen, isDisabled, tags, register, lab
                 </div>
             )}
             <Select
+                selectedKeys={value}
+                onSelectionChange={(selection) => {
+                    const keys = Array.from(selection) as string[]
+                    if (onTagSelect)
+                        onTagSelect(keys)
+                }}
                 isDisabled={isDisabled}
                 aria-label="Dream Tags"
                 register={register}

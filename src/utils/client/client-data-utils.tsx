@@ -1,5 +1,5 @@
 "use client"
-import {KeyedMutator} from "swr";
+import {KeyedMutator, MutatorOptions} from "swr";
 import {Context, createContext, Dispatch, SetStateAction, useContext} from "react";
 
 /**
@@ -25,7 +25,7 @@ export type DataContextState<T, O> = {
     [T: string]: any
 }
 
-export type OptimisticWorker<T> = (work: () => Promise<T | undefined | null>, data: T) => Promise<void>
+export type OptimisticWorker<T> = (work: () => Promise<T | undefined | null>, data: T, options?: Omit<MutatorOptions, 'optimisticData'>) => Promise<void>
 
 export interface DataContextProps {
     [K: string]: DataContextState<any, any>

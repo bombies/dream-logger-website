@@ -7,15 +7,22 @@ export const GET: ApiRoute = async () => (
     ))
 )
 
-export const POST: ApiRoute = async () => (
+export const POST: ApiRoute = async (req) => (
     authenticated((session) => (
         dreamDraftsService.createDraft(session)
-    ))
+    ), {
+        request: req,
+        rateLimiter: {
+            NAME: "dream_draft_create",
+            REQUEST_LIMIT: 10,
+            DURATION: 60,
+        }
+    })
 )
 
 export const DELETE: ApiRoute = async (req) => (
     authenticated((session) => (
-        dreamDraftsService.deleteDraft(session, new URL(req.url).searchParams)
+        dreamDraftsService.deleteDraftWithParams(session, new URL(req.url).searchParams)
     ), {
         prismaErrors: {
             recordNotFoundMessage: "Couldn't find a draft dream with that ID!"

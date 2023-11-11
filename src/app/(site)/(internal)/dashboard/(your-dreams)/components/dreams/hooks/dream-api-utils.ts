@@ -5,7 +5,6 @@ import useSWRMutation from "swr/mutation";
 import useSWRImmutable from "swr/immutable";
 
 export const FetchFullDream = (dreamId: string, doFetch: boolean) => {
-    console.log(dreamId, doFetch)
     return useSWRImmutable(`/api/me/dreams/${dreamId}?tags=true&characters=true`, fetcher<DreamWithRelations | null>)
 }
 
