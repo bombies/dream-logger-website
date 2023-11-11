@@ -13,7 +13,7 @@ export type RouteContext<T extends { [K: string]: string } | unknown> = {
 
 export type ApiRoute<T extends {
     [K: string]: string
-} | unknown = unknown> = (request: NextRequest, context: RouteContext<T>) => Promise<NextResponse<any>>
+} | unknown = unknown> = (request: NextRequest, context: RouteContext<T>) => Promise<NextResponse>
 
 export type IdObject = { id: string }
 
