@@ -4,6 +4,7 @@ import {createGenericContext} from "@/utils/client/client-data-utils";
 import {FC, PropsWithChildren, useCallback, useEffect, useState} from "react";
 import useLocalStorage from "@/app/(site)/hooks/useLocalStorage";
 import {useTheme} from "next-themes";
+import {signal} from "@preact/signals-react";
 
 
 const [DarkModeContext, hook] = createGenericContext<[boolean, (newVal: boolean) => void]>("useDarkMode must be used in a DarkModeProvider!")

@@ -3,7 +3,7 @@
 import {useEffect, useMemo, useState} from "react";
 import {defaultTutorialsState, TutorialsState} from "@/app/(site)/(internal)/dashboard/components/TutorialsProvider";
 
-class LocalStorage {
+export class LocalStorage {
     constructor(private readonly storage: Storage) {
     }
 
