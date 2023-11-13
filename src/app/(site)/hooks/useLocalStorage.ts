@@ -22,10 +22,10 @@ class LocalStorage {
     }
 
     get tutorialsState(): TutorialsState {
-        let tutorialsJsonString = this.storage.getItem("tutorials_state")
+        const tutorialsJsonString = this.storage.getItem("tutorials_state")
         let state: TutorialsState = {...defaultTutorialsState}
         if (tutorialsJsonString)
-            JSON.parse(tutorialsJsonString)
+            state = JSON.parse(tutorialsJsonString)
         return state
     }
 
