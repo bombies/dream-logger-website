@@ -58,7 +58,7 @@
     "@next-auth/prisma-adapter": "^1.0.7",
     "@types/bcrypt": "^5.0.2",
     "@types/jsonwebtoken": "^9.0.5",
-    "@types/multer": "^1.4.10",
+    "@types/multer": "^1.4.11",
     "@types/node": "^20",
     "@types/nodemailer": "^6.4.14",
     "@types/ramda": "^0.29.9",
