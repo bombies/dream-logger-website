@@ -67,7 +67,7 @@
     "@types/request-ip": "^0.0.41",
     "autoprefixer": "^10",
     "eslint": "^8",
-    "eslint-config-next": "14.0.2",
+    "eslint-config-next": "14.0.3",
     "postcss": "^8",
     "prisma": "^5.5.2",
     "tailwindcss": "^3",
