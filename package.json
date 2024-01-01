@@ -16,7 +16,7 @@
     "@aws-sdk/client-s3": "^3.454.0",
     "@aws-sdk/cloudfront-signer": "^3.451.0",
     "@aws-sdk/credential-providers": "^3.454.0",
-    "@aws-sdk/s3-request-presigner": "^3.454.0",
+    "@aws-sdk/s3-request-presigner": "^3.484.0",
     "@nextui-org/react": "^2.2.9",
     "@prisma/client": "^5.6.0",
     "@react-email/button": "0.0.11",
